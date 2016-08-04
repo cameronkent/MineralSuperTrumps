@@ -1,0 +1,7 @@
+CP2406 Programming II
+
+Assessment Project: 'Mineral Supertrumps'
+
+4/8/16:
+    * Created project directory on 'R2 - D2' Hard Disk
+    *
