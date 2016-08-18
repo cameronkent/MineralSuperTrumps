@@ -1,0 +1,13 @@
+    USER STORIES - First version
+
+* The user enters a player name.
+* The user chooses opponents 2, 3 or 4.
+* The user sees a random dealer chosen.
+* The random dealer shuffles and deals each player 8 cards.
+* The remaining pack is set face down.
+* The game begins with 'player' left of dealer placing first card down.
+* The first 'player' announces the name, category and value of the card played.
+* The next 'player' then plays a card of higher value and announces name and category.
+* Turns continue until a 'player' does not have a card of higher value.
+* The 'player' who can not play a card must draw from the pack.
+* The 'player' can not play again until a supertrump card is played, or all but one 'player' has passed.

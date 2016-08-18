@@ -4,4 +4,8 @@ Assessment Project: 'Mineral Supertrumps'
 
 4/8/16:
     * Created project directory on 'R2 - D2' Hard Disk
-    *
+    * Created GitHub Repository
+
+19/8/16:
+    * Began basic user stories
+    * Imported 'MstCards' list and images for cards from master file.
