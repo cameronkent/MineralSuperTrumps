@@ -9,3 +9,7 @@ Assessment Project: 'Mineral Supertrumps'
 19/8/16:
     * Began basic user stories
     * Imported 'MstCards' list and images for cards from master file.
+
+29/8/16:
+    * Created some pseudocode for main
+    * Began coding of main and player.java

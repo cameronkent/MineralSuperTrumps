@@ -11,3 +11,10 @@
 * Turns continue until a 'player' does not have a card of higher value.
 * The 'player' who can not play a card must draw from the pack.
 * The 'player' can not play again until a supertrump card is played, or all but one 'player' has passed.
+* A player may pass even if they could play a card
+* A player can play a supertrump during any of their turns
+* A supertrump card changes the playing category or trump, according to the trump card
+* After a supertrump is played any player who had passed may play again
+* The game continues with players taking turns until all but one person passes
+* The last players begins the next round by playing a new card
+* The winner is the first player to empty their hand of cards

@@ -1,0 +1,22 @@
+Program Pseudocode
+
+
+program start
+
+main
+    get playerName
+        userPlayer
+    get numPlayers
+        for i: numPlayers
+            new compPlayer(i)
+
+    randomise gameDealer
+    randomise cardDeck from cards
+
+    gameDealer deals
+        cardDeck - (8 * numPlayers)
+        userPlayer + 8 cards
+        for i: numPlayers
+            compPlayer(i) + 8 cards
+
+    gamePlay
