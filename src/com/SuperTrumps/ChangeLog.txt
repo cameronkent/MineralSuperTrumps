@@ -13,3 +13,5 @@ Assessment Project: 'Mineral Supertrumps'
 29/8/16:
     * Created some pseudocode for main
     * Began coding of main and player.java
+    * Created Player class with getPlayerName method to take user input
+    * Created comPlayers class with instances created through array after user enters number of players
