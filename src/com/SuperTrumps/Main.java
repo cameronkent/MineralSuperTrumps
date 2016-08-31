@@ -33,7 +33,7 @@ public class Main {
             compPlayer[i].compPlayerName = "Computer " + (Integer.toString(i + 1));
 
         }
-        //Display names of players
+        //Display names of player and computer players
         System.out.println("This games players are:");
         System.out.println(playerName);
         for (int i = 0; i < compPlayer.length; i++) {

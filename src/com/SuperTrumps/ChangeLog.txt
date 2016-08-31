@@ -15,3 +15,4 @@ Assessment Project: 'Mineral Supertrumps'
     * Began coding of main and player.java
     * Created Player class with getPlayerName method to take user input
     * Created comPlayers class with instances created through array after user enters number of players
+    * Created ReadMstCardsFile tested printing elements * not working as yet
