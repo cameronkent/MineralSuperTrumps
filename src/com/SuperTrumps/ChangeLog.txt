@@ -16,3 +16,6 @@ Assessment Project: 'Mineral Supertrumps'
     * Created Player class with getPlayerName method to take user input
     * Created comPlayers class with instances created through array after user enters number of players
     * Created ReadMstCardsFile tested printing elements * not working as yet
+
+1/9/16
+    * Updated and formatted userStories
