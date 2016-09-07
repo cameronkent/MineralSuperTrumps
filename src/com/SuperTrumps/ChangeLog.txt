@@ -19,3 +19,6 @@ Assessment Project: 'Mineral Supertrumps'
 
 1/9/16
     * Updated and formatted userStories
+
+7/9/16
+    * Imported dd-plist into project
