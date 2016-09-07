@@ -22,3 +22,5 @@ Assessment Project: 'Mineral Supertrumps'
 
 7/9/16
     * Imported dd-plist into project
+    * Removed incomplete Pseudocode file
+    * Began work on import of card plist using dd-plist
