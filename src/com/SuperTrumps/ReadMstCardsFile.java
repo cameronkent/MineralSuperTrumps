@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class ReadMstCardsFile {
 
-    public ArrayList<Cards> cardDeck = new ArrayList<>();
+    public ArrayList<Card> cardDeck = new ArrayList<>();
 
-    ReadMstCardsFile() throws ParserConfigurationException, ParseException, PropertyListFormatException, IOException {
+    ReadMstCardsFile() throws Exception {
         try {
 
             File inputFile = new File("MstCards_151021.plist");
@@ -21,7 +21,6 @@ public class ReadMstCardsFile {
             NSArray cardArray = (NSArray) cardDict.objectForKey("cards");
 
             //do something with cardArray
-
         }
         catch (Exception e) {
         e.printStackTrace();
@@ -29,17 +28,3 @@ public class ReadMstCardsFile {
 
     }
 }
-
-//                    fileName
-//                    imageName
-//                    card_type
-//                    title
-//                    chemistry
-//                    classification
-//                    crystal_system
-//                    occurrence
-//                    hardness
-//                    specific_gravity
-//                    cleavage
-//                    crystal_abundance
-//                    economic_value

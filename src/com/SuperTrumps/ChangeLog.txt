@@ -24,3 +24,8 @@ Assessment Project: 'Mineral Supertrumps'
     * Imported dd-plist into project
     * Removed incomplete Pseudocode file
     * Began work on import of card plist using dd-plist
+
+8/9/16
+    * Added estimates to user stories
+    * created Deck class which imports from the plist to build deck array
+    * built constructors in card and trumpCard classes
