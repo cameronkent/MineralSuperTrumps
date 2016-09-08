@@ -1,10 +1,11 @@
 package com.SuperTrumps;
 
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         int numPlayers;
 
@@ -40,6 +41,11 @@ public class Main {
             System.out.println(compPlayer[i].compPlayerName);
 
         }
+        //Build a deck from plist and shuffle
+        Deck cardDeck = new Deck();
+        Collections.shuffle(cardDeck.deckArray);
+        System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.");
+
     }
 
 }

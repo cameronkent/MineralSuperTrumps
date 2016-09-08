@@ -3,7 +3,7 @@ package com.SuperTrumps;
 import com.dd.plist.*;
 import com.dd.plist.PropertyListParser;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Deck {
     public ArrayList<Card> deckArray = new ArrayList();
@@ -14,13 +14,13 @@ public class Deck {
             int minerals = 0;
             int trumps = 54;
 
+            System.out.println("reading file..."); //DEBUGGING PROGRESS MARKER
+
             File file = new File("MstCards_151021.plist");
             NSDictionary rootDict = (NSDictionary) PropertyListParser.parse(file);
             NSArray cardsArray = (NSArray) rootDict.objectForKey("cards");
 
-
-            while (minerals < 54) {
-
+            do {
                 NSDictionary mineralCard = (NSDictionary) cardsArray.objectAtIndex(minerals);
 
                 NSString title = (NSString) mineralCard.objectForKey("title");
@@ -35,25 +35,26 @@ public class Deck {
                 NSString economicValue = (NSString) mineralCard.objectForKey("economic_value");
 
                 deckArray.add(new Card(title, chemistry, classification, crystalSystem, occurrence, hardness, specificGravity, cleavage, crustalAbundance, economicValue));
-                minerals =+ 1;
+                //System.out.println("card added..." + minerals); //DEBUGGING PROGRESS MARKER
+                minerals = minerals + 1;
+
             }
+            while (minerals < 54);
 
-            while (trumps < 60) {
-
+            do {
                 NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
 
                 NSString title = (NSString) trumpCard.objectForKey("title");
                 NSString subtitle = (NSString) trumpCard.objectForKey("subtitle");
 
                 deckArray.add(new TrumpCard(title, subtitle));
-                trumps =+ 1;
+                //System.out.println("trump added..." + trumps); //DEBUGGING PROGRESS MARKER
+                trumps = trumps + 1;
             }
+            while (trumps < 60);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            return;
+        } catch (Exception exc) {
+            exc.printStackTrace();
         }
     }
 
@@ -61,5 +62,13 @@ public class Deck {
         for (Card i: deckArray) {
             System.out.println(i.toString());
         }
+    }
+    void print(int index) {
+
+        System.out.println(deckArray.get(index).toString());
+    }
+
+    public int size() {
+        return deckArray.size();
     }
 }

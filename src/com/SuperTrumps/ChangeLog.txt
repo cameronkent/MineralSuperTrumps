@@ -41,3 +41,7 @@ Assessment Project: 'Mineral Supertrumps'
     * deleted ReadMSTCards class as redundant
     * built test class to test build and display of deck, error occurring at present
     * Formatted the toStrings for Cards and trumpCards
+    PUSHED
+    * Fixed the Deck array building
+    * implemented and tested creating shuffling and printing random cards from deck
+    PUSHED

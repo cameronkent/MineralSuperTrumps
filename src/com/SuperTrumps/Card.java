@@ -1,7 +1,6 @@
 package com.SuperTrumps;
 
 import com.dd.plist.NSArray;
-import com.dd.plist.NSObject;
 import com.dd.plist.NSString;
 
 //                    fileName
