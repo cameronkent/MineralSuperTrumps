@@ -5,27 +5,39 @@ Assessment Project: 'Mineral Supertrumps'
 4/8/16:
     * Created project directory on 'R2 - D2' Hard Disk
     * Created GitHub Repository
+    PUSHED
 
 19/8/16:
     * Began basic user stories
     * Imported 'MstCards' list and images for cards from master file.
+    PUSHED
 
 29/8/16:
     * Created some pseudocode for main
     * Began coding of main and player.java
+    PUSHED
     * Created Player class with getPlayerName method to take user input
     * Created comPlayers class with instances created through array after user enters number of players
+    PUSHED
     * Created ReadMstCardsFile tested printing elements * not working as yet
+    PUSHED
 
 1/9/16
     * Updated and formatted userStories
+    PUSHED
 
 7/9/16
     * Imported dd-plist into project
+    PUSHED
     * Removed incomplete Pseudocode file
     * Began work on import of card plist using dd-plist
+    PUSHED
 
 8/9/16
     * Added estimates to user stories
     * created Deck class which imports from the plist to build deck array
     * built constructors in card and trumpCard classes
+    PUSHED
+    * deleted ReadMSTCards class as redundant
+    * built test class to test build and display of deck, error occurring at present
+    * Formatted the toStrings for Cards and trumpCards

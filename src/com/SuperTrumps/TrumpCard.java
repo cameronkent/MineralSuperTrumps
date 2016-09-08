@@ -12,9 +12,9 @@ public class TrumpCard extends Card {
 
     @Override
     public String toString() {
-        return ("********************" +
-                "\n TRUMP: " + this.title +
-                "\n Action: " + this.subtitle +
-                "\n********************");
+        return ("**************************************************" +
+                "\n SUPERTRUMP \n" + this.title +
+                "\n\n ABILITY: \n" + this.subtitle +
+                "\n**************************************************");
     }
 }

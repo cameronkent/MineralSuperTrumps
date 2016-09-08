@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Deck {
     public ArrayList<Card> deckArray = new ArrayList();
 
-    Deck() throws Exception {
+    public Deck() throws Exception {
 
         try {
             int minerals = 0;
@@ -21,7 +21,7 @@ public class Deck {
 
             while (minerals < 54) {
 
-                NSDictionary mineralCard = (NSDictionary) cardsArray.objectAtIndex(minerals); // index of the cards
+                NSDictionary mineralCard = (NSDictionary) cardsArray.objectAtIndex(minerals);
 
                 NSString title = (NSString) mineralCard.objectForKey("title");
                 NSString chemistry = (NSString) mineralCard.objectForKey("chemistry");
@@ -40,7 +40,7 @@ public class Deck {
 
             while (trumps < 60) {
 
-                NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps); // index of the cards
+                NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
 
                 NSString title = (NSString) trumpCard.objectForKey("title");
                 NSString subtitle = (NSString) trumpCard.objectForKey("subtitle");
@@ -51,6 +51,9 @@ public class Deck {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        finally {
+            return;
         }
     }
 

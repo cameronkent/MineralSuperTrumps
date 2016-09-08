@@ -1,6 +1,7 @@
 package com.SuperTrumps;
 
 import com.dd.plist.NSArray;
+import com.dd.plist.NSObject;
 import com.dd.plist.NSString;
 
 //                    fileName
@@ -10,6 +11,7 @@ public class Card {
 
     NSString title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
     NSArray occurrence;
+
 
     public Card() {}
 
@@ -29,17 +31,17 @@ public class Card {
 
     @Override
     public String toString() {
-        return ("--------------------" +
-                "\n Element: " + this.title +
-                "\n Chemistry: " + this.chemistry +
-                "\n Classification: " + this.classification +
-                "\n Crystal system: " + this.crystalSystem +
-                "\n Occurrence: " + this.occurrence +
-                "\n Hardness: " + this.hardness +
-                "\n Specific Gravity: " + this.specificGravity +
-                "\n Cleavage: " + this.cleavage +
-                "\n Crustal abundance: " + this.crustalAbundance +
-                "\n Economic value: " + this.economicValue +
-                "\n--------------------");
+        return ("--------------------------------------------------" +
+                "\n ELEMENT:            " + this.title +
+                "\n CHEMISTRY:          " + this.chemistry +
+                "\n CLASSIFICATION:     " + this.classification +
+                "\n CRYSTAL SYSTEM:     " + this.crystalSystem +
+                "\n OCCURRENCE:         " + this.occurrence +
+                "\n HARDNESS:           " + this.hardness +
+                "\n SPECIFIC GRAVITY:   " + this.specificGravity +
+                "\n CLEAVAGE:           " + this.cleavage +
+                "\n CRUSTAL ABUNDANCE:  " + this.crustalAbundance +
+                "\n ECONOMIC VALUE:     " + this.economicValue +
+                "\n--------------------------------------------------");
     }
 }
