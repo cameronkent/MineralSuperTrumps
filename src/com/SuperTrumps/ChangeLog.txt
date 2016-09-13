@@ -53,5 +53,10 @@ Assessment Project: 'Mineral Supertrumps'
     * created and tested dealing 8 cards to a player hand and removing them from the deck
     PUSHED
     * Implemented dealing of hands to main
-    * Altered Card toString to print only information relevant to gameplay
+    * Altered Card toString to print only information relevant to game play
     * Created testing for displaying and selecting a card to play from hand
+    PUSHED
+    * Created a do while loop to select playing category
+    * implemented methods in player class to deal hands and single card
+    * eliminated redundancies in variable assignment in main
+    PUSHED

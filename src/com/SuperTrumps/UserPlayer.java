@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class UserPlayer extends Player {
 
-    String playerName = "";
-
     String getUserPlayerName() {
 
         Scanner user_input = new Scanner(System.in);
