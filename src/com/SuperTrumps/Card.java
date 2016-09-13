@@ -30,7 +30,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return ("--------------------------------------------------" +
+        return ("\n--------------------------------------------------" +
                 "\n ELEMENT:            " + this.title +
                 "\n CHEMISTRY:          " + this.chemistry +
                 "\n CLASSIFICATION:     " + this.classification +

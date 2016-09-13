@@ -12,7 +12,7 @@ public class TrumpCard extends Card {
 
     @Override
     public String toString() {
-        return ("**************************************************" +
+        return ("\n**************************************************" +
                 "\n SUPERTRUMP \n" + this.title +
                 "\n\n ABILITY: \n" + this.subtitle +
                 "\n**************************************************");

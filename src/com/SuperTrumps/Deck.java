@@ -14,7 +14,7 @@ public class Deck {
             int minerals = 0;
             int trumps = 54;
 
-            System.out.println("reading file..."); //DEBUGGING PROGRESS MARKER
+            //System.out.println("reading file..."); //DEBUGGING PROGRESS MARKER
 
             File file = new File("MstCards_151021.plist");
             NSDictionary rootDict = (NSDictionary) PropertyListParser.parse(file);

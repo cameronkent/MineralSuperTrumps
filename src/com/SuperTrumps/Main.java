@@ -10,8 +10,8 @@ public class Main {
         int numPlayers;
 
         //Create Player instance for user and enter user playerName
-        Player userPlayer = new Player();
-        String playerName = userPlayer.getPlayerName();
+        UserPlayer userPlayer = new UserPlayer();
+        String playerName = userPlayer.getUserPlayerName();
 
         System.out.println("Welcome " + playerName);
 

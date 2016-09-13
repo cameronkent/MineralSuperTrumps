@@ -45,3 +45,10 @@ Assessment Project: 'Mineral Supertrumps'
     * Fixed the Deck array building
     * implemented and tested creating shuffling and printing random cards from deck
     PUSHED
+
+13/9/16
+    * Altered MstCards plist trumps to match image descriptions
+    * Created new player super class
+    * userplayer and complayer new inherit from player class
+    * created and tested dealing 8 cards to a player hand and removing them from the deck
+    PUSHED
