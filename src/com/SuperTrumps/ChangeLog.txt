@@ -60,3 +60,7 @@ Assessment Project: 'Mineral Supertrumps'
     * implemented methods in player class to deal hands and single card
     * eliminated redundancies in variable assignment in main
     PUSHED
+    * implemented dealHand as method call
+    * implemented showHand method call for userPlayer
+    * created secondary test file for clean run through test
+    PUSHED

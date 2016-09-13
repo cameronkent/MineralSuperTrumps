@@ -22,26 +22,21 @@ public class Test {
 //
 //        System.out.println("printing deck size..."); //DEBUGGING PROGRESS MARKER
 //        System.out.println(cardDeck.size());
-//
+
         System.out.println("shuffling deck..."); //DEBUGGING PROGRESS MARKER
         Collections.shuffle(cardDeck.deckArray);
-//
+
 //        System.out.println("printing random card..."); //DEBUGGING PROGRESS MARKER
 //        cardDeck.print(5);
 
-
         Player playerOne = new Player();
+        playerOne.DealHand(playerOne, cardDeck);
 
-        for (int i = 0; i < 8; i++) {
-            int deckSize = cardDeck.size();
-//            System.out.println("dealing card");
-            playerOne.Hand.add(cardDeck.deckArray.get(deckSize-1));
-            cardDeck.deckArray.remove(cardDeck.deckArray.get(deckSize-1));
-        }
-
+//Display player hand
         System.out.println("Cards in hand " + playerOne.Hand.size());
-//        System.out.println(playerOne.Hand);
-        System.out.println("Cards left in deck " + cardDeck.size());
+        for (int i = 0; i < playerOne.Hand.size(); i++ )System.out.println(playerOne.Hand.get(i));
+
+        //System.out.println("Cards left in deck " + cardDeck.size());
 
 //Test Display player hands in main
 //        System.out.println("Cards in " + playerName + " hand " + userPlayer.Hand.size());
@@ -52,12 +47,12 @@ public class Test {
 //        System.out.println("Cards left in deck " + cardDeck.size());
 //
 
-//display cards and players select card to play
-//NEEDS TO BE A METHOD TO CALL
-        for (int i = 0; i < playerOne.Hand.size(); i++) {
-            System.out.println("Card #" + (i+1) + ":");
-            System.out.println(playerOne.Hand.get(i));
-        }
+
+
+//        for (int i = 0; i < playerOne.Hand.size(); i++) {//display cards and players select card to play//NEEDS TO BE A METHOD TO CALL
+//            System.out.println("Card #" + (i+1) + ":");
+//            System.out.println(playerOne.Hand.get(i));
+//        }
         Scanner userInput = new Scanner(System.in);
         System.out.println("Choose card to play");
         int cardToPlay = userInput.nextInt();

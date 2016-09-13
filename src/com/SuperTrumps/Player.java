@@ -19,4 +19,10 @@ public class Player {
         player.Hand.add(cardDeck.deckArray.get(cardDeck.size()-1));
         cardDeck.deckArray.remove(cardDeck.deckArray.get(cardDeck.size()-1));
     }
+
+    public void PlayCard(Player player, int cardToPlay) {
+        System.out.println("Playing the card: \n" + player.Hand.get(cardToPlay-1));
+        player.Hand.remove(player.Hand.get(cardToPlay -1));
+
+    }
 }

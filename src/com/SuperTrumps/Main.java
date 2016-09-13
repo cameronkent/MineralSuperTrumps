@@ -17,8 +17,7 @@ public class Main {
 //Run a Do While loop to get number of players from users
         do {
             Scanner user_input = new Scanner(System.in);
-            System.out.println("Choose 2, 3 or 4 computer players.");
-            System.out.println("How may opponents:");
+            System.out.println("Choose 2, 3 or 4 computer players. \nHow may opponents:");
             numPlayers = user_input.nextInt();
         }   while (numPlayers <2 || numPlayers >5);
         System.out.println("There are " + (numPlayers + 1) + " players in this game.");
@@ -42,7 +41,10 @@ public class Main {
 
 //Deal 8 cards to all players
         userPlayer.DealHand(userPlayer, cardDeck);
-        for (int j = 0; j < comPlayer.length; j++) comPlayer[j].DealHand(userPlayer, cardDeck);
+        for (int j = 0; j < comPlayer.length; j++) comPlayer[j].DealHand(comPlayer[j], cardDeck);
         System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.");
+
+//Displays users hand
+        userPlayer.showHand(userPlayer);
     }
 }
