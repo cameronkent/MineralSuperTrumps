@@ -52,3 +52,6 @@ Assessment Project: 'Mineral Supertrumps'
     * userplayer and complayer new inherit from player class
     * created and tested dealing 8 cards to a player hand and removing them from the deck
     PUSHED
+    * Implemented dealing of hands to main
+    * Altered Card toString to print only information relevant to gameplay
+    * Created testing for displaying and selecting a card to play from hand

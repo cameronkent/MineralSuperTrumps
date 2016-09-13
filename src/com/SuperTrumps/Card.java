@@ -30,17 +30,19 @@ public class Card {
 
     @Override
     public String toString() {
-        return ("\n--------------------------------------------------" +
+        return ("--------------------------------------------------" +
                 "\n ELEMENT:            " + this.title +
-                "\n CHEMISTRY:          " + this.chemistry +
-                "\n CLASSIFICATION:     " + this.classification +
-                "\n CRYSTAL SYSTEM:     " + this.crystalSystem +
-                "\n OCCURRENCE:         " + this.occurrence +
-                "\n HARDNESS:           " + this.hardness +
-                "\n SPECIFIC GRAVITY:   " + this.specificGravity +
-                "\n CLEAVAGE:           " + this.cleavage +
-                "\n CRUSTAL ABUNDANCE:  " + this.crustalAbundance +
-                "\n ECONOMIC VALUE:     " + this.economicValue +
-                "\n--------------------------------------------------");
+//                "\n CHEMISTRY:          " + this.chemistry +
+//                "\n CLASSIFICATION:     " + this.classification +
+//                "\n CRYSTAL SYSTEM:     " + this.crystalSystem +
+//                "\n OCCURRENCE:         " + this.occurrence +
+                "\n--------------------------------------------------" +
+                "\n CATEGORIES\n" +
+                "\n Hardness:           " + this.hardness +
+                "\n Specific gravity:   " + this.specificGravity +
+                "\n Cleavage:           " + this.cleavage +
+                "\n Crustal Abundance:  " + this.crustalAbundance +
+                "\n Economic value:     " + this.economicValue +
+                "\n--------------------------------------------------\n");
     }
 }

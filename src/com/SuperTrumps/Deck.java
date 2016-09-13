@@ -57,14 +57,14 @@ public class Deck {
             exc.printStackTrace();
         }
     }
-
+//Print all cards in deck
     void print(){
         for (Card i: deckArray) {
             System.out.println(i.toString());
         }
     }
+//Print select card
     void print(int index) {
-
         System.out.println(deckArray.get(index).toString());
     }
 
