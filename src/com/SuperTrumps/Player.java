@@ -23,6 +23,28 @@ public class Player {
     public void PlayCard(Player player, int cardToPlay) {
         System.out.println("Playing the card: \n" + player.Hand.get(cardToPlay-1));
         player.Hand.remove(player.Hand.get(cardToPlay -1));
-
     }
+
+    public String getCategoryAsString(int categorySelect ) {
+        String categoryAsString;
+        loop: do {
+            switch (categorySelect) {
+                case 1: categoryAsString = "Hardness";
+                    break loop;
+                case 2: categoryAsString = "Specific gravity";
+                    break loop;
+                case 3: categoryAsString = "Cleavage";
+                    break loop;
+                case 4: categoryAsString = "Crustal abundance";
+                    break loop;
+                case 5: categoryAsString = "Economic value";
+                    break loop;
+                default: categoryAsString = "";
+                    break;
+            }
+        } while (categoryAsString.equals(""));
+        return categoryAsString;
+    }
+
+
 }

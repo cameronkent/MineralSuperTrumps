@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         int numPlayers;
+        String categoryInPlay;
 
 //Create Player instance for user and enter user playerName
         UserPlayer userPlayer = new UserPlayer();

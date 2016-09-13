@@ -45,4 +45,25 @@ public class Card {
                 "\n Economic value:     " + this.economicValue +
                 "\n--------------------------------------------------\n");
     }
+
+    public NSString getCategoryInPlay(int categorySelect ) {
+        NSString categoryInPlay;
+        loop: do {
+            switch (categorySelect) {
+                case 1: categoryInPlay = hardness;
+                    break loop;
+                case 2: categoryInPlay = specificGravity;
+                    break loop;
+                case 3: categoryInPlay = cleavage;
+                    break loop;
+                case 4: categoryInPlay = crustalAbundance;
+                    break loop;
+                case 5: categoryInPlay = economicValue;
+                    break loop;
+                default: categoryInPlay = null;
+                    break;
+            }
+        } while (categoryInPlay.equals(null));
+        return categoryInPlay;
+    }
 }

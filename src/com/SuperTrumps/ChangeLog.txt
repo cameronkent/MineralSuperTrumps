@@ -64,3 +64,8 @@ Assessment Project: 'Mineral Supertrumps'
     * implemented showHand method call for userPlayer
     * created secondary test file for clean run through test
     PUSHED
+
+14/9/16
+    * Created getCategoryAsString method to return a String for round category
+    * created getCategoryInPlay to return variable to compare categories
+    PUSHED
