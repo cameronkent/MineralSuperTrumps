@@ -49,7 +49,7 @@ Assessment Project: 'Mineral Supertrumps'
 13/9/16
     * Altered MstCards plist trumps to match image descriptions
     * Created new player super class
-    * userplayer and complayer new inherit from player class
+    * userPlayer and comPlayer new inherit from player class
     * created and tested dealing 8 cards to a player hand and removing them from the deck
     PUSHED
     * Implemented dealing of hands to main
@@ -73,3 +73,6 @@ Assessment Project: 'Mineral Supertrumps'
 15/9/16
     * Created new Game class to handle logic
     * Created copy of main to refactor to include game class
+    PUSHED
+    * Began creating switch case to set int value for categories to compare
+    * Began attempting to pull value of category from card to compare.

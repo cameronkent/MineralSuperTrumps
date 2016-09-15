@@ -15,7 +15,7 @@ public class TestTwo {
         //Define variables used in running
         String categoryAsString;
         int categorySelect;
-        NSString categoryInPlay;
+        String categoryValue;
 
         //Build and shuffle deck
         System.out.println("creating deck..."); Deck cardDeck = new Deck();
@@ -37,8 +37,61 @@ public class TestTwo {
         Scanner inputCategory = new Scanner(System.in);
         categorySelect = inputCategory.nextInt();
         categoryAsString = gameOne.getCategoryAsString(categorySelect);
+        categoryValue = "high";
 
+        int valueToPlay = getEconomicValueAsInt(categoryValue);
         System.out.println("Category for this round is " + categoryAsString);
 
+
+
+
     }
+    //Return economic value as int for comparison
+    public int getEconomicValueAsInt(String economicValue) {
+        int economicValueAsInt = 0;
+        switch (economicValue){
+            case "trivial": return 1;
+            case "low": return 2;
+            case "moderate": return 3;
+            case "high": return 4;
+            case "very high": return 5;
+            case "I'm rich": return 6;
+        }return economicValueAsInt;
+    }
+
+    //Return crustal abundance as int for comparison
+    public int getCrustalAbundanceAsInt(String economicValue) {
+        int economicValueAsInt = 0;
+        switch (economicValue){
+            case "ultratrace": return 1;
+            case "trace": return 2;
+            case "low": return 3;
+            case "moderate": return 4;
+            case "high": return 5;
+            case "very high": return 6;
+        }return economicValueAsInt;
+    }
+
+    //Return cleavage as int for comparison
+    public int getEconomicValueAsInt(String economicValue) {
+        int economicValueAsInt = 0;
+        switch (economicValue){
+            case "none": return 1;
+            case "poor/none": return 2;
+            case "1 poor": return 3;
+            case "2 poor": return 4;
+            case "1 good": return 5;
+            case "I1 good, 1 poor": return 6;
+            case "2 good": return 7;
+            case "3 good": return 8;
+            case "1 perfect": return 9;
+            case "1 perfect, 1 good": return 10;
+            case "1 perfect, 2 good": return 11;
+            case "2 perfect, 1 good": return 12;
+            case "3 perfect": return 13;
+            case "4 perfect": return 14;
+            case "6 perfect": return 15;
+        }return economicValueAsInt;
+    }
+
 }

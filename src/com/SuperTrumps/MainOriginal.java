@@ -1,6 +1,7 @@
 package com.SuperTrumps;
 
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class MainOriginal {
@@ -40,6 +41,15 @@ public class MainOriginal {
         Deck cardDeck = new Deck();
         Collections.shuffle(cardDeck.deckArray);
         System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.");
+
+//Create a random int to 'select' dealer
+        Random random = new Random();
+        int dealer = random.nextInt(numPlayers - 1 + 1) + 1;
+        if (dealer == 1) {
+            System.out.println(userPlayer.playerName + " is dealing this round");
+        } else {
+            System.out.println(comPlayer[dealer] + " is dealing this round");
+        }
 
 //Deal 8 cards to all players
         userPlayer.DealHand(userPlayer, cardDeck);

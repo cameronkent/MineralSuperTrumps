@@ -11,9 +11,9 @@ public class Card {
     NSString title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
     NSArray occurrence;
 
-
     public Card() {}
 
+    //Construct card
     public Card(NSString title, NSString chemistry, NSString classification, NSString crystalSystem, NSArray occurrence, NSString hardness, NSString specificGravity, NSString cleavage, NSString crustalAbundance, NSString economicValue) {
         this.title = title;
         this.chemistry = chemistry;
@@ -46,24 +46,16 @@ public class Card {
                 "\n--------------------------------------------------\n");
     }
 
-    public NSString getCategoryInPlay(int categorySelect ) {
-        NSString categoryInPlay;
-        loop: do {
-            switch (categorySelect) {
-                case 1: categoryInPlay = hardness;
-                    break loop;
-                case 2: categoryInPlay = specificGravity;
-                    break loop;
-                case 3: categoryInPlay = cleavage;
-                    break loop;
-                case 4: categoryInPlay = crustalAbundance;
-                    break loop;
-                case 5: categoryInPlay = economicValue;
-                    break loop;
-                default: categoryInPlay = null;
-                    break;
-            }
-        } while (categoryInPlay.equals(null));
-        return categoryInPlay;
-    }
+    // TODO: make this work
+//    public NSString getCategoryInPlay(int categorySelect ) {
+//        NSString categoryInPlay;
+//            switch (categorySelect) {
+//                case 1: return categoryInPlay = hardness;
+//                case 2: return categoryInPlay = specificGravity;
+//                case 3: return categoryInPlay = cleavage;
+//                case 4: return categoryInPlay = crustalAbundance;
+//                case 5: return categoryInPlay = economicValue;
+//                default: return categoryInPlay = null;
+//            }
+//    }
 }

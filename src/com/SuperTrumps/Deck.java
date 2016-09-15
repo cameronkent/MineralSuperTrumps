@@ -59,17 +59,18 @@ public class Deck {
     }
 
 //Print all cards in deck
-    void print(){
+    void printDeck(){
         for (Card i: deckArray) {
             System.out.println(i.toString());
         }
     }
 
 //Print select card
-    void print(int index) {
+    void printCard(int index) {
         System.out.println(deckArray.get(index).toString());
     }
 
+//Return size of deck
     public int size() {
         return deckArray.size();
     }
