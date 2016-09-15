@@ -3,11 +3,14 @@ package com.SuperTrumps;
 import com.dd.plist.NSString;
 
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TestTwo {
 
     public static void main(String[] args) throws Exception {
+
+        Game gameOne = new Game();
 
         //Define variables used in running
         String categoryAsString;
@@ -29,11 +32,11 @@ public class TestTwo {
         playerOne.PlayCard(playerOne, inputCardToPlay.nextInt());
 
 
-        //Display card in play and chose category to play
+        //Display card in play and choose category to play
         System.out.println("Choose category to play:" + "\n1 Hardness" + "\n2 Specific gravity" + "\n3 Cleavage" + "\n4 Crustal abundance" + "\n5 Economic value");
         Scanner inputCategory = new Scanner(System.in);
         categorySelect = inputCategory.nextInt();
-        categoryAsString = playerOne.getCategoryAsString(categorySelect);
+        categoryAsString = gameOne.getCategoryAsString(categorySelect);
 
         System.out.println("Category for this round is " + categoryAsString);
 

@@ -69,3 +69,7 @@ Assessment Project: 'Mineral Supertrumps'
     * Created getCategoryAsString method to return a String for round category
     * created getCategoryInPlay to return variable to compare categories
     PUSHED
+
+15/9/16
+    * Created new Game class to handle logic
+    * Created copy of main to refactor to include game class
