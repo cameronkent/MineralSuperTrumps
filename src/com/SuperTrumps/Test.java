@@ -59,39 +59,5 @@ public class Test {
         System.out.println("Playing the card: \n" + playerOne.Hand.get(cardToPlay-1));
         playerOne.Hand.remove(cardDeck.deckArray.get(cardToPlay-1));
 
-//Display card in play and chose category to play
-        String categoryInPlay;
-        loop: do {
-            System.out.println("Choose category to play:" +
-                    "\n1 Hardness" +
-                    "\n2 Specific gravity" +
-                    "\n3 Cleavage" +
-                    "\n4 Crustal abundance" +
-                    "\n5 Economic value");
-            Scanner inputCategory = new Scanner(System.in);
-            int categorySelect = inputCategory.nextInt();
-            switch (categorySelect) {
-                case 1:
-                    categoryInPlay = "Hardness";
-                    break loop;
-                case 2:
-                    categoryInPlay = "Specific gravity";
-                    break loop;
-                case 3:
-                    categoryInPlay = "Cleavage";
-                    break loop;
-                case 4:
-                    categoryInPlay = "Crustal abundance";
-                    break loop;
-                case 5:
-                    categoryInPlay = "Economic value";
-                    break loop;
-                default:
-                    categoryInPlay = "";
-                    break;
-            }
-        } while (categoryInPlay.equals(""));
-
-        System.out.println("Category for this round is " + categoryInPlay);
     }
 }

@@ -24,9 +24,11 @@ public class Player {
     }
 
     //Removes one card from hand to go into play
-    public void PlayCard(Player player, int cardToPlay) {
-        System.out.println("Playing the card: \n" + player.Hand.get(cardToPlay-1));
+    public Card PlayCard(Player player, int cardToPlay) {
+        System.out.println(playerName + "is playing the card: \n" + player.Hand.get(cardToPlay-1));
+        Card cardInPlay = player.Hand.get(cardToPlay - 1);
         player.Hand.remove(player.Hand.get(cardToPlay -1));
+        return cardInPlay;
     }
 
 

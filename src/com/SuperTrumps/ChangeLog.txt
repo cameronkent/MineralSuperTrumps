@@ -74,5 +74,11 @@ Assessment Project: 'Mineral Supertrumps'
     * Created new Game class to handle logic
     * Created copy of main to refactor to include game class
     PUSHED
-    * Began creating switch case to set int value for categories to compare
+    * Began creating switch cases to set int value for categories to compare
     * Began attempting to pull value of category from card to compare.
+    PUSHED
+
+16/9/16
+    * converted functionality into method calls for usability
+    * began constructing game round functionality
+    PUSHED

@@ -46,7 +46,23 @@ public class Card {
                 "\n--------------------------------------------------\n");
     }
 
-    // TODO: make this work
+    public String getCategoryInPlay(int categorySelect) {
+        String categoryInPlay = "";
+        switch (categorySelect) {
+            case 1:
+                return categoryInPlay = hardness.toString();
+            case 2:
+                return categoryInPlay = specificGravity.toString();
+            case 3:
+                return categoryInPlay = cleavage.toString();
+            case 4:
+                return categoryInPlay = crustalAbundance.toString();
+            case 5:
+                return categoryInPlay = economicValue.toString();
+        } return categoryInPlay;
+    }
+
+    // TODO: make this work... maybe
 //    public NSString getCategoryInPlay(int categorySelect ) {
 //        NSString categoryInPlay;
 //            switch (categorySelect) {

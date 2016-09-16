@@ -9,11 +9,14 @@ class Game {
 
     private int numPlayers;
     private UserPlayer userPlayer;
-    private ComPlayers[] comPlayer = new ComPlayers[numPlayers];
+    private ComPlayer[] comPlayer;
     private Deck cardDeck;
     private int dealer;
     private Array[] playerTurn = new Array[numPlayers];
-
+    private String categoryAsString;
+    private int categorySelect;
+    private String categoryValueAsString;
+    private int valueToPlay;
     private String categoryInPlay;
 
     //Create Player instance for user and enter user playerName
@@ -30,14 +33,13 @@ class Game {
             System.out.println("Choose 2, 3 or 4 computer players. \nHow may opponents:");
             numPlayers = user_input.nextInt();
         }   while (numPlayers <2 || numPlayers >5);
-        numPlayers = numPlayers + 1;
-        System.out.println("There are " + (numPlayers) + " players in this game.");
+        System.out.println("There are " + ((numPlayers)  + 1) + " players in this game.");
     }
 
     //Create array of comPlayers using ComPlayer class
     public void setComPlayers() {
         for (int i = 0; i < numPlayers; i++) {
-            comPlayer[i] = new ComPlayers();
+            comPlayer[i] = new ComPlayer();
             comPlayer[i].comPlayerName = "Computer " + (Integer.toString(i + 1));
         }
     }
@@ -76,7 +78,13 @@ class Game {
         System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.");
     }
 
-
+    public void startNewRound() {
+        userPlayer.showHand(userPlayer);
+        userPlayer.getCardToPlay(userPlayer);
+        categorySelect = userPlayer.getCategoryToPlay();
+        Card test = comPlayer[1].getComCardToPlay(comPlayer[1]);
+        System.out.println(test);
+    }
 
     //Return a string of category for printing
     public String getCategoryAsString(int categorySelect ) {
@@ -99,4 +107,5 @@ class Game {
         } while (categoryAsString.equals(""));
         return categoryAsString;
     }
+
 }
