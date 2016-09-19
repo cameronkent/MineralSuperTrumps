@@ -86,4 +86,8 @@ Assessment Project: 'Mineral Supertrumps'
 19/9/16
     * Began implementation of player turn structure
     * Removed redundant methods
-    * Testing of game turns has logic error, removed bad syntax todo solve this.
+    * Testing of game turns has logic error, removed bad syntax
+    PUSHED
+    * Updated User Stories
+    * Refactored methods across classes
+    * Implemented comparison of value for  comPlayer to play or draw a card

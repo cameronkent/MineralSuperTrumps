@@ -85,7 +85,7 @@ class Game {
         categorySelect = userPlayer.getCategoryToPlay();
         //Card test = comPlayer[1].getComCardToPlay(comPlayer[1]);
     }
-//_________________________________________________________________________
+//____________________________________________________________________________________________________________________
     //Return a string of category for printing
     public String getCategoryAsString(int categorySelect ) {
         String categoryAsString;

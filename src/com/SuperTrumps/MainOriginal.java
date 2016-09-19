@@ -13,7 +13,7 @@ public class MainOriginal {
         String categoryAsString;
         String categoryValueAsString;
         Card cardInPlay;
-        int randComCardToPlay;
+        int randCardToPlay;
         Card cardToPlay;
         int valueInPlay;
         int valueToPlay;
@@ -61,21 +61,26 @@ public class MainOriginal {
         cardInPlay = userPlayer.getCardToPlay(userPlayer);
         categoryNumber = userPlayer.getCategoryToPlay();
         categoryAsString = newGame.getCategoryAsString(categoryNumber);
+
         categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
-        valueInPlay = newGame.getValueToPlay(categoryNumber, categoryValueAsString);
+
+        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
         System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
         System.out.println("Score to beat is: " + categoryValueAsString);
 
 
 //ComPlayers playing 1 card each
         for (int i = 0; i < comPlayer.length; i++) {
-            randComCardToPlay = comPlayer[i].getRandComCardToPlay(comPlayer[i]);
-            valueToPlay = 1; //// TODO: 19/09/2016 create method to return value of randCards category value
-            if (valueToPlay < valueInPlay) {
-                cardToPlay = comPlayer[i].getComCardToPlay(comPlayer[i], randComCardToPlay);
+            randCardToPlay = comPlayer[i].getRandCard(comPlayer[i]);
+            cardToPlay = comPlayer[i].getComCardToPlay(comPlayer[i], randCardToPlay);
+
+            valueToPlay = Game.getValueToPlay(categoryNumber, cardToPlay.getCategoryInPlay(categoryNumber));
+            if (valueToPlay >= valueInPlay) {
+                comPlayer[i].PlayCard(comPlayer[i], randCardToPlay);
             } else {
                 comPlayer[i].DrawCard(comPlayer[i], cardDeck);
             }
         }
+
     }
 }
