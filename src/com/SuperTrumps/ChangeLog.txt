@@ -91,3 +91,7 @@ Assessment Project: 'Mineral Supertrumps'
     * Updated User Stories
     * Refactored methods across classes
     * Implemented comparison of value for  comPlayer to play or draw a card
+    PUSHED
+    * Created playerTurn array to track turn order and dealer
+    * Created methods to handle turn functionality.
+    * Implemented loop for comPlayers to go through hand and only play card of higher value.

@@ -6,8 +6,13 @@ public class Player {
 
     private static final int STARTING_HAND = 8;
     String playerName;
+    int playerID;
 
     ArrayList<Card> Hand = new ArrayList<>();
+
+//    Player(String playerName) {
+//        this.playerName = playerName;
+//    }
 
     //Deals 8 cards to player and removes 8 from deck
     public void DealHand(Player player, Deck cardDeck) {

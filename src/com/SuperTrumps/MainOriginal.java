@@ -1,5 +1,6 @@
 package com.SuperTrumps;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -28,13 +29,14 @@ public class MainOriginal {
             Scanner user_input = new Scanner(System.in);
             System.out.println("Choose 2, 3 or 4 computer players. \nHow may opponents:");
             numPlayers = user_input.nextInt();
-        }   while (numPlayers <2 || numPlayers >5);
+        } while (numPlayers < 2 || numPlayers > 5);
         System.out.println("There are " + (numPlayers + 1) + " players in this game.");
+        ArrayList[] turnOrder = new ArrayList[numPlayers];
 
 //Create array of comPlayers using ComPlayer class
         ComPlayer[] comPlayer = new ComPlayer[numPlayers];
         for (int i = 0; i < comPlayer.length; i++) {
-            comPlayer[i] = new ComPlayer();
+            comPlayer[i] = new ComPlayer(i + 1);
             comPlayer[i].playerName = "Computer " + (Integer.toString(i + 1));
         }
 
@@ -70,17 +72,25 @@ public class MainOriginal {
 
 
 //ComPlayers playing 1 card each
+//        for (int i = 0; i < comPlayer.length; i++) {
+//            randCardToPlay = comPlayer[i].getRandCard(comPlayer[i]);
+//            cardToPlay = comPlayer[i].getComCardToPlay(comPlayer[i], randCardToPlay);
+//
+//            valueToPlay = Game.getValueToPlay(categoryNumber, cardToPlay.getCategoryInPlay(categoryNumber));
+//            if (valueToPlay >= valueInPlay) {
+//                comPlayer[i].PlayCard(comPlayer[i], randCardToPlay);
+//            } else {
+//                comPlayer[i].DrawCard(comPlayer[i], cardDeck);
+//            }
+//        }
+//
         for (int i = 0; i < comPlayer.length; i++) {
-            randCardToPlay = comPlayer[i].getRandCard(comPlayer[i]);
-            cardToPlay = comPlayer[i].getComCardToPlay(comPlayer[i], randCardToPlay);
-
-            valueToPlay = Game.getValueToPlay(categoryNumber, cardToPlay.getCategoryInPlay(categoryNumber));
-            if (valueToPlay >= valueInPlay) {
-                comPlayer[i].PlayCard(comPlayer[i], randCardToPlay);
-            } else {
+            int comMove = comPlayer[i].playCardOrPass(comPlayer[i], categoryNumber, valueInPlay, cardDeck);
+            if (comMove == 0) {
                 comPlayer[i].DrawCard(comPlayer[i], cardDeck);
+            } else {
+                comPlayer[i].PlayCard(comPlayer[i], i+1);
             }
         }
-
     }
 }

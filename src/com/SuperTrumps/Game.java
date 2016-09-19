@@ -40,7 +40,7 @@ class Game {
     //Create array of comPlayers using ComPlayer class
     public void setComPlayers() {
         for (int i = 0; i < numPlayers; i++) {
-            comPlayer[i] = new ComPlayer();
+            comPlayer[i] = new ComPlayer(i + 1);
             comPlayer[i].playerName = "Computer " + (Integer.toString(i + 1));
         }
     }

@@ -8,6 +8,7 @@ import com.dd.plist.NSString;
 //                    card_type
 public class Card {
 
+    //// TODO: 19/09/16 refactor NSString to String type
     NSString title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
     NSArray occurrence;
 
