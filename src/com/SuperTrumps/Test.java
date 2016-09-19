@@ -42,7 +42,7 @@ public class Test {
 //        System.out.println("Cards in " + playerName + " hand " + userPlayer.Hand.size());
 //        System.out.println(userPlayer.Hand);
 //        for (int j = 0; j < compPlayer.length; j++) {
-//            System.out.println("Cards in " + compPlayer[j].comPlayerName + " hand " + compPlayer[j].Hand.size());
+//            System.out.println("Cards in " + compPlayer[j].playerName + " hand " + compPlayer[j].Hand.size());
 //            System.out.println(userPlayer.Hand);        }
 //        System.out.println("Cards left in deck " + cardDeck.size());
 //

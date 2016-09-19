@@ -35,34 +35,34 @@ Assessment Project: 'Mineral Supertrumps'
 
 8/9/16
     * Added estimates to user stories
-    * created Deck class which imports from the plist to build deck array
-    * built constructors in card and trumpCard classes
+    * Created Deck class which imports from the plist to build deck array
+    * Built constructors in card and trumpCard classes
     PUSHED
-    * deleted ReadMSTCards class as redundant
-    * built test class to test build and display of deck, error occurring at present
+    * Deleted ReadMSTCards class as redundant
+    * Built test class to test build and display of deck, error occurring at present
     * Formatted the toStrings for Cards and trumpCards
     PUSHED
     * Fixed the Deck array building
-    * implemented and tested creating shuffling and printing random cards from deck
+    * Implemented and tested creating shuffling and printing random cards from deck
     PUSHED
 
 13/9/16
     * Altered MstCards plist trumps to match image descriptions
     * Created new player super class
-    * userPlayer and comPlayer new inherit from player class
-    * created and tested dealing 8 cards to a player hand and removing them from the deck
+    * UserPlayer and comPlayer new inherit from player class
+    * Created and tested dealing 8 cards to a player hand and removing them from the deck
     PUSHED
     * Implemented dealing of hands to main
     * Altered Card toString to print only information relevant to game play
     * Created testing for displaying and selecting a card to play from hand
     PUSHED
     * Created a do while loop to select playing category
-    * implemented methods in player class to deal hands and single card
-    * eliminated redundancies in variable assignment in main
+    * Implemented methods in player class to deal hands and single card
+    * Eliminated redundancies in variable assignment in main
     PUSHED
-    * implemented dealHand as method call
-    * implemented showHand method call for userPlayer
-    * created secondary test file for clean run through test
+    * Implemented dealHand as method call
+    * Implemented showHand method call for userPlayer
+    * Created secondary test file for clean run through test
     PUSHED
 
 14/9/16
@@ -79,6 +79,11 @@ Assessment Project: 'Mineral Supertrumps'
     PUSHED
 
 16/9/16
-    * converted functionality into method calls for usability
-    * began constructing game round functionality
+    * Converted functionality into method calls for usability
+    * Began constructing game round functionality
     PUSHED
+
+19/9/16
+    * Began implementation of player turn structure
+    * Removed redundant methods
+    * Testing of game turns has logic error, removed bad syntax todo solve this.

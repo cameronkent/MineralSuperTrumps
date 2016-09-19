@@ -8,8 +8,15 @@ public class MainOriginal {
     public static void main(String[] args) throws Exception {
 
         int numPlayers;
-
+        int categoryNumber;
         Game newGame = new Game();
+        String categoryAsString;
+        String categoryValueAsString;
+        Card cardInPlay;
+        int randComCardToPlay;
+        Card cardToPlay;
+        int valueInPlay;
+        int valueToPlay;
 
 //Create Player instance for user and enter user playerName
         UserPlayer userPlayer = new UserPlayer();
@@ -28,13 +35,13 @@ public class MainOriginal {
         ComPlayer[] comPlayer = new ComPlayer[numPlayers];
         for (int i = 0; i < comPlayer.length; i++) {
             comPlayer[i] = new ComPlayer();
-            comPlayer[i].comPlayerName = "Computer " + (Integer.toString(i + 1));
+            comPlayer[i].playerName = "Computer " + (Integer.toString(i + 1));
         }
 
 //Display names of player and computer players
         System.out.println("This games players are:");
         System.out.println(userPlayer.playerName);
-        for (int i = 0; i < comPlayer.length; i++) System.out.println(comPlayer[i].comPlayerName);
+        for (int i = 0; i < comPlayer.length; i++) System.out.println(comPlayer[i].playerName);
 
 //Build a deck from plist and shuffle
         Deck cardDeck = new Deck();
@@ -49,5 +56,26 @@ public class MainOriginal {
 
 //Displays users hand
         userPlayer.showHand(userPlayer);
+
+//Turn structure with user playing first card
+        cardInPlay = userPlayer.getCardToPlay(userPlayer);
+        categoryNumber = userPlayer.getCategoryToPlay();
+        categoryAsString = newGame.getCategoryAsString(categoryNumber);
+        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+        valueInPlay = newGame.getValueToPlay(categoryNumber, categoryValueAsString);
+        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
+        System.out.println("Score to beat is: " + categoryValueAsString);
+
+
+//ComPlayers playing 1 card each
+        for (int i = 0; i < comPlayer.length; i++) {
+            randComCardToPlay = comPlayer[i].getRandComCardToPlay(comPlayer[i]);
+            valueToPlay = 1; //// TODO: 19/09/2016 create method to return value of randCards category value
+            if (valueToPlay < valueInPlay) {
+                cardToPlay = comPlayer[i].getComCardToPlay(comPlayer[i], randComCardToPlay);
+            } else {
+                comPlayer[i].DrawCard(comPlayer[i], cardDeck);
+            }
+        }
     }
 }
