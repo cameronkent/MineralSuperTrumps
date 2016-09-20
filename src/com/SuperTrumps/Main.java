@@ -59,7 +59,7 @@ public class Main {
 
 //  If player passes they cannot continue in round
 
-//  Player turns continue until one player not passed
+//  Player turns continue until one player not passedTurn
 
 //  If player plays 'Trump' card round is over
 

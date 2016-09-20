@@ -8,11 +8,8 @@ public class Player {
     String playerName;
     int playerID;
 
-    ArrayList<Card> Hand = new ArrayList<>();
-
-//    Player(String playerName) {
-//        this.playerName = playerName;
-//    }
+    public boolean passedTurn;
+    public ArrayList<Card> Hand = new ArrayList<>();
 
     //Deals 8 cards to player and removes 8 from deck
     public void DealHand(Player player, Deck cardDeck) {
@@ -24,7 +21,7 @@ public class Player {
 
     //Adds card to player hand and removes from deck
     public void DrawCard(Player player, Deck cardDeck) {
-        System.out.println(playerName + " draws a card from the deck.");
+        System.out.println(playerName + " draws a card from the deck.\n");
         player.Hand.add(cardDeck.deckArray.get(cardDeck.size()-1));
         cardDeck.deckArray.remove(cardDeck.deckArray.get(cardDeck.size()-1));
     }

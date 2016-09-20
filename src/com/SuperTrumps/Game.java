@@ -3,14 +3,15 @@ package com.SuperTrumps;
 import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 
 class Game {
 
-    private int numPlayers;
-    private UserPlayer userPlayer;
-    private ComPlayer[] comPlayer;
-    private Deck cardDeck;
+    int numPlayers;
+    UserPlayer userPlayer;
+    Player[] players;
+    ComPlayer[] comPlayer;
+    Deck cardDeck;
+
     private int dealer;
 
 
@@ -19,18 +20,21 @@ class Game {
     Game(int numPlayers) {
         this.numPlayers = numPlayers;
         comPlayer = new ComPlayer[numPlayers];
+        players = new Player[numPlayers + 1];
     }
 
 //Logic methods
 
     public void setUserPlayer(String playerName) {
         userPlayer = new UserPlayer(playerName);
-        System.out.println("Welcome " + userPlayer.playerName);
+        players[0] = userPlayer;
+        System.out.println("Welcome " + userPlayer.playerName + "\n");
     }
 
     public void setComPlayers() {
         for (int i = 0; i < numPlayers; i++) {
             comPlayer[i] = new ComPlayer(i + 1);
+            players[i] = comPlayer[i + 1];
             comPlayer[i].playerName = "Computer " + (Integer.toString(i + 1));
         }
     }
@@ -46,57 +50,79 @@ class Game {
     public void buildCardDeck() throws Exception {
         cardDeck = new Deck();
         Collections.shuffle(cardDeck.deckArray);
-        System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.");
+        System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.\n");
     }
 
     public void randomiseDealer() {
         Random random = new Random();
         dealer = random.nextInt(numPlayers) + 1;
         if (dealer == 1) {
-            System.out.println(userPlayer.playerName + " is dealing this round");
+            System.out.println(userPlayer.playerName + " is dealing this round\n");
         }else {
-            System.out.println(comPlayer[dealer].playerName + " is dealing this round");
+            System.out.println(comPlayer[dealer].playerName + " is dealing this round\n");
         }
     }
 
     public void dealPlayerHands() {
         userPlayer.DealHand(userPlayer, cardDeck);
         for (int j = 0; j < comPlayer.length; j++) comPlayer[j].DealHand(comPlayer[j], cardDeck);
-        System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.");
+        System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
     }
 
-    public void startNewRound() {
+    public void startNewRound() { // TODO: 20/09/2016 refactor to methods using round class
 
         Card cardInPlay;
         int categoryNumber;
         int valueInPlay;
         int valueToPlay;
+        int playerToStart;
         String categoryAsString;
         String categoryValueAsString;
         Array[] playerTurn = new Array[numPlayers];// TODO: 20/09/2016 build turn order
 
-        userPlayer.showHand(userPlayer);
-        userPlayer.getCardToPlay(userPlayer);
+        Round gameRound = new Round();
 
-        cardInPlay = userPlayer.getCardToPlay(userPlayer);
+        //get cardInPlay from dealers 'left'
+        playerToStart = dealer -1;
+//        cardInPlay = gameRound.getCardInPlay(playerToStart, userPlayer, comPlayer); // TODO: 20/09/2016 make this work
+
+        //get category from starting player
+//        gameRound.getCategory(playerToStart,userPlayer, players); // TODO: 20/09/2016 make this work also
+
+
+//        if (!userPlayer.passedTurn) {
+//            userPlayer.showHand(userPlayer);
+//            cardInPlay = userPlayer.getCardToPlay(userPlayer);
+//        }
+
+
         categoryNumber = userPlayer.getCategoryToPlay();
         categoryAsString = getCategoryAsString(categoryNumber);
 
-        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+//        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
 
-        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+//        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
         System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
-        System.out.println("Score to beat is: " + categoryValueAsString);
+//        System.out.println("Score to beat is: " + categoryValueAsString);
 
-//ComPlayers play or pass
-        for (int i = 0; i < comPlayer.length; i++) {
-            int comMove = comPlayer[i].playCardOrPass(comPlayer[i], categoryNumber, valueInPlay, cardDeck);
-            if (comMove == 0) {
-                comPlayer[i].DrawCard(comPlayer[i], cardDeck);
-            } else {
-                comPlayer[i].PlayCard(comPlayer[i], i+1);
-            }
-        }
+////ComPlayers play or pass
+//        for (int i = 0; i < comPlayer.length; i++) {
+//
+//            //check if 'passed' and then play card or pass round
+//            while (!comPlayer[i].passedTurn) {
+//
+//                int comMove = comPlayer[i].playCardOrPass(categoryNumber, valueInPlay);
+//                if (comMove == 0) {
+//                    comPlayer[i].DrawCard(comPlayer[i], cardDeck);
+//                    comPlayer[i].passedTurn = true;
+//                } else {
+//                    comPlayer[i].PlayCard(comPlayer[i], i+1);
+//                }
+//
+//            }
+//
+//
+//        }
 
     }
 

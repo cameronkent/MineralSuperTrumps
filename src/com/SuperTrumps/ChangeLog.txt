@@ -104,3 +104,7 @@ Assessment Project: 'Mineral Supertrumps'
     * Added an input to check if player ready before starting rounds
     * Fixed some method syntax with incorrect logic
     PUSHED
+    * Created Testing package to separate test files
+    * Worked on Round class methods
+    * Incomplete methods in Round class. need to solve todo
+    PUSHED

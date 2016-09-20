@@ -1,4 +1,4 @@
-package com.SuperTrumps;
+package com.SuperTrumps.Testing;
 
 import java.util.Collections;
 import java.util.Random;

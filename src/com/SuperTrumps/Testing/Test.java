@@ -1,4 +1,7 @@
-package com.SuperTrumps;
+package com.SuperTrumps.Testing;
+
+import com.SuperTrumps.Deck;
+import com.SuperTrumps.Player;
 
 import java.util.Collections;
 import java.util.Scanner;

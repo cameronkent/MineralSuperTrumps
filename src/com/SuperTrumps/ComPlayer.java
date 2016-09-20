@@ -17,12 +17,19 @@ public class ComPlayer extends Player {
         return randCard.nextInt(comPlayer.Hand.size() - 1 ) + 1;
     }
 
+    public Card PlayCard(Player player, int cardToPlay) {
+        System.out.println(playerName + " is playing the card: \n" + player.Hand.get(cardToPlay-1));
+        Card cardInPlay = player.Hand.get(cardToPlay - 1);
+        player.Hand.remove(player.Hand.get(cardToPlay -1));
+        return cardInPlay;
+    }
+
     public int getCategoryFromComPlayer() {
         Random randCategory = new Random();
         return randCategory.nextInt(5)+1;
     }
 
-    public int playCardOrPass(Player comPlayer, int categoryInt, int valueInPlay, Deck cardDeck){
+    public int playCardOrPass(int categoryInt, int valueInPlay){
         Card cardToPlay;
         int cardNum = 0;
         int valueToPlay = 0;
