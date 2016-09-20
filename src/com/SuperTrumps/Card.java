@@ -8,24 +8,23 @@ import com.dd.plist.NSString;
 //                    card_type
 public class Card {
 
-    //// TODO: 19/09/16 refactor NSString to String type
-    NSString title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
+    String title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
     NSArray occurrence;
 
     public Card() {}
 
     //Construct card
     public Card(NSString title, NSString chemistry, NSString classification, NSString crystalSystem, NSArray occurrence, NSString hardness, NSString specificGravity, NSString cleavage, NSString crustalAbundance, NSString economicValue) {
-        this.title = title;
-        this.chemistry = chemistry;
-        this.classification = classification;
-        this.crystalSystem = crystalSystem;
+        this.title = title.toString();
+        this.chemistry = chemistry.toString();
+        this.classification = classification.toString();
+        this.crystalSystem = crystalSystem.toString();
         this.occurrence = occurrence;
-        this.hardness = hardness;
-        this.specificGravity = specificGravity;
-        this.cleavage =cleavage;
-        this.crustalAbundance = crustalAbundance;
-        this.economicValue = economicValue;
+        this.hardness = hardness.toString();
+        this.specificGravity = specificGravity.toString();
+        this.cleavage = cleavage.toString();
+        this.crustalAbundance = crustalAbundance.toString();
+        this.economicValue = economicValue.toString();
 
     }
 
@@ -51,15 +50,20 @@ public class Card {
         String categoryInPlay = "";
         switch (categorySelect) {
             case 1:
-                return categoryInPlay = hardness.toString();
+                categoryInPlay = hardness;
+                return categoryInPlay;
             case 2:
-                return categoryInPlay = specificGravity.toString();
+                categoryInPlay = specificGravity;
+                return categoryInPlay;
             case 3:
-                return categoryInPlay = cleavage.toString();
+                categoryInPlay = cleavage;
+                return categoryInPlay;
             case 4:
-                return categoryInPlay = crustalAbundance.toString();
+                categoryInPlay = crustalAbundance;
+                return categoryInPlay;
             case 5:
-                return categoryInPlay = economicValue.toString();
+                categoryInPlay = economicValue;
+                return categoryInPlay;
         } return categoryInPlay;
     }
 

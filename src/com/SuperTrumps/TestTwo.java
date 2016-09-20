@@ -7,37 +7,37 @@ public class TestTwo {
 
     public static void main(String[] args) throws Exception {
 
-        Game gameOne = new Game();
-
-//Define variables used in running
-        String categoryAsString;
-        int categorySelect;
-        String categoryValueAsString;
-        int valueToPlay;
-
-//Build and shuffle deck
-        System.out.println("creating deck..."); Deck cardDeck = new Deck();
-        System.out.println("shuffling deck..."); Collections.shuffle(cardDeck.deckArray);
-
-//Instantiate user, deal and display hand
-        UserPlayer playerOne = new UserPlayer();
-        playerOne.DealHand(playerOne, cardDeck);
-        playerOne.showHand(playerOne);
-
-//Take input to play card from users hand
-        Scanner inputCardToPlay = new Scanner(System.in);
-        System.out.println("Choose card to play");
-        Card cardInPlay = playerOne.PlayCard(playerOne, inputCardToPlay.nextInt());
-
-
-//Display card in play and choose category to play
-        System.out.println("Choose category to play:" + "\n1 Hardness" + "\n2 Specific gravity" + "\n3 Cleavage" + "\n4 Crustal abundance" + "\n5 Economic value");
-        Scanner inputCategory = new Scanner(System.in);
-        categorySelect = inputCategory.nextInt();
-        categoryAsString = gameOne.getCategoryAsString(categorySelect);
-        categoryValueAsString = cardInPlay.getCategoryInPlay(categorySelect);
-        System.out.println("Category for this round is " + categoryAsString);
-        System.out.println("Score to beat is: " + categoryValueAsString);
+//        Game gameOne = new Game();
+//
+////Define variables used in running
+//        String categoryAsString;
+//        int categorySelect;
+//        String categoryValueAsString;
+//        int valueToPlay;
+//
+////Build and shuffle deck
+//        System.out.println("creating deck..."); Deck cardDeck = new Deck();
+//        System.out.println("shuffling deck..."); Collections.shuffle(cardDeck.deckArray);
+//
+////Instantiate user, deal and display hand
+//        UserPlayer playerOne = new UserPlayer();
+//        playerOne.DealHand(playerOne, cardDeck);
+//        playerOne.showHand(playerOne);
+//
+////Take input to play card from users hand
+//        Scanner inputCardToPlay = new Scanner(System.in);
+//        System.out.println("Choose card to play");
+//        Card cardInPlay = playerOne.PlayCard(playerOne, inputCardToPlay.nextInt());
+//
+//
+////Display card in play and choose category to play
+//        System.out.println("Choose category to play:" + "\n1 Hardness" + "\n2 Specific gravity" + "\n3 Cleavage" + "\n4 Crustal abundance" + "\n5 Economic value");
+//        Scanner inputCategory = new Scanner(System.in);
+//        categorySelect = inputCategory.nextInt();
+//        categoryAsString = gameOne.getCategoryAsString(categorySelect);
+//        categoryValueAsString = cardInPlay.getCategoryInPlay(categorySelect);
+//        System.out.println("Category for this round is " + categoryAsString);
+//        System.out.println("Score to beat is: " + categoryValueAsString);
 
 
         //valueToPlay = getValueToPlay(categorySelect, categoryValueAsString);

@@ -6,7 +6,11 @@ public class UserPlayer extends Player {
 
 
     UserPlayer() {
+    }
+
+    UserPlayer(String playerName) {
         playerID = 0;
+        this.playerName = playerName;
     }
 
     //Take input to set name of player

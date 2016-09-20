@@ -7,51 +7,61 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
 //  Start application
-        Game gameST = new Game();
         System.out.println("Welcome to Mineral SuperTrumps!");
 
 //  Edit player name
-        Scanner user_input = new Scanner(System.in);
+        Scanner input_playerName = new Scanner(System.in);
         System.out.println("Enter your name:");
-        String playerName = user_input.next();
-
+        String playerName = input_playerName.next();
 
 //  Choose number of players
-//  Add players
+        int numPlayers;
+        do {Scanner input_numPlayers = new Scanner(System.in);
+            System.out.println("Choose 2, 3 or 4 computer players. \nHow may opponents:");
+            numPlayers = input_numPlayers.nextInt();
+        }   while (numPlayers <2 || numPlayers >5);
+        System.out.println("There are " + ((numPlayers)  + 1) + " players in this game.");
+
 //  Start new game
+        Game gameST = new Game(numPlayers);
+        gameST.setUserPlayer(playerName);
+
+//  Add players
+        gameST.setComPlayers();
+        gameST.showPlayers();
+
 //  Randomise dealer
+        gameST.randomiseDealer();
+
 //  Deck is shuffled
+        gameST.buildCardDeck();
+
 //  Players dealt 8 cards
+        gameST.dealPlayerHands();
+
 //  Remaining cards make up the deck
+
 //  First player plays card to start round
+        gameST.startNewRound();
+
 //  Next player plays higher card or passes
+
 //  If player passes they must draw card from deck
+
 //  If player passes they cannot continue in round
+
 //  Player turns continue until one player not passed
+
 //  If player plays 'Trump' card round is over
+
 //  New round category is the 'Trump' category
+
 //  Player who played 'Trump' begins next round
+
 //  Rounds continue
+
 //  First player with empty hand wins game
 
 
-
-////Create new game instance
-//        Game newGame = new Game();
-//
-////Create players and display names and number of players
-//        newGame.setUserPlayer();
-//        newGame.setNumPlayers();
-//        newGame.setComPlayers();
-//        newGame.showPlayers();
-//
-////Build a deck instance, shuffle deck, display random dealer and deal each player a hand
-//        newGame.buildCardDeck();
-//        newGame.randomiseDealer();
-//        newGame.dealPlayerHands();
-//
-//        // TODO: 16/09/16 set dealer to be fluid
-////Player 'left' of dealer begins game by playing first card
-//        newGame.startNewRound();
     }
 }

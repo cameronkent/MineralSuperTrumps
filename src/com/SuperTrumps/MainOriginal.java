@@ -10,7 +10,7 @@ public class MainOriginal {
 
         int numPlayers;
         int categoryNumber;
-        Game newGame = new Game();
+        //Game newGame = new Game();
         String categoryAsString;
         String categoryValueAsString;
         Card cardInPlay;
@@ -62,28 +62,15 @@ public class MainOriginal {
 //Turn structure with user playing first card
         cardInPlay = userPlayer.getCardToPlay(userPlayer);
         categoryNumber = userPlayer.getCategoryToPlay();
-        categoryAsString = newGame.getCategoryAsString(categoryNumber);
+        //categoryAsString = newGame.getCategoryAsString(categoryNumber);
 
         categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
 
         valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
+        //System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
         System.out.println("Score to beat is: " + categoryValueAsString);
 
-
-//ComPlayers playing 1 card each
-//        for (int i = 0; i < comPlayer.length; i++) {
-//            randCardToPlay = comPlayer[i].getRandCard(comPlayer[i]);
-//            cardToPlay = comPlayer[i].getComCardToPlay(comPlayer[i], randCardToPlay);
-//
-//            valueToPlay = Game.getValueToPlay(categoryNumber, cardToPlay.getCategoryInPlay(categoryNumber));
-//            if (valueToPlay >= valueInPlay) {
-//                comPlayer[i].PlayCard(comPlayer[i], randCardToPlay);
-//            } else {
-//                comPlayer[i].DrawCard(comPlayer[i], cardDeck);
-//            }
-//        }
-//
+//ComPlayers play or pass
         for (int i = 0; i < comPlayer.length; i++) {
             int comMove = comPlayer[i].playCardOrPass(comPlayer[i], categoryNumber, valueInPlay, cardDeck);
             if (comMove == 0) {

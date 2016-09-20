@@ -12,32 +12,22 @@ class Game {
     private ComPlayer[] comPlayer;
     private Deck cardDeck;
     private int dealer;
-    private Array[] playerTurn = new Array[numPlayers];
-    private String categoryAsString;
-    private int categorySelect;
-    private String categoryValueAsString;
-    private int valueToPlay;
-    private String categoryInPlay;
 
-//_________________________BUILD FOR MAIN_________________________________
-    //Create Player instance for user and enter user playerName
-    public void setUserPlayer() {
-        userPlayer = new UserPlayer();
-        userPlayer.getUserPlayerName();
+
+//Constructor
+
+    Game(int numPlayers) {
+        this.numPlayers = numPlayers;
+        comPlayer = new ComPlayer[numPlayers];
+    }
+
+//Logic methods
+
+    public void setUserPlayer(String playerName) {
+        userPlayer = new UserPlayer(playerName);
         System.out.println("Welcome " + userPlayer.playerName);
     }
 
-    //Run a Do While loop to get number of players from users
-    public void setNumPlayers() {
-        do {
-            Scanner user_input = new Scanner(System.in);
-            System.out.println("Choose 2, 3 or 4 computer players. \nHow may opponents:");
-            numPlayers = user_input.nextInt();
-        }   while (numPlayers <2 || numPlayers >5);
-        System.out.println("There are " + ((numPlayers)  + 1) + " players in this game.");
-    }
-
-    //Create array of comPlayers using ComPlayer class
     public void setComPlayers() {
         for (int i = 0; i < numPlayers; i++) {
             comPlayer[i] = new ComPlayer(i + 1);
@@ -45,7 +35,6 @@ class Game {
         }
     }
 
-    //Display names of player and computer players
     public void showPlayers() {
         System.out.println("This games players are:");
         System.out.println(userPlayer.playerName);
@@ -54,14 +43,12 @@ class Game {
         }
     }
 
-    //Build a deck from plist and shuffle
     public void buildCardDeck() throws Exception {
         cardDeck = new Deck();
         Collections.shuffle(cardDeck.deckArray);
         System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.");
     }
 
-    //Create a random int to 'select' dealer
     public void randomiseDealer() {
         Random random = new Random();
         dealer = random.nextInt(numPlayers - 1 + 1) + 1;
@@ -72,7 +59,6 @@ class Game {
         }
     }
 
-    //Deal 8 cards to all players
     public void dealPlayerHands() {
         userPlayer.DealHand(userPlayer, cardDeck);
         for (int j = 0; j < comPlayer.length; j++) comPlayer[j].DealHand(comPlayer[j], cardDeck);
@@ -80,11 +66,40 @@ class Game {
     }
 
     public void startNewRound() {
+
+        Card cardInPlay;
+        int categoryNumber;
+        int valueInPlay;
+        int valueToPlay;
+        String categoryAsString;
+        String categoryValueAsString;
+        Array[] playerTurn = new Array[numPlayers];// TODO: 20/09/2016 build turn order
+
         userPlayer.showHand(userPlayer);
         userPlayer.getCardToPlay(userPlayer);
-        categorySelect = userPlayer.getCategoryToPlay();
-        //Card test = comPlayer[1].getComCardToPlay(comPlayer[1]);
+
+        cardInPlay = userPlayer.getCardToPlay(userPlayer);
+        categoryNumber = userPlayer.getCategoryToPlay();
+        categoryAsString = getCategoryAsString(categoryNumber);
+
+        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+
+        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
+        System.out.println("Score to beat is: " + categoryValueAsString);
+
+//ComPlayers play or pass
+        for (int i = 0; i < comPlayer.length; i++) {
+            int comMove = comPlayer[i].playCardOrPass(comPlayer[i], categoryNumber, valueInPlay, cardDeck);
+            if (comMove == 0) {
+                comPlayer[i].DrawCard(comPlayer[i], cardDeck);
+            } else {
+                comPlayer[i].PlayCard(comPlayer[i], i+1);
+            }
+        }
+
     }
+
 //____________________________________________________________________________________________________________________
     //Return a string of category for printing
     public String getCategoryAsString(int categorySelect ) {

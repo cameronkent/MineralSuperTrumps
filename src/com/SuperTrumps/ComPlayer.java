@@ -31,7 +31,8 @@ public class ComPlayer extends Player {
             cardToPlay = Hand.get(i);
             valueToPlay = Game.getValueToPlay(categoryInt, cardToPlay.getCategoryInPlay(categoryInt));
             if (valueToPlay >= valueInPlay) {
-                return cardNum = i + 1;
+                cardNum = i + 1;
+                return cardNum;
             }
         }return cardNum;
     }

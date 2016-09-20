@@ -95,3 +95,9 @@ Assessment Project: 'Mineral Supertrumps'
     * Created playerTurn array to track turn order and dealer
     * Created methods to handle turn functionality.
     * Implemented loop for comPlayers to go through hand and only play card of higher value.
+    PUSHED
+
+20/9/16
+    * Began reconstructing Main to implement Game class
+    * Began implementing a round method to handle a game round structure
+    PUSHED
