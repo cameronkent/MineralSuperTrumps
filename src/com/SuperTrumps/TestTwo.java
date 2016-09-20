@@ -1,12 +1,23 @@
 package com.SuperTrumps;
 
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TestTwo {
 
     public static void main(String[] args) throws Exception {
 
+        int dealer;
+        int numPlayers = 3;
+
+        Random random = new Random();
+        dealer = random.nextInt(numPlayers) + 1;
+        if (dealer == 1) {
+            System.out.println( "player is dealing this round");
+        }else {
+            System.out.println(dealer + " is dealing this round");
+        }
 //        Game gameOne = new Game();
 //
 ////Define variables used in running

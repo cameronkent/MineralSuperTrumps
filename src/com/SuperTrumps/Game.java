@@ -51,11 +51,11 @@ class Game {
 
     public void randomiseDealer() {
         Random random = new Random();
-        dealer = random.nextInt(numPlayers - 1 + 1) + 1;
+        dealer = random.nextInt(numPlayers) + 1;
         if (dealer == 1) {
             System.out.println(userPlayer.playerName + " is dealing this round");
         }else {
-            System.out.println(comPlayer[dealer] + " is dealing this round");
+            System.out.println(comPlayer[dealer].playerName + " is dealing this round");
         }
     }
 

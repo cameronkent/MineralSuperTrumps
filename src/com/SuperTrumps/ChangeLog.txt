@@ -101,3 +101,6 @@ Assessment Project: 'Mineral Supertrumps'
     * Began reconstructing Main to implement Game class
     * Began implementing a round method to handle a game round structure
     PUSHED
+    * Added an input to check if player ready before starting rounds
+    * Fixed some method syntax with incorrect logic
+    PUSHED

@@ -30,6 +30,15 @@ public class Main {
         gameST.setComPlayers();
         gameST.showPlayers();
 
+        //input check before starting rounds
+        boolean playReady = false;
+        do {
+            System.out.println("Are you ready to play? y/n");
+            Scanner input_playReady = new Scanner(System.in);
+            if (input_playReady.next().charAt(0) == 'y') {
+                playReady = true; }
+        } while (playReady == false);
+
 //  Randomise dealer
         gameST.randomiseDealer();
 
