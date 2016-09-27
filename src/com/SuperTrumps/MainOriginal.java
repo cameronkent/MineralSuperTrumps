@@ -60,15 +60,15 @@ public class MainOriginal {
         userPlayer.showHand(userPlayer);
 
 //Turn structure with user playing first card
-        cardInPlay = userPlayer.getCardToPlay(userPlayer);
+//        cardInPlay = userPlayer.getCardToPlay(userPlayer);
         categoryNumber = userPlayer.getCategoryToPlay();
         //categoryAsString = newGame.getCategoryAsString(categoryNumber);
 
-        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+//        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
 
-        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+//        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
         //System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
-        System.out.println("Score to beat is: " + categoryValueAsString);
+//        System.out.println("Score to beat is: " + categoryValueAsString);
 
 ////ComPlayers play or pass
 //        for (int i = 0; i < comPlayer.length; i++) {

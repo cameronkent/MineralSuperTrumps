@@ -69,19 +69,21 @@ class Game {
         Card cardInPlay = null;
         int categoryNumber = 0;
         int valueInPlay;
-        int valueToPlay;
         int playerTurn;
+        int playersInRound = numPlayers + 1;
         String categoryAsString;
         String categoryValueAsString;
         //Array[] playerTurn = new Array[numPlayers];// TODO: 20/09/2016 build turn order
 
 //Start Round
         roundCount = roundCount + 1;
-        playerTurn = dealer - 1;
+        if (dealer == 0) { playerTurn = numPlayers + 1; }
+        else { playerTurn = dealer - 1; }
         switch (playerTurn) {
             case 0:
                 userPlayer.showHand(userPlayer);
-                cardInPlay = userPlayer.getCardToPlay(userPlayer);
+                int cardToPlay = userPlayer.getCardToPlay();
+                cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
                 categoryNumber = userPlayer.getCategoryToPlay();
                 playerTurn = numPlayers;
                 break;
@@ -107,35 +109,82 @@ class Game {
                 break;
         }
 
+//display information about cardInPlay
         categoryAsString = getCategoryAsString(categoryNumber);
         categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
-        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-
         System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
-        System.out.println("Score to beat is: " + categoryValueAsString);
 
-        switch (playerTurn) {
-            case 0:
-                if (!userPlayer.passedTurn) {
-                    userPlayer.showHand(userPlayer);
-                    cardInPlay = userPlayer.getCardToPlay(userPlayer);
-                }
-                playerTurn = numPlayers;
-                break;
-            case 1:
-                playerTurn = 0;
-                break;
-            case 2:
-                playerTurn = 1;
-                break;
-            case 3:
-                playerTurn = 2;
-                break;
-            case 4:
-                playerTurn = 3;
-                break;
-        }
+        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+        System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
 
+//play turns
+        do {
+            switch (playerTurn) {
+                case 0:
+                    if (!userPlayer.passedTurn) {
+                        userPlayer.showHand(userPlayer);
+                        int userMove = userPlayer.playOrPass();
+                        if (userMove == 1) {
+                            int cardToPlay = userPlayer.getCardToPlay();
+                            int valueToPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+                            if (valueToPlay > valueInPlay) {
+                                cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+                            }
+                        } else userPlayer.passedTurn = true;
+                    }
+                    playerTurn = numPlayers;
+                    break;
+                case 1:
+                    if (!comPlayer[0].passedTurn) {
+                        int comMove = comPlayer[0].playCardOrPass(categoryNumber, valueInPlay);
+                        if (comMove == 0) {
+                            comPlayer[0].DrawCard(comPlayer[0], cardDeck);
+                            comPlayer[0].passedTurn = true;
+                            playersInRound = playersInRound - 1;
+                        } else {cardInPlay = comPlayer[0].PlayCard(comPlayer[0], comMove);}
+                    }
+                    playerTurn = 0;
+                    break;
+                case 2:
+                    if (!comPlayer[1].passedTurn) {
+                        int comMove = comPlayer[1].playCardOrPass(categoryNumber, valueInPlay);
+                        if (comMove == 0) {
+                            comPlayer[1].DrawCard(comPlayer[1], cardDeck);
+                            comPlayer[1].passedTurn = true;
+                            playersInRound = playersInRound - 1;
+                        } else {cardInPlay = comPlayer[1].PlayCard(comPlayer[1], comMove);}
+                    }
+                    playerTurn = 1;
+                    break;
+                case 3:
+                    if (!comPlayer[2].passedTurn) {
+                        int comMove = comPlayer[0].playCardOrPass(categoryNumber, valueInPlay);
+                        if (comMove == 0) {
+                            comPlayer[2].DrawCard(comPlayer[2], cardDeck);
+                            comPlayer[2].passedTurn = true;
+                            playersInRound = playersInRound - 1;
+                        } else {cardInPlay = comPlayer[2].PlayCard(comPlayer[2], comMove);}
+                    }
+                    playerTurn = 2;
+                    break;
+                case 4:
+                    if (!comPlayer[3].passedTurn) {
+                        int comMove = comPlayer[3].playCardOrPass(categoryNumber, valueInPlay);
+                        if (comMove == 0) {
+                            comPlayer[3].DrawCard(comPlayer[3], cardDeck);
+                            comPlayer[3].passedTurn = true;
+                            playersInRound = playersInRound - 1;
+                        } else {cardInPlay = comPlayer[3].PlayCard(comPlayer[3], comMove);}
+                    }
+                    playerTurn = 3;
+                    break;
+            }
+            categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+            valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+            System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
+        } while (playersInRound > 1);
+
+        System.out.println("round complete");
 
 //        if (!userPlayer.passedTurn) {
 //            userPlayer.showHand(userPlayer);
@@ -155,11 +204,13 @@ class Game {
 //                }
 //            }
 //        }
-//
+
     }
 
 
 //____________________________________________________________________________________________________________________
+
+
     //Return a string of category for printing
     public String getCategoryAsString(int categorySelect ) {
         String categoryAsString;
@@ -185,16 +236,22 @@ class Game {
     //find category to get values
     public static int getValueToPlay (int categorySelect, String categoryValueAsString) {
         int valueToPlay = 0;
-        if (categorySelect == 1) {
-            valueToPlay = getHardnessAsInt(categoryValueAsString);
-        } else if (categorySelect == 2) {
-            valueToPlay = getSpecificGravityAsInt(categoryValueAsString);
-        } else if (categorySelect == 3) {
-            valueToPlay = getCleavageAsInt(categoryValueAsString);
-        } else if (categorySelect == 4) {
-            valueToPlay = getCrustalAbundanceAsInt(categoryValueAsString);
-        } else if (categorySelect == 5) {
-            valueToPlay = getEconomicValueAsInt(categoryValueAsString);
+        switch (categorySelect) {
+            case 1:
+                valueToPlay = getHardnessAsInt(categoryValueAsString);
+                return valueToPlay;
+            case 2:
+                valueToPlay = getSpecificGravityAsInt(categoryValueAsString);
+                return valueToPlay;
+            case 3:
+                valueToPlay = getCleavageAsInt(categoryValueAsString);
+                return valueToPlay;
+            case 4:
+                valueToPlay = getCrustalAbundanceAsInt(categoryValueAsString);
+                return valueToPlay;
+            case 5:
+                valueToPlay = getEconomicValueAsInt(categoryValueAsString);
+                return valueToPlay;
         } return valueToPlay;
     }
 
@@ -202,119 +259,314 @@ class Game {
     public static int getHardnessAsInt(String hardness) {
         int hardnessAsInt = 0;
         switch (hardness){
-            case "1" : return 1;
-            case "1-1.5" : return 2;
-            case "1-2" : return 3;
-            case "1.5.2.5" : return 4;
-            case "2" : return 5;
-            case "2.5" : return 6;
-            case "2-3" : return 7;
-            case "2.5-3" : return 8;
-            case "2.5-3.5" : return 9;
-            case "3" : return 10;
-            case "3-3.5" : return 11;
-            case "3.5-3.6" : return 12;
-            case "3.5-4" : return 13;
-            case "3.5-4.5" : return 14;
-            case "4" : return 15;
-            case "4-4.5" : return 16;
-            case "5" : return 17;
-            case "5-5.5" : return 18;
-            case "5.5" : return 19;
-            case "5-6" : return 20;
-            case "5.5-6" : return 21;
-            case "5.5-6.5" : return 22;
-            case "5.5-7" : return 23;
-            case "6" : return 24;
-            case "6-6.5" : return 25;
-            case "6-7" : return 26;
-            case "6.5-7" : return 27;
-            case "6-7.5" : return 28;
-            case "6.5-7.5" : return 29;
-            case "7" : return 30;
-            case "7.5" : return 31;
-            case "7.5-8" : return 32;
-            case "8" : return 33;
-            case "9" : return 34;
-            case "10" : return 35;
+            case "1" :
+                hardnessAsInt = 1;
+                return hardnessAsInt;
+            case "1-1.5" :
+                hardnessAsInt = 2;
+                return hardnessAsInt;
+            case "1-2" :
+                hardnessAsInt = 3;
+                return hardnessAsInt;
+            case "1.5.2.5" :
+                hardnessAsInt = 4;
+                return hardnessAsInt;
+            case "2" :
+                hardnessAsInt = 5;
+                return hardnessAsInt;
+            case "2.5" :
+                hardnessAsInt = 6;
+                return hardnessAsInt;
+            case "2-3" :
+                hardnessAsInt = 7;
+                return hardnessAsInt;
+            case "2.5-3" :
+                hardnessAsInt = 8;
+                return hardnessAsInt;
+            case "2.5-3.5" :
+                hardnessAsInt = 9;
+                return hardnessAsInt;
+            case "3" :
+                hardnessAsInt = 10;
+                return hardnessAsInt;
+            case "3-3.5" :
+                hardnessAsInt = 11;
+                return hardnessAsInt;
+            case "3.5-3.6" :
+                hardnessAsInt = 12;
+                return hardnessAsInt;
+            case "3.5-4" :
+                hardnessAsInt = 13;
+                return hardnessAsInt;
+            case "3.5-4.5" :
+                hardnessAsInt = 14;
+                return hardnessAsInt;
+            case "4" :
+                hardnessAsInt = 15;
+                return hardnessAsInt;
+            case "4-4.5" :
+                hardnessAsInt = 16;
+                return hardnessAsInt;
+            case "5" :
+                hardnessAsInt = 17;
+                return hardnessAsInt;
+            case "5-5.5" :
+                hardnessAsInt = 18;
+                return hardnessAsInt;
+            case "5.5" :
+                hardnessAsInt = 19;
+                return hardnessAsInt;
+            case "5-6" :
+                hardnessAsInt = 20;
+                return hardnessAsInt;
+            case "5.5-6" :
+                hardnessAsInt = 21;
+                return hardnessAsInt;
+            case "5.5-6.5" :
+                hardnessAsInt = 22;
+                return hardnessAsInt;
+            case "5.5-7" :
+                hardnessAsInt = 23;
+                return hardnessAsInt;
+            case "6" :
+                hardnessAsInt = 24;
+                return hardnessAsInt;
+            case "6-6.5" :
+                hardnessAsInt = 25;
+                return hardnessAsInt;
+            case "6-7" :
+                hardnessAsInt = 26;
+                return hardnessAsInt;
+            case "6.5-7" :
+                hardnessAsInt = 27;
+                return hardnessAsInt;
+            case "6-7.5" :
+                hardnessAsInt = 28;
+                return hardnessAsInt;
+            case "6.5-7.5" :
+                hardnessAsInt = 29;
+                return hardnessAsInt;
+            case "7" :
+                hardnessAsInt = 30;
+                return hardnessAsInt;
+            case "7.5" :
+                hardnessAsInt = 31;
+                return hardnessAsInt;
+            case "7.5-8" :
+                hardnessAsInt = 32;
+                return hardnessAsInt;
+            case "8" :
+                hardnessAsInt = 33;
+                return hardnessAsInt;
+            case "9" :
+                hardnessAsInt = 34;
+                return hardnessAsInt;
+            case "10" :
+                hardnessAsInt = 35;
+                return hardnessAsInt;
         } return hardnessAsInt;
     }
 
     //Return specific gravity as int for comparison
     public static int getSpecificGravityAsInt(String specificGravity) {
-        int hardnessAsInt = 0;
+        int specificGravityAsInt = 0;
         switch (specificGravity) {
-            case "2.2" : return 1;
-            case "2.3" : return 2;
-            case "2.4" : return 3;
-            case "2.5-2.6" : return 4;
-            case "2.6" : return 5;
-            case "2.65" : return 6;
-            case "2.6-2.7" : return 7;
-            case "2.6-2.8" : return 8;
-            case "2.6-3.3" : return 9;
-            case "2.6-2.9" : return 10;
-            case "2.7" : return 11;
-            case "2.7-3.3" : return 12;
-            case "2.8-2.9" : return 13;
-            case "2.9" : return 14;
-            case "3.0" : return 15;
-            case "3.0-3.2" : return 16;
-            case "3.15" : return 17;
-            case "3.0-3.5" : return 18;
-            case "3.1-3.2" : return 19;
-            case "3.2" : return 20;
-            case "3.25" : return 21;
-            case "3.2-4.4" : return 22;
-            case "3.2-3.5" : return 23;
-            case "3.2-3.6" : return 24;
-            case "3.2-3.9" : return 25;
-            case "3.4-3.6" : return 26;
-            case "3.5" : return 27;
-            case "3.5-3.6" : return 28;
-            case "3.5-3.7" : return 29;
-            case "3.5-4.3" : return 30;
-            case "3.7-3.8" : return 31;
-            case "3.9-4.1" : return 32;
-            case "4.0" : return 33;
-            case "4.1-4.3" : return 34;
-            case "4.3" : return 35;
-            case "4.5" : return 36;
-            case "4.5-5.1" : return 37;
-            case "4.6" : return 38;
-            case "4.6-4.7" : return 39;
-            case "4.7" : return 40;
-            case "4.7-4.8" : return 41;
-            case "5.0" : return 42;
-            case "5.0-5.3" : return 43;
-            case "5.2" : return 44;
-            case "5.3" : return 45;
-            case "6.9-7.1" : return 46;
-            case "7.5-7.6" : return 47;
-            case "19.3" : return 48;
-
-        }return hardnessAsInt;
+            case "2.2" :
+                specificGravityAsInt = 1;
+                return specificGravityAsInt;
+            case "2.3" :
+                specificGravityAsInt = 2;
+                return specificGravityAsInt;
+            case "2.4" :
+                specificGravityAsInt = 3;
+                return specificGravityAsInt;
+            case "2.5-2.6" :
+                specificGravityAsInt = 4;
+                return specificGravityAsInt;
+            case "2.6" :
+                specificGravityAsInt = 5;
+                return specificGravityAsInt;
+            case "2.65" :
+                specificGravityAsInt = 6;
+                return specificGravityAsInt;
+            case "2.6-2.7" :
+                specificGravityAsInt = 7;
+                return specificGravityAsInt;
+            case "2.6-2.8" :
+                specificGravityAsInt = 8;
+                return specificGravityAsInt;
+            case "2.6-3.3" :
+                specificGravityAsInt = 9;
+                return specificGravityAsInt;
+            case "2.6-2.9" :
+                specificGravityAsInt = 10;
+                return specificGravityAsInt;
+            case "2.7" :
+                specificGravityAsInt = 11;
+                return specificGravityAsInt;
+            case "2.7-3.3" :
+                specificGravityAsInt = 12;
+                return specificGravityAsInt;
+            case "2.8-2.9" :
+                specificGravityAsInt = 13;
+                return specificGravityAsInt;
+            case "2.9" :
+                specificGravityAsInt = 14;
+                return specificGravityAsInt;
+            case "3.0" :
+                specificGravityAsInt = 15;
+                return specificGravityAsInt;
+            case "3.0-3.2" :
+                specificGravityAsInt = 16;
+                return specificGravityAsInt;
+            case "3.15" :
+                specificGravityAsInt = 17;
+                return specificGravityAsInt;
+            case "3.0-3.5" :
+                specificGravityAsInt = 18;
+                return specificGravityAsInt;
+            case "3.1-3.2" :
+                specificGravityAsInt = 19;
+                return specificGravityAsInt;
+            case "3.2" :
+                specificGravityAsInt = 20;
+                return specificGravityAsInt;
+            case "3.25" :
+                specificGravityAsInt = 21;
+                return specificGravityAsInt;
+            case "3.2-4.4" :
+                specificGravityAsInt = 22;
+                return specificGravityAsInt;
+            case "3.2-3.5" :
+                specificGravityAsInt = 23;
+                return specificGravityAsInt;
+            case "3.2-3.6" :
+                specificGravityAsInt = 24;
+                return specificGravityAsInt;
+            case "3.2-3.9" :
+                specificGravityAsInt = 25;
+                return specificGravityAsInt;
+            case "3.4-3.6" :
+                specificGravityAsInt = 26;
+                return specificGravityAsInt;
+            case "3.5" :
+                specificGravityAsInt = 27;
+                return specificGravityAsInt;
+            case "3.5-3.6" :
+                specificGravityAsInt = 28;
+                return specificGravityAsInt;
+            case "3.5-3.7" :
+                specificGravityAsInt = 29;
+                return specificGravityAsInt;
+            case "3.5-4.3" :
+                specificGravityAsInt = 30;
+                return specificGravityAsInt;
+            case "3.7-3.8" :
+                specificGravityAsInt = 31;
+                return specificGravityAsInt;
+            case "3.9-4.1" :
+                specificGravityAsInt = 32;
+                return specificGravityAsInt;
+            case "4.0" :
+                specificGravityAsInt = 33;
+                return specificGravityAsInt;
+            case "4.1-4.3" :
+                specificGravityAsInt = 34;
+                return specificGravityAsInt;
+            case "4.3" :
+                specificGravityAsInt = 35;
+                return specificGravityAsInt;
+            case "4.5" :
+                specificGravityAsInt = 36;
+                return specificGravityAsInt;
+            case "4.5-5.1" :
+                specificGravityAsInt = 37;
+                return specificGravityAsInt;
+            case "4.6" :
+                specificGravityAsInt = 38;
+                return specificGravityAsInt;
+            case "4.6-4.7" :
+                specificGravityAsInt = 39;
+                return specificGravityAsInt;
+            case "4.7" :
+                specificGravityAsInt = 40;
+                return specificGravityAsInt;
+            case "4.7-4.8" :
+                specificGravityAsInt = 41;
+                return specificGravityAsInt;
+            case "5.0" :
+                specificGravityAsInt = 42;
+                return specificGravityAsInt;
+            case "5.0-5.3" :
+                specificGravityAsInt = 43;
+                return specificGravityAsInt;
+            case "5.2" :
+                specificGravityAsInt = 44;
+                return specificGravityAsInt;
+            case "5.3" :
+                specificGravityAsInt = 45;
+                return specificGravityAsInt;
+            case "6.9-7.1" :
+                specificGravityAsInt = 46;
+                return specificGravityAsInt;
+            case "7.5-7.6" :
+                specificGravityAsInt = 47;
+                return specificGravityAsInt;
+            case "19.3" :
+                specificGravityAsInt = 48;
+                return specificGravityAsInt;
+        }return specificGravityAsInt;
     }
 
     //Return cleavage as int for comparison
     public static int getCleavageAsInt(String cleavage) {
         int cleavageAsInt = 0;
         switch (cleavage){
-            case "none": return 1;
-            case "poor/none": return 2;
-            case "1 poor": return 3;
-            case "2 poor": return 4;
-            case "1 good": return 5;
-            case "1 good, 1 poor": return 6;
-            case "2 good": return 7;
-            case "3 good": return 8;
-            case "1 perfect": return 9;
-            case "1 perfect, 1 good": return 10;
-            case "1 perfect, 2 good": return 11;
-            case "2 perfect, 1 good": return 12;
-            case "3 perfect": return 13;
-            case "4 perfect": return 14;
-            case "6 perfect": return 15;
+            case "none":
+                cleavageAsInt = 1;
+                return cleavageAsInt;
+            case "poor/none":
+                cleavageAsInt = 2;
+                return cleavageAsInt;
+            case "1 poor":
+                cleavageAsInt = 3;
+                return cleavageAsInt;
+            case "2 poor":
+                cleavageAsInt = 4;
+                return cleavageAsInt;
+            case "1 good":
+                cleavageAsInt = 5;
+                return cleavageAsInt;
+            case "1 good, 1 poor":
+                cleavageAsInt = 6;
+                return cleavageAsInt;
+            case "2 good":
+                cleavageAsInt = 7;
+                return cleavageAsInt;
+            case "3 good":
+                cleavageAsInt = 8;
+                return cleavageAsInt;
+            case "1 perfect":
+                cleavageAsInt = 9;
+                return cleavageAsInt;
+            case "1 perfect, 1 good":
+                cleavageAsInt = 10;
+                return cleavageAsInt;
+            case "1 perfect, 2 good":
+                cleavageAsInt = 11;
+                return cleavageAsInt;
+            case "2 perfect, 1 good":
+                cleavageAsInt = 12;
+                return cleavageAsInt;
+            case "3 perfect":
+                cleavageAsInt = 13;
+                return cleavageAsInt;
+            case "4 perfect":
+                cleavageAsInt = 14;
+                return cleavageAsInt;
+            case "6 perfect":
+                cleavageAsInt = 15;
+                return cleavageAsInt;
         }return cleavageAsInt;
     }
 
@@ -322,12 +574,24 @@ class Game {
     public static int getCrustalAbundanceAsInt(String crustalAbundance) {
         int crustalAbundanceAsInt = 0;
         switch (crustalAbundance){
-            case "ultratrace": return 1;
-            case "trace": return 2;
-            case "low": return 3;
-            case "moderate": return 4;
-            case "high": return 5;
-            case "very high": return 6;
+            case "ultratrace":
+                crustalAbundanceAsInt = 1;
+                return crustalAbundanceAsInt;
+            case "trace":
+                crustalAbundanceAsInt = 2;
+                return crustalAbundanceAsInt;
+            case "low":
+                crustalAbundanceAsInt = 3;
+                return crustalAbundanceAsInt;
+            case "moderate":
+                crustalAbundanceAsInt = 4;
+                return crustalAbundanceAsInt;
+            case "high":
+                crustalAbundanceAsInt = 5;
+                return crustalAbundanceAsInt;
+            case "very high":
+                crustalAbundanceAsInt = 6;
+                return crustalAbundanceAsInt;
         }return crustalAbundanceAsInt;
     }
 
@@ -335,12 +599,24 @@ class Game {
     public static int getEconomicValueAsInt(String economicValue) {
         int economicValueAsInt = 0;
         switch (economicValue){
-            case "trivial": return 1;
-            case "low": return 2;
-            case "moderate": return 3;
-            case "high": return 4;
-            case "very high": return 5;
-            case "I'm rich": return 6;
+            case "trivial":
+                economicValueAsInt = 1;
+                return economicValueAsInt;
+            case "low":
+                economicValueAsInt = 2;
+                return economicValueAsInt;
+            case "moderate":
+                economicValueAsInt = 3;
+                return economicValueAsInt;
+            case "high":
+                economicValueAsInt = 4;
+                return economicValueAsInt;
+            case "very high":
+                economicValueAsInt = 5;
+                return economicValueAsInt;
+            case "I'm rich":
+                economicValueAsInt = 6;
+                return economicValueAsInt;
         }return economicValueAsInt;
     }
 

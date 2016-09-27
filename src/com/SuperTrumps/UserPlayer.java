@@ -22,16 +22,21 @@ public class UserPlayer extends Player {
 
     //Displays users hand
     public void showHand(Player player) {
-        System.out.println("Cards in hand " + player.Hand.size());
-        for (int i = 0; i < player.Hand.size(); i++ )System.out.println("Card #" + (i+1) + ":\n" + player.Hand.get(i));
+        Scanner input_showHand = new Scanner(System.in);
+        System.out.println("View hand? y/n");
+        String showHand = input_showHand.next();
+        if (showHand.charAt(0) == 'y') {
+            System.out.println("Cards in hand " + player.Hand.size());
+            for (int i = 0; i < player.Hand.size(); i++ )System.out.println("Card #" + (i+1) + ":\n" + player.Hand.get(i));
+        }
     }
 
     //Take input to play card from users hand
-    public Card getCardToPlay(Player userPlayer) {
+    public int getCardToPlay() {
         Scanner inputCardToPlay = new Scanner(System.in);
         System.out.println("Choose card to play");
-        Card cardInPlay = userPlayer.PlayCard(userPlayer, inputCardToPlay.nextInt());
-        return cardInPlay;
+        int cardToPlay =  inputCardToPlay.nextInt();
+        return cardToPlay;
     }
 
     public int getCategoryToPlay() {
@@ -40,5 +45,15 @@ public class UserPlayer extends Player {
         Scanner inputCategory = new Scanner(System.in);
         categorySelect = inputCategory.nextInt();
         return categorySelect;
+    }
+
+    public int playOrPass() {
+        int playOrPass;
+        Scanner input_playOrPass = new Scanner(System.in);
+        do {
+            System.out.println("1: Play a card\n2: Pass turn?");
+            playOrPass = input_playOrPass.nextInt();
+        } while (playOrPass != 1 && playOrPass != 2);
+        return playOrPass;
     }
 }

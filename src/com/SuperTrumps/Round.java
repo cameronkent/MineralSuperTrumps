@@ -8,7 +8,8 @@ public class Round {
         switch (playerToStart) {
             case 0:
                 userPlayer.showHand(userPlayer);
-                cardInPlay = userPlayer.getCardToPlay(userPlayer);
+                int cardToPlay = userPlayer.getCardToPlay();
+                cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
                 break;
             case 1:
                 cardInPlay = comPlayer.getComCardToPlay(comPlayer, comPlayer.getRandCard(comPlayer));

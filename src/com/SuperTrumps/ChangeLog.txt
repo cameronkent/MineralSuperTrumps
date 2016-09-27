@@ -114,3 +114,6 @@ Assessment Project: 'Mineral Supertrumps'
     * Moved functionality from Round to Game to move forward
     * Began implementing turn functionality
     PUSHED
+    * Refactored Game methods
+    * Continued implementing turns
+    PUSHED

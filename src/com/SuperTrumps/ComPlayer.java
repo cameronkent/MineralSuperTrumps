@@ -32,12 +32,12 @@ public class ComPlayer extends Player {
     public int playCardOrPass(int categoryInt, int valueInPlay){
         Card cardToPlay;
         int cardNum = 0;
-        int valueToPlay = 0;
+        int valueToPlay;
 
         for (int i = 0; i < Hand.size(); i++) {
             cardToPlay = Hand.get(i);
             valueToPlay = Game.getValueToPlay(categoryInt, cardToPlay.getCategoryInPlay(categoryInt));
-            if (valueToPlay >= valueInPlay) {
+            if (valueToPlay > valueInPlay) {
                 cardNum = i + 1;
                 return cardNum;
             }
