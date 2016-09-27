@@ -120,3 +120,7 @@ Assessment Project: 'Mineral Supertrumps'
     * Temporarily blocked import of Trump cards to deck until logic set up
     * Formatted MstCards pList to correct comparison errors
     * Fixed some flow errors in players turn
+    PUSHED
+    * Refactored turn switches to refer to methods
+    * Refactored player classes to fix game flow
+    * toDo fix on playTurnUserPlayer

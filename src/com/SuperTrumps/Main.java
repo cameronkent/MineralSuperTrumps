@@ -39,7 +39,7 @@ public class Main {
             System.out.println("\nAre you ready to play? y/n");
             Scanner input_playReady = new Scanner(System.in);
             if (input_playReady.next().charAt(0) == 'y') {
-                System.out.println("GAME STARTING");
+                System.out.println("\nGAME STARTING\n");
                 playReady = true; }
         } while (playReady == false);
 

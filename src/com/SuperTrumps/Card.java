@@ -50,19 +50,19 @@ public class Card {
         String categoryInPlay = "";
         switch (categorySelect) {
             case 1:
-                categoryInPlay = hardness;
+                categoryInPlay = this.hardness;
                 return categoryInPlay;
             case 2:
-                categoryInPlay = specificGravity;
+                categoryInPlay = this.specificGravity;
                 return categoryInPlay;
             case 3:
-                categoryInPlay = cleavage;
+                categoryInPlay = this.cleavage;
                 return categoryInPlay;
             case 4:
-                categoryInPlay = crustalAbundance;
+                categoryInPlay = this.crustalAbundance;
                 return categoryInPlay;
             case 5:
-                categoryInPlay = economicValue;
+                categoryInPlay = this.economicValue;
                 return categoryInPlay;
         } return categoryInPlay;
     }

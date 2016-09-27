@@ -1,6 +1,5 @@
 package com.SuperTrumps;
 
-import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.Random;
 
@@ -15,6 +14,13 @@ class Game {
     int dealer;
     int playerTurn;
     boolean gameOver = false;
+
+    Card cardInPlay = null;
+    int categoryNumber = 0;
+    int valueInPlay;
+    String categoryAsString;
+    String categoryValueAsString;
+
 
     Game(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -66,13 +72,7 @@ class Game {
     }
 
     public void startNewRound() {
-
-        Card cardInPlay = null;
-        int categoryNumber = 0;
-        int valueInPlay;
         int playersInRound = numPlayers + 1;
-        String categoryAsString;
-        String categoryValueAsString;
 
 //Start Round
         roundCount = roundCount + 1;
@@ -112,84 +112,51 @@ class Game {
 
 //display information about cardInPlay
         categoryAsString = getCategoryAsString(categoryNumber);
-        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);// TODO: 27/09/16 fix NullPointer re trumps
-        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
 
-        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-        System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
+        setCurrentValues();
+        displayCurrentValue();
 
 //play turns
         do {
             switch (playerTurn) {
                 case 0:
-                    if (!userPlayer.passedTurn) {
-                        userPlayer.showHand(userPlayer);
-                        int userMove = userPlayer.playOrPass();
-                        if (userMove == 2) {
-                            userPlayer.passedTurn = true;
-                            playersInRound = playersInRound - 1;
-                            System.out.println(playersInRound + " players left in round.");
-                        } else {
-                            int cardToPlay = userPlayer.getCardToPlay();
-                            int valueToPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-                            if (valueToPlay > valueInPlay) {
-                                cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
-                            }
-                        }
-                    }
+//                    if (!userPlayer.passedTurn) {
+//                        userPlayer.showHand(userPlayer);
+//                        int userMove = userPlayer.playOrPass();
+//                        if (userMove == 2) {
+//                            userPlayer.passedTurn = true;
+//                            playersInRound = playersInRound - 1;
+//                            System.out.println(playersInRound + " players left in round.");
+//                        } else {
+//                            int cardToPlay = userPlayer.getCardToPlay();
+//                            int valueToPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+//                            if (valueToPlay > valueInPlay) {
+//                                cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+//                            }
+//                        }
+//                    }
+                    playTurnUserPlayer(playersInRound);
                     playerTurn = numPlayers;
                     break;
                 case 1:
-                    if (!comPlayer[0].passedTurn) {
-                        int comMove = comPlayer[0].playCardOrPass(categoryNumber, valueInPlay);
-                        if (comMove == 0) {
-                            comPlayer[0].DrawCard(comPlayer[0], cardDeck);
-                            comPlayer[0].passedTurn = true;
-                            System.out.println(playersInRound + " players left in round.");
-                        } else {cardInPlay = comPlayer[0].PlayCard(comPlayer[0], comMove);}
-                    }
+                    playTurnComPlayer(comPlayer[0], playersInRound);
                     playerTurn = 0;
                     break;
                 case 2:
-                    if (!comPlayer[1].passedTurn) {
-                        int comMove = comPlayer[1].playCardOrPass(categoryNumber, valueInPlay);
-                        if (comMove == 0) {
-                            comPlayer[1].DrawCard(comPlayer[1], cardDeck);
-                            comPlayer[1].passedTurn = true;
-                            playersInRound = playersInRound - 1;
-                            System.out.println(playersInRound + " players left in round.");
-                        } else {cardInPlay = comPlayer[1].PlayCard(comPlayer[1], comMove);}
-                    }
+                    playTurnComPlayer(comPlayer[1], playersInRound);
                     playerTurn = 1;
                     break;
                 case 3:
-                    if (!comPlayer[2].passedTurn) {
-                        int comMove = comPlayer[0].playCardOrPass(categoryNumber, valueInPlay);
-                        if (comMove == 0) {
-                            comPlayer[2].DrawCard(comPlayer[2], cardDeck);
-                            comPlayer[2].passedTurn = true;
-                            playersInRound = playersInRound - 1;
-                            System.out.println(playersInRound + " players left in round.");
-                        } else {cardInPlay = comPlayer[2].PlayCard(comPlayer[2], comMove);}
-                    }
+                    playTurnComPlayer(comPlayer[2], playersInRound);
                     playerTurn = 2;
                     break;
                 case 4:
-                    if (!comPlayer[3].passedTurn) {
-                        int comMove = comPlayer[3].playCardOrPass(categoryNumber, valueInPlay);
-                        if (comMove == 0) {
-                            comPlayer[3].DrawCard(comPlayer[3], cardDeck);
-                            comPlayer[3].passedTurn = true;
-                            playersInRound = playersInRound - 1;
-                            System.out.println(playersInRound + " players left in round.");
-                        } else {cardInPlay = comPlayer[3].PlayCard(comPlayer[3], comMove);}
-                    }
+                    playTurnComPlayer(comPlayer[3], playersInRound);
                     playerTurn = 3;
                     break;
             }
-            categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
-            valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-            System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
+            setCurrentValues();
+            displayCurrentValue();
         } while (playersInRound > 1);
 
 
@@ -198,11 +165,54 @@ class Game {
 
 //____________________________________________________________________________________________________________________
 
+    public void setCurrentValues() {
+        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+        valueInPlay = getValueToPlay(categoryNumber, cardInPlay.getCategoryInPlay(categoryNumber));
+    }
+
+    public void displayCurrentValue() {
+        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
+        System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
+    }
+
+    public void playTurnUserPlayer(int playersInRound){
+        if (!userPlayer.passedTurn) {
+            userPlayer.showHand(userPlayer);
+            int userMove = userPlayer.playOrPass();
+            if (userMove == 2) {
+                userPlayer.DrawCard(userPlayer, cardDeck);
+                userPlayer.passedTurn = true;
+                playersInRound = playersInRound - 1;
+                System.out.println(playersInRound + " players left in round.");
+            } else { // TODO: 27/09/2016 FIX THIS; set current values to users card and display users played card
+                int cardToPlay = userPlayer.getCardToPlay();
+                //int valueToPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
+                int valueToPlay = getValueToPlay(categoryNumber, userPlayer.Hand.get(cardToPlay).getCategoryInPlay(categoryNumber));
+                if (valueToPlay > valueInPlay) {
+                    cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+                }
+            }
+        }
+
+    }
+
+    public void playTurnComPlayer(ComPlayer comPlayer, int playersInRound) {
+        if (!comPlayer.passedTurn) {
+            int comMove = comPlayer.playCardOrPass(categoryNumber, valueInPlay);
+            if (comMove == 0) {
+                comPlayer.DrawCard(comPlayer, cardDeck);
+                comPlayer.passedTurn = true;
+                playersInRound = playersInRound - 1;
+                System.out.println(playersInRound + " players left in round.");
+            } else {cardInPlay = comPlayer.PlayCard(comPlayer, comMove);}
+        }
+    }
+
     //Return a string of category for printing
-    public String getCategoryAsString(int categorySelect ) {
+    public String getCategoryAsString(int categoryNumber ) {
         String categoryAsString;
         loop: do {
-            switch (categorySelect) {
+            switch (categoryNumber) {
                 case 1: categoryAsString = "Hardness";
                     break loop;
                 case 2: categoryAsString = "Specific gravity";
@@ -221,7 +231,7 @@ class Game {
     }
 
     //find category to get values
-    public static int getValueToPlay (int categorySelect, String categoryValueAsString) {
+    public static int getValueToPlay(int categorySelect, String categoryValueAsString) {
         int valueToPlay = 0;
         switch (categorySelect) {
             case 1:

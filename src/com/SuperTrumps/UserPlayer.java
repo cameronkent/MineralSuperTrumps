@@ -47,11 +47,19 @@ public class UserPlayer extends Player {
         return categorySelect;
     }
 
+    public Card PlayCard(Player player, int cardToPlay) {
+        System.out.println(playerName + " is playing the card: \n" + player.Hand.get(cardToPlay-1));
+        Card cardInPlay = player.Hand.get(cardToPlay - 1);
+        player.Hand.remove(player.Hand.get(cardToPlay -1));
+        System.out.println("Cards in hand " + player.Hand.size());
+        return cardInPlay;
+    }
+
     public int playOrPass() {
         int playOrPass;
         Scanner input_playOrPass = new Scanner(System.in);
         do {
-            System.out.println("1: Play a card\n2: Pass turn?");
+            System.out.println("1: Play a card\n2: Pass turn");
             playOrPass = input_playOrPass.nextInt();
         } while (playOrPass != 1 && playOrPass != 2);
         return playOrPass;
