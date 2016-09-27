@@ -6,20 +6,21 @@ import java.util.Random;
 class Game {
 
     int numPlayers;
-    UserPlayer userPlayer;
-    Player[] players;
-    ComPlayer[] comPlayer;
-    Deck cardDeck;
     int roundCount;
     int dealer;
     int playerTurn;
-    boolean gameOver = false;
-
-    Card cardInPlay = null;
+    int playersInRound;
     int categoryNumber = 0;
     int valueInPlay;
     String categoryAsString;
     String categoryValueAsString;
+    Deck cardDeck;
+    Card cardInPlay = null;
+    Player[] players;
+    UserPlayer userPlayer;
+    ComPlayer[] comPlayer;
+    boolean gameOver = false;
+
 
 
     Game(int numPlayers) {
@@ -71,99 +72,76 @@ class Game {
         System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
     }
 
-    public void startNewRound() {
-        int playersInRound = numPlayers + 1;
-
-//Start Round
+    public void playGameRound() {
+        playersInRound = numPlayers + 1;
         roundCount = roundCount + 1;
 
-        if (dealer == 0) { playerTurn = numPlayers + 1; } // TODO: 27/09/16 fix this
-        else {playerTurn = dealer - 1; }
+        startGameRound();
 
-        switch (playerTurn) {
-            case 0:
-                userPlayer.showHand(userPlayer);
-                int cardToPlay = userPlayer.getCardToPlay();
-                cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
-                categoryNumber = userPlayer.getCategoryToPlay();
-                playerTurn = numPlayers;
-                break;
-            case 1:
-                cardInPlay = comPlayer[0].PlayCard(comPlayer[0], comPlayer[0].getRandCard(comPlayer[0]));
-                categoryNumber = comPlayer[0].getCategoryFromComPlayer();
-                playerTurn = 0;
-                break;
-            case 2:
-                cardInPlay = comPlayer[1].PlayCard(comPlayer[1], comPlayer[1].getRandCard(comPlayer[1]));
-                categoryNumber = comPlayer[1].getCategoryFromComPlayer();
-                playerTurn = 1;
-                break;
-            case 3:
-                cardInPlay = comPlayer[2].PlayCard(comPlayer[2], comPlayer[2].getRandCard(comPlayer[2]));
-                categoryNumber = comPlayer[2].getCategoryFromComPlayer();
-                playerTurn = 2;
-                break;
-            case 4:
-                cardInPlay = comPlayer[3].PlayCard(comPlayer[3], comPlayer[3].getRandCard(comPlayer[3]));
-                categoryNumber = comPlayer[3].getCategoryFromComPlayer();
-                playerTurn = 3;
-                break;
-        }
-
-//display information about cardInPlay
-        categoryAsString = getCategoryAsString(categoryNumber);
-
-        setCurrentValues();
-        displayCurrentValue();
-
-//play turns
         do {
-            switch (playerTurn) {
-                case 0:
-//                    if (!userPlayer.passedTurn) {
-//                        userPlayer.showHand(userPlayer);
-//                        int userMove = userPlayer.playOrPass();
-//                        if (userMove == 2) {
-//                            userPlayer.passedTurn = true;
-//                            playersInRound = playersInRound - 1;
-//                            System.out.println(playersInRound + " players left in round.");
-//                        } else {
-//                            int cardToPlay = userPlayer.getCardToPlay();
-//                            int valueToPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-//                            if (valueToPlay > valueInPlay) {
-//                                cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
-//                            }
-//                        }
-//                    }
-                    playTurnUserPlayer(playersInRound);
-                    playerTurn = numPlayers;
-                    break;
-                case 1:
-                    playTurnComPlayer(comPlayer[0], playersInRound);
-                    playerTurn = 0;
-                    break;
-                case 2:
-                    playTurnComPlayer(comPlayer[1], playersInRound);
-                    playerTurn = 1;
-                    break;
-                case 3:
-                    playTurnComPlayer(comPlayer[2], playersInRound);
-                    playerTurn = 2;
-                    break;
-                case 4:
-                    playTurnComPlayer(comPlayer[3], playersInRound);
-                    playerTurn = 3;
-                    break;
-            }
-            setCurrentValues();
-            displayCurrentValue();
+            playGameRoundTurns();
         } while (playersInRound > 1);
-
-
     }
 
 
 //____________________________________________________________________________________________________________________
+
+    public void startGameRound() {
+        if (dealer == 1) { playerTurn = numPlayers; }
+        else {playerTurn = dealer - 1; }
+        switch (playerTurn) {
+            case 0:
+                startRoundUserPlayer();
+                playerTurn = numPlayers;
+                break;
+            case 1:
+                startRoundComPlayer(comPlayer[0]);
+                playerTurn = 0;
+                break;
+            case 2:
+                startRoundComPlayer(comPlayer[1]);
+                playerTurn = 1;
+                break;
+            case 3:
+                startRoundComPlayer(comPlayer[2]);
+                playerTurn = 2;
+                break;
+            case 4:
+                startRoundComPlayer(comPlayer[3]);
+                playerTurn = 3;
+                break;
+        }
+        categoryAsString = getCategoryAsString(categoryNumber);
+        setCurrentValues();
+        displayCurrentValue();
+    }
+
+    public void playGameRoundTurns() {
+        switch (playerTurn) {
+            case 0:
+                playTurnUserPlayer();
+                playerTurn = numPlayers;
+                break;
+            case 1:
+                playTurnComPlayer(comPlayer[0]);
+                playerTurn = 0;
+                break;
+            case 2:
+                playTurnComPlayer(comPlayer[1]);
+                playerTurn = 1;
+                break;
+            case 3:
+                playTurnComPlayer(comPlayer[2]);
+                playerTurn = 2;
+                break;
+            case 4:
+                playTurnComPlayer(comPlayer[3]);
+                playerTurn = 3;
+                break;
+        }
+        setCurrentValues();
+        displayCurrentValue();
+    }
 
     public void setCurrentValues() {
         categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
@@ -175,37 +153,51 @@ class Game {
         System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
     }
 
-    public void playTurnUserPlayer(int playersInRound){
+    public void startRoundUserPlayer() {
+        userPlayer.showHand(userPlayer);
+        int cardToPlay = userPlayer.getCardToPlay();
+        cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+        categoryNumber = userPlayer.getCategoryToPlay();
+    }
+
+    public void startRoundComPlayer(ComPlayer comPlayer) {
+        cardInPlay = comPlayer.PlayCard(comPlayer, comPlayer.getRandCard(comPlayer));
+        categoryNumber = comPlayer.getCategoryFromComPlayer();
+    }
+
+    //Gets the user to choose to play a card or pass turn
+    public void playTurnUserPlayer(){
         if (!userPlayer.passedTurn) {
             userPlayer.showHand(userPlayer);
             int userMove = userPlayer.playOrPass();
-            if (userMove == 2) {
-                userPlayer.DrawCard(userPlayer, cardDeck);
-                userPlayer.passedTurn = true;
-                playersInRound = playersInRound - 1;
-                System.out.println(playersInRound + " players left in round.");
-            } else { // TODO: 27/09/2016 FIX THIS; set current values to users card and display users played card
+            if (userMove == 1) {
                 int cardToPlay = userPlayer.getCardToPlay();
-                //int valueToPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-                int valueToPlay = getValueToPlay(categoryNumber, userPlayer.Hand.get(cardToPlay).getCategoryInPlay(categoryNumber));
+                int valueToPlay = getValueToPlay(categoryNumber, userPlayer.Hand.get(cardToPlay-1).getCategoryInPlay(categoryNumber));
                 if (valueToPlay > valueInPlay) {
                     cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
-                }
+                } else { passPlayerTurn(userPlayer); }
+            } else {
+                passPlayerTurn(userPlayer);
             }
         }
-
     }
 
-    public void playTurnComPlayer(ComPlayer comPlayer, int playersInRound) {
+    //ComPlayer turn; either plays a higher card or passes
+    public void playTurnComPlayer(ComPlayer comPlayer) {
         if (!comPlayer.passedTurn) {
             int comMove = comPlayer.playCardOrPass(categoryNumber, valueInPlay);
             if (comMove == 0) {
-                comPlayer.DrawCard(comPlayer, cardDeck);
-                comPlayer.passedTurn = true;
-                playersInRound = playersInRound - 1;
-                System.out.println(playersInRound + " players left in round.");
+                passPlayerTurn(comPlayer);
             } else {cardInPlay = comPlayer.PlayCard(comPlayer, comMove);}
         }
+    }
+
+    //Standard pass method for all players
+    public void passPlayerTurn(Player player) {
+        player.DrawCard(player, cardDeck);
+        player.passedTurn = true;
+        playersInRound = playersInRound - 1;
+        System.out.println(playersInRound + " players left in round.");
     }
 
     //Return a string of category for printing

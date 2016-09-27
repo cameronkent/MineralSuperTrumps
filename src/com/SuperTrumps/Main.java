@@ -49,10 +49,10 @@ public class Main {
 
         gameST.dealPlayerHands();
 
-
-        gameST.startNewRound();
-        System.out.println("Round complete");
-
+        do {
+            gameST.playGameRound();
+            System.out.println("Round complete");
+        } while (gameOver = false);
 
 //  If player plays 'Trump' card round is over
 
