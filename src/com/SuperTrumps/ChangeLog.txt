@@ -117,3 +117,6 @@ Assessment Project: 'Mineral Supertrumps'
     * Refactored Game methods
     * Continued implementing turns
     PUSHED
+    * Temporarily blocked import of Trump cards to deck until logic set up
+    * Formatted MstCards pList to correct comparison errors
+    * Fixed some flow errors in players turn

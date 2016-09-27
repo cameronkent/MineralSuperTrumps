@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        boolean gameOver = false;
 
 //  Start application
         System.out.println("Welcome to Mineral SuperTrumps!");
@@ -48,15 +49,10 @@ public class Main {
 
         gameST.dealPlayerHands();
 
+
         gameST.startNewRound();
+        System.out.println("Round complete");
 
-//  Next player plays higher card or passes
-
-//  If player passes they must draw card from deck
-
-//  If player passes they cannot continue in round
-
-//  Player turns continue until one player not passedTurn
 
 //  If player plays 'Trump' card round is over
 

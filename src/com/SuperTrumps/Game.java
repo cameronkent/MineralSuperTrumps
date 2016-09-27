@@ -12,8 +12,9 @@ class Game {
     ComPlayer[] comPlayer;
     Deck cardDeck;
     int roundCount;
-
-    private int dealer;
+    int dealer;
+    int playerTurn;
+    boolean gameOver = false;
 
     Game(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -64,21 +65,21 @@ class Game {
         System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
     }
 
-    public void startNewRound() { // TODO: 20/09/2016 refactor to methods using round class
+    public void startNewRound() {
 
         Card cardInPlay = null;
         int categoryNumber = 0;
         int valueInPlay;
-        int playerTurn;
         int playersInRound = numPlayers + 1;
         String categoryAsString;
         String categoryValueAsString;
-        //Array[] playerTurn = new Array[numPlayers];// TODO: 20/09/2016 build turn order
 
 //Start Round
         roundCount = roundCount + 1;
-        if (dealer == 0) { playerTurn = numPlayers + 1; }
-        else { playerTurn = dealer - 1; }
+
+        if (dealer == 0) { playerTurn = numPlayers + 1; } // TODO: 27/09/16 fix this
+        else {playerTurn = dealer - 1; }
+
         switch (playerTurn) {
             case 0:
                 userPlayer.showHand(userPlayer);
@@ -111,7 +112,7 @@ class Game {
 
 //display information about cardInPlay
         categoryAsString = getCategoryAsString(categoryNumber);
-        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);// TODO: 27/09/16 fix NullPointer re trumps
         System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
 
         valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
@@ -124,13 +125,17 @@ class Game {
                     if (!userPlayer.passedTurn) {
                         userPlayer.showHand(userPlayer);
                         int userMove = userPlayer.playOrPass();
-                        if (userMove == 1) {
+                        if (userMove == 2) {
+                            userPlayer.passedTurn = true;
+                            playersInRound = playersInRound - 1;
+                            System.out.println(playersInRound + " players left in round.");
+                        } else {
                             int cardToPlay = userPlayer.getCardToPlay();
                             int valueToPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
                             if (valueToPlay > valueInPlay) {
                                 cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
                             }
-                        } else userPlayer.passedTurn = true;
+                        }
                     }
                     playerTurn = numPlayers;
                     break;
@@ -140,7 +145,7 @@ class Game {
                         if (comMove == 0) {
                             comPlayer[0].DrawCard(comPlayer[0], cardDeck);
                             comPlayer[0].passedTurn = true;
-                            playersInRound = playersInRound - 1;
+                            System.out.println(playersInRound + " players left in round.");
                         } else {cardInPlay = comPlayer[0].PlayCard(comPlayer[0], comMove);}
                     }
                     playerTurn = 0;
@@ -152,6 +157,7 @@ class Game {
                             comPlayer[1].DrawCard(comPlayer[1], cardDeck);
                             comPlayer[1].passedTurn = true;
                             playersInRound = playersInRound - 1;
+                            System.out.println(playersInRound + " players left in round.");
                         } else {cardInPlay = comPlayer[1].PlayCard(comPlayer[1], comMove);}
                     }
                     playerTurn = 1;
@@ -163,6 +169,7 @@ class Game {
                             comPlayer[2].DrawCard(comPlayer[2], cardDeck);
                             comPlayer[2].passedTurn = true;
                             playersInRound = playersInRound - 1;
+                            System.out.println(playersInRound + " players left in round.");
                         } else {cardInPlay = comPlayer[2].PlayCard(comPlayer[2], comMove);}
                     }
                     playerTurn = 2;
@@ -174,6 +181,7 @@ class Game {
                             comPlayer[3].DrawCard(comPlayer[3], cardDeck);
                             comPlayer[3].passedTurn = true;
                             playersInRound = playersInRound - 1;
+                            System.out.println(playersInRound + " players left in round.");
                         } else {cardInPlay = comPlayer[3].PlayCard(comPlayer[3], comMove);}
                     }
                     playerTurn = 3;
@@ -184,32 +192,11 @@ class Game {
             System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
         } while (playersInRound > 1);
 
-        System.out.println("round complete");
-
-//        if (!userPlayer.passedTurn) {
-//            userPlayer.showHand(userPlayer);
-//            cardInPlay = userPlayer.getCardToPlay(userPlayer);
-//        }
-
-////ComPlayers play or pass
-//        for (int i = 0; i < comPlayer.length; i++) {
-//            //check if 'passed' and then play card or pass round
-//            while (!comPlayer[i].passedTurn) {
-//                int comMove = comPlayer[i].playCardOrPass(categoryNumber, valueInPlay);
-//                if (comMove == 0) {
-//                    comPlayer[i].DrawCard(comPlayer[i], cardDeck);
-//                    comPlayer[i].passedTurn = true;
-//                } else {
-//                    comPlayer[i].PlayCard(comPlayer[i], i+1);
-//                }
-//            }
-//        }
 
     }
 
 
 //____________________________________________________________________________________________________________________
-
 
     //Return a string of category for printing
     public String getCategoryAsString(int categorySelect ) {

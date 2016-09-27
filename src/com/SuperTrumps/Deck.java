@@ -14,8 +14,6 @@ public class Deck {
             int minerals = 0;
             int trumps = 54;
 
-            //System.out.println("reading file..."); //DEBUGGING PROGRESS MARKER
-
             File file = new File("MstCards_151021.plist");
             NSDictionary rootDict = (NSDictionary) PropertyListParser.parse(file);
             NSArray cardsArray = (NSArray) rootDict.objectForKey("cards");
@@ -35,23 +33,20 @@ public class Deck {
                 NSString economicValue = (NSString) mineralCard.objectForKey("economic_value");
 
                 deckArray.add(new Card(title, chemistry, classification, crystalSystem, occurrence, hardness, specificGravity, cleavage, crustalAbundance, economicValue));
-                //System.out.println("card added..." + minerals); //DEBUGGING PROGRESS MARKER
                 minerals = minerals + 1;
 
-            }
-            while (minerals < 54);
+            } while (minerals < 54);
 
-            do {
-                NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
-
-                NSString title = (NSString) trumpCard.objectForKey("title");
-                NSString subtitle = (NSString) trumpCard.objectForKey("subtitle");
-
-                deckArray.add(new TrumpCard(title, subtitle));
-                //System.out.println("trump added..." + trumps); //DEBUGGING PROGRESS MARKER
-                trumps = trumps + 1;
-            }
-            while (trumps < 60);
+// TODO: 27/09/16  Reactive trumps when logic is implemented
+//            do {
+//                NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
+//
+//                NSString title = (NSString) trumpCard.objectForKey("title");
+//                NSString subtitle = (NSString) trumpCard.objectForKey("subtitle");
+//
+//                deckArray.add(new TrumpCard(title, subtitle));
+//                trumps = trumps + 1;
+//            } while (trumps < 60);
 
         } catch (Exception exc) {
             exc.printStackTrace();
@@ -65,15 +60,8 @@ public class Deck {
         }
     }
 
-//Print select card
-    void printCard(int index) {
-        System.out.println(deckArray.get(index).toString());
-    }
-
 //Return size of deck
     public int size() {
         return deckArray.size();
     }
-
-
 }
