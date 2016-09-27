@@ -70,14 +70,14 @@ public class MainOriginal {
         //System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
         System.out.println("Score to beat is: " + categoryValueAsString);
 
-//ComPlayers play or pass
-        for (int i = 0; i < comPlayer.length; i++) {
-            int comMove = comPlayer[i].playCardOrPass(comPlayer[i], categoryNumber, valueInPlay, cardDeck);
-            if (comMove == 0) {
-                comPlayer[i].DrawCard(comPlayer[i], cardDeck);
-            } else {
-                comPlayer[i].PlayCard(comPlayer[i], i+1);
-            }
-        }
+////ComPlayers play or pass
+//        for (int i = 0; i < comPlayer.length; i++) {
+//            int comMove = comPlayer[i].playCardOrPass(comPlayer[i], categoryNumber, valueInPlay, cardDeck);
+//            if (comMove == 0) {
+//                comPlayer[i].DrawCard(comPlayer[i], cardDeck);
+//            } else {
+//                comPlayer[i].PlayCard(comPlayer[i], i+1);
+//            }
+//        }
     }
 }

@@ -66,17 +66,4 @@ public class Card {
                 return categoryInPlay;
         } return categoryInPlay;
     }
-
-    // TODO: make this work... maybe
-//    public NSString getCategoryInPlay(int categorySelect ) {
-//        NSString categoryInPlay;
-//            switch (categorySelect) {
-//                case 1: return categoryInPlay = hardness;
-//                case 2: return categoryInPlay = specificGravity;
-//                case 3: return categoryInPlay = cleavage;
-//                case 4: return categoryInPlay = crustalAbundance;
-//                case 5: return categoryInPlay = economicValue;
-//                default: return categoryInPlay = null;
-//            }
-//    }
 }

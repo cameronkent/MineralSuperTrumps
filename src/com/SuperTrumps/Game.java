@@ -11,11 +11,9 @@ class Game {
     Player[] players;
     ComPlayer[] comPlayer;
     Deck cardDeck;
+    int roundCount;
 
     private int dealer;
-
-
-//Constructor
 
     Game(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -23,18 +21,15 @@ class Game {
         players = new Player[numPlayers + 1];
     }
 
-//Logic methods
-
     public void setUserPlayer(String playerName) {
         userPlayer = new UserPlayer(playerName);
-        players[0] = userPlayer;
-        System.out.println("Welcome " + userPlayer.playerName + "\n");
+        //players[0] = userPlayer;
     }
 
     public void setComPlayers() {
         for (int i = 0; i < numPlayers; i++) {
             comPlayer[i] = new ComPlayer(i + 1);
-            players[i] = comPlayer[i + 1];
+            //players[i + 1] = comPlayer[i + 1];
             comPlayer[i].playerName = "Computer " + (Integer.toString(i + 1));
         }
     }
@@ -59,7 +54,7 @@ class Game {
         if (dealer == 1) {
             System.out.println(userPlayer.playerName + " is dealing this round\n");
         }else {
-            System.out.println(comPlayer[dealer].playerName + " is dealing this round\n");
+            System.out.println(comPlayer[dealer - 1].playerName + " is dealing this round\n");
         }
     }
 
@@ -71,23 +66,75 @@ class Game {
 
     public void startNewRound() { // TODO: 20/09/2016 refactor to methods using round class
 
-        Card cardInPlay;
-        int categoryNumber;
+        Card cardInPlay = null;
+        int categoryNumber = 0;
         int valueInPlay;
         int valueToPlay;
-        int playerToStart;
+        int playerTurn;
         String categoryAsString;
         String categoryValueAsString;
-        Array[] playerTurn = new Array[numPlayers];// TODO: 20/09/2016 build turn order
+        //Array[] playerTurn = new Array[numPlayers];// TODO: 20/09/2016 build turn order
 
-        Round gameRound = new Round();
+//Start Round
+        roundCount = roundCount + 1;
+        playerTurn = dealer - 1;
+        switch (playerTurn) {
+            case 0:
+                userPlayer.showHand(userPlayer);
+                cardInPlay = userPlayer.getCardToPlay(userPlayer);
+                categoryNumber = userPlayer.getCategoryToPlay();
+                playerTurn = numPlayers;
+                break;
+            case 1:
+                cardInPlay = comPlayer[0].PlayCard(comPlayer[0], comPlayer[0].getRandCard(comPlayer[0]));
+                categoryNumber = comPlayer[0].getCategoryFromComPlayer();
+                playerTurn = 0;
+                break;
+            case 2:
+                cardInPlay = comPlayer[1].PlayCard(comPlayer[1], comPlayer[1].getRandCard(comPlayer[1]));
+                categoryNumber = comPlayer[1].getCategoryFromComPlayer();
+                playerTurn = 1;
+                break;
+            case 3:
+                cardInPlay = comPlayer[2].PlayCard(comPlayer[2], comPlayer[2].getRandCard(comPlayer[2]));
+                categoryNumber = comPlayer[2].getCategoryFromComPlayer();
+                playerTurn = 2;
+                break;
+            case 4:
+                cardInPlay = comPlayer[3].PlayCard(comPlayer[3], comPlayer[3].getRandCard(comPlayer[3]));
+                categoryNumber = comPlayer[3].getCategoryFromComPlayer();
+                playerTurn = 3;
+                break;
+        }
 
-        //get cardInPlay from dealers 'left'
-        playerToStart = dealer -1;
-//        cardInPlay = gameRound.getCardInPlay(playerToStart, userPlayer, comPlayer); // TODO: 20/09/2016 make this work
+        categoryAsString = getCategoryAsString(categoryNumber);
+        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
 
-        //get category from starting player
-//        gameRound.getCategory(playerToStart,userPlayer, players); // TODO: 20/09/2016 make this work also
+        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
+        System.out.println("Score to beat is: " + categoryValueAsString);
+
+        switch (playerTurn) {
+            case 0:
+                if (!userPlayer.passedTurn) {
+                    userPlayer.showHand(userPlayer);
+                    cardInPlay = userPlayer.getCardToPlay(userPlayer);
+                }
+                playerTurn = numPlayers;
+                break;
+            case 1:
+                playerTurn = 0;
+                break;
+            case 2:
+                playerTurn = 1;
+                break;
+            case 3:
+                playerTurn = 2;
+                break;
+            case 4:
+                playerTurn = 3;
+                break;
+        }
 
 
 //        if (!userPlayer.passedTurn) {
@@ -95,22 +142,10 @@ class Game {
 //            cardInPlay = userPlayer.getCardToPlay(userPlayer);
 //        }
 
-
-        categoryNumber = userPlayer.getCategoryToPlay();
-        categoryAsString = getCategoryAsString(categoryNumber);
-
-//        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
-
-//        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
-        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
-//        System.out.println("Score to beat is: " + categoryValueAsString);
-
 ////ComPlayers play or pass
 //        for (int i = 0; i < comPlayer.length; i++) {
-//
 //            //check if 'passed' and then play card or pass round
 //            while (!comPlayer[i].passedTurn) {
-//
 //                int comMove = comPlayer[i].playCardOrPass(categoryNumber, valueInPlay);
 //                if (comMove == 0) {
 //                    comPlayer[i].DrawCard(comPlayer[i], cardDeck);
@@ -118,13 +153,11 @@ class Game {
 //                } else {
 //                    comPlayer[i].PlayCard(comPlayer[i], i+1);
 //                }
-//
 //            }
-//
-//
 //        }
-
+//
     }
+
 
 //____________________________________________________________________________________________________________________
     //Return a string of category for printing

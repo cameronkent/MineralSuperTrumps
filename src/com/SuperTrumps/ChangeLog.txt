@@ -108,3 +108,9 @@ Assessment Project: 'Mineral Supertrumps'
     * Worked on Round class methods
     * Incomplete methods in Round class. need to solve todo
     PUSHED
+
+27/9/16
+    * Refactored classes removing redundancies
+    * Moved functionality from Round to Game to move forward
+    * Began implementing turn functionality
+    PUSHED
