@@ -123,9 +123,13 @@ Assessment Project: 'Mineral Supertrumps'
     PUSHED
     * Refactored turn switches to refer to methods
     * Refactored player classes to fix game flow
-    * toDo fix on playTurnUserPlayer
+    * toDo fix on playTurnUserPlayer FIXED
 
 28/9/16
     * Refactored starting new round to method calls
     * fixed userDealer turn start error
     * todo implement trump functionality
+    PUSHED
+    * Implemented loop of game rounds to boolean gameOver
+    * Fixed playTurnUserPlayer
+    PUSHED

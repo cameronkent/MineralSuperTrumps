@@ -19,7 +19,7 @@ class Game {
     Player[] players;
     UserPlayer userPlayer;
     ComPlayer[] comPlayer;
-    boolean gameOver = false;
+    //boolean gameOver = false;
 
 
 
@@ -81,10 +81,19 @@ class Game {
         do {
             playGameRoundTurns();
         } while (playersInRound > 1);
+
+        Main.gameOver = false;
     }
 
 
 //____________________________________________________________________________________________________________________
+
+    void resetPassedPlayers(){
+        this.userPlayer.passedTurn = false;
+        for (int i = 0; i < numPlayers; i++) {
+            this.comPlayer[i].passedTurn =false;
+        }
+    }
 
     public void startGameRound() {
         if (dealer == 1) { playerTurn = numPlayers; }
@@ -149,7 +158,7 @@ class Game {
     }
 
     public void displayCurrentValue() {
-        System.out.println("Category for this round is: " + categoryAsString.toUpperCase());
+        System.out.println("\nCategory for this round is: " + categoryAsString.toUpperCase());
         System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
     }
 

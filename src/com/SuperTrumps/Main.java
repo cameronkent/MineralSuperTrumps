@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 public class Main {
 
+    static boolean gameOver;
+
     public static void main(String[] args) throws Exception {
-        boolean gameOver = false;
+        //boolean gameOver = false;
 
 //  Start application
         System.out.println("Welcome to Mineral SuperTrumps!");
@@ -41,7 +43,7 @@ public class Main {
             if (input_playReady.next().charAt(0) == 'y') {
                 System.out.println("\nGAME STARTING\n");
                 playReady = true; }
-        } while (playReady == false);
+        } while (!playReady);
 
         gameST.randomiseDealer();
 
@@ -50,9 +52,10 @@ public class Main {
         gameST.dealPlayerHands();
 
         do {
+            gameST.resetPassedPlayers();
             gameST.playGameRound();
-            System.out.println("Round complete");
-        } while (gameOver = false);
+            System.out.println("ROUND COMPLETE");
+        } while (!gameOver);
 
 //  If player plays 'Trump' card round is over
 
