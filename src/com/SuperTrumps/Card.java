@@ -10,6 +10,8 @@ public class Card {
 
     String title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
     NSArray occurrence;
+    public boolean isTrump;
+
 
     public Card() {}
 
@@ -25,7 +27,7 @@ public class Card {
         this.cleavage = cleavage.toString();
         this.crustalAbundance = crustalAbundance.toString();
         this.economicValue = economicValue.toString();
-
+        this.isTrump = false;
     }
 
     @Override

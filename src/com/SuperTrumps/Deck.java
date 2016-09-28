@@ -38,15 +38,15 @@ public class Deck {
             } while (minerals < 54);
 
 // TODO: 27/09/16  Reactive trumps when logic is implemented
-//            do {
-//                NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
-//
-//                NSString title = (NSString) trumpCard.objectForKey("title");
-//                NSString subtitle = (NSString) trumpCard.objectForKey("subtitle");
-//
-//                deckArray.add(new TrumpCard(title, subtitle));
-//                trumps = trumps + 1;
-//            } while (trumps < 60);
+            do {
+                NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
+
+                NSString title = (NSString) trumpCard.objectForKey("title");
+                NSString subtitle = (NSString) trumpCard.objectForKey("subtitle");
+
+                deckArray.add(new TrumpCard(title, subtitle));
+                trumps = trumps + 1;
+            } while (trumps < 60);
 
         } catch (Exception exc) {
             exc.printStackTrace();

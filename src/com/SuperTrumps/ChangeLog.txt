@@ -137,3 +137,8 @@ Assessment Project: 'Mineral Supertrumps'
     * Altered encapsulation of methods and variables
     * todo fix exception in run
     PUSHED
+    * Introduce isTrump Boolean to cards to allow for if checks
+    * Implemented Trump execution switch for regular turns
+    * Applied win condition to after cards are played
+    * Implemented trump check before com starts a round
+    PUSHED

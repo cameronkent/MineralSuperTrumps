@@ -80,6 +80,8 @@ class Game {
             startGameRound();
         }
 
+        trumpPlayed = false;
+
         do {
             playGameRoundTurns();
         } while (playersInRound > 1);
@@ -92,6 +94,7 @@ class Game {
     private void checkWinCondition(Player player) {
         if (player.Hand.size() == 0) {
             gameWinner = player;
+            playersInRound = 0;
             Main.gameOver = true;
         } else {
             Main.gameOver = false;
@@ -177,11 +180,23 @@ class Game {
         int cardToPlay = userPlayer.getCardToPlay();
         cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
         categoryNumber = userPlayer.getCategoryToPlay();
+        checkWinCondition(userPlayer);
     }
 
     private void startRoundComPlayer(ComPlayer comPlayer) {
-        cardInPlay = comPlayer.PlayCard(comPlayer, comPlayer.getRandCard(comPlayer));
-        categoryNumber = comPlayer.getCategoryFromComPlayer();
+        Card cardToPlay;
+        loop: for (int i = 0; i < comPlayer.Hand.size(); i++) {
+            cardToPlay = comPlayer.Hand.get(i);
+            if (!cardToPlay.isTrump) {
+                cardInPlay = comPlayer.PlayCard(comPlayer, comPlayer.getRandCard(comPlayer));
+                categoryNumber = comPlayer.getCategoryFromComPlayer();
+                checkWinCondition(comPlayer);
+                break loop;
+            }
+        }
+//        cardInPlay = comPlayer.PlayCard(comPlayer, comPlayer.getRandCard(comPlayer));
+//        categoryNumber = comPlayer.getCategoryFromComPlayer();
+//        checkWinCondition(comPlayer);
     }
 
     //Gets the user to choose to play a card or pass turn
@@ -208,10 +223,46 @@ class Game {
             int comMove = comPlayer.playCardOrPass(categoryNumber, valueInPlay);
             if (comMove == 0) {
                 passPlayerTurn(comPlayer);
-            } else {
+            } else if (comPlayer.Hand.get(comMove).isTrump){
+                activateTrumpCard(comPlayer, comMove);
+            }
+            else {
                 cardInPlay = comPlayer.PlayCard(comPlayer, comMove);
                 checkWinCondition(comPlayer);
             }
+        }
+    }
+
+    private void activateTrumpCard(Player player, int trump) {
+        cardInPlay = player.PlayTrump(player, trump);
+        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+        valueInPlay = 0;
+        playersInRound = 0;
+        trumpPlayed = true;
+
+        switch (cardInPlay.title) {
+            case "The Geologist":
+                if (player == userPlayer) {
+                    categoryNumber = userPlayer.getCategoryToPlay();
+                }else {
+                    categoryNumber = ComPlayer.getCategoryFromComPlayer();
+                }
+                break;
+            case "The Gemmologist":
+                categoryNumber = 1;
+                break;
+            case "The Mineralogist":
+                categoryNumber = 3;
+                break;
+            case "The Miner":
+                categoryNumber = 5;
+                break;
+            case "The Petrologist":
+                categoryNumber = 4;
+                break;
+            case "The Geophysicist":
+                categoryNumber = 2;//todo: or throw magnetite
+                break;
         }
     }
 
@@ -246,9 +297,9 @@ class Game {
     }
 
     //find category to get values
-    public static int getValueToPlay(int categorySelect, String categoryValueAsString) {
+    public static int getValueToPlay(int categoryNumber, String categoryValueAsString) {
         int valueToPlay = 0;
-        switch (categorySelect) {
+        switch (categoryNumber) {
             case 1:
                 valueToPlay = getHardnessAsInt(categoryValueAsString);
                 return valueToPlay;

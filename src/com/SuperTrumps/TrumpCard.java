@@ -8,6 +8,7 @@ public class TrumpCard extends Card {
     public TrumpCard(NSString title, NSString subtitle) {
         this.title = title.toString();
         this.subtitle = subtitle.toString();
+        this.isTrump = true;
     }
 
     @Override

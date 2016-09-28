@@ -27,6 +27,15 @@ public class Player {
         return cardInPlay;
     }
 
+    //Play trump card from Hand
+    public Card PlayTrump(Player player, int cardToPlay) {
+        System.out.println(playerName + " is playing the TRUMP: \n" + player.Hand.get(cardToPlay-1));
+        Card cardInPlay = player.Hand.get(cardToPlay - 1);
+        player.Hand.remove(player.Hand.get(cardToPlay -1));
+        System.out.println("Cards in " + this.playerName + " hand " + player.Hand.size());
+        return cardInPlay;
+    }
+
     //Adds card to player hand and removes from deck
     public void DrawCard(Player player, Deck cardDeck) {
         if (cardDeck.size() > 0) {
