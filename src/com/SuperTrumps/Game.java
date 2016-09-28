@@ -5,22 +5,22 @@ import java.util.Random;
 
 class Game {
 
-    int numPlayers;
+    private int numPlayers;
     int roundCount;
-    int dealer;
-    int playerTurn;
-    int playersInRound;
-    int categoryNumber = 0;
-    int valueInPlay;
-    String categoryAsString;
-    String categoryValueAsString;
+    private int dealer;
+    private int playerTurn;
+    private int playersInRound;
+    private int categoryNumber = 0;
+    private int valueInPlay;
+    private String categoryAsString;
+    private String categoryValueAsString;
     Deck cardDeck;
-    Card cardInPlay = null;
-    Player[] players;
-    UserPlayer userPlayer;
-    ComPlayer[] comPlayer;
-    //boolean gameOver = false;
-
+    private Card cardInPlay = null;
+    private Player[] players;
+    private UserPlayer userPlayer;
+    private ComPlayer[] comPlayer;
+    Player gameWinner;
+    private boolean trumpPlayed;
 
 
     Game(int numPlayers) {
@@ -29,12 +29,12 @@ class Game {
         players = new Player[numPlayers + 1];
     }
 
-    public void setUserPlayer(String playerName) {
+    void setUserPlayer(String playerName) {
         userPlayer = new UserPlayer(playerName);
         //players[0] = userPlayer;
     }
 
-    public void setComPlayers() {
+    void setComPlayers() {
         for (int i = 0; i < numPlayers; i++) {
             comPlayer[i] = new ComPlayer(i + 1);
             //players[i + 1] = comPlayer[i + 1];
@@ -42,7 +42,7 @@ class Game {
         }
     }
 
-    public void showPlayers() {
+    void showPlayers() {
         System.out.println("This games players are:");
         System.out.println(userPlayer.playerName);
         for (int i = 0; i < comPlayer.length; i++) {
@@ -50,13 +50,13 @@ class Game {
         }
     }
 
-    public void buildCardDeck() throws Exception {
+    void buildCardDeck() throws Exception {
         cardDeck = new Deck();
         Collections.shuffle(cardDeck.deckArray);
         System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.\n");
     }
 
-    public void randomiseDealer() {
+    void randomiseDealer() {
         Random random = new Random();
         dealer = random.nextInt(numPlayers) + 1;
         if (dealer == 1) {
@@ -66,27 +66,37 @@ class Game {
         }
     }
 
-    public void dealPlayerHands() {
+    void dealPlayerHands() {
         userPlayer.DealHand(userPlayer, cardDeck);
         for (int j = 0; j < comPlayer.length; j++) comPlayer[j].DealHand(comPlayer[j], cardDeck);
         System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
     }
 
-    public void playGameRound() {
+    void playGameRound() {
         playersInRound = numPlayers + 1;
         roundCount = roundCount + 1;
 
-        startGameRound();
+        if (!trumpPlayed) { // TODO: 28/09/16 implement trump set category
+            startGameRound();
+        }
 
         do {
             playGameRoundTurns();
         } while (playersInRound > 1);
 
-        Main.gameOver = false;
     }
 
 
 //____________________________________________________________________________________________________________________
+
+    private void checkWinCondition(Player player) {
+        if (player.Hand.size() == 0) {
+            gameWinner = player;
+            Main.gameOver = true;
+        } else {
+            Main.gameOver = false;
+        }
+    }
 
     void resetPassedPlayers(){
         this.userPlayer.passedTurn = false;
@@ -95,7 +105,7 @@ class Game {
         }
     }
 
-    public void startGameRound() {
+    private void startGameRound() {
         if (dealer == 1) { playerTurn = numPlayers; }
         else {playerTurn = dealer - 1; }
         switch (playerTurn) {
@@ -125,7 +135,7 @@ class Game {
         displayCurrentValue();
     }
 
-    public void playGameRoundTurns() {
+    private void playGameRoundTurns() {
         switch (playerTurn) {
             case 0:
                 playTurnUserPlayer();
@@ -152,30 +162,30 @@ class Game {
         displayCurrentValue();
     }
 
-    public void setCurrentValues() {
+    private void setCurrentValues() {
         categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
         valueInPlay = getValueToPlay(categoryNumber, cardInPlay.getCategoryInPlay(categoryNumber));
     }
 
-    public void displayCurrentValue() {
+    private void displayCurrentValue() {
         System.out.println("\nCategory for this round is: " + categoryAsString.toUpperCase());
         System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
     }
 
-    public void startRoundUserPlayer() {
+    private void startRoundUserPlayer() {
         userPlayer.showHand(userPlayer);
         int cardToPlay = userPlayer.getCardToPlay();
         cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
         categoryNumber = userPlayer.getCategoryToPlay();
     }
 
-    public void startRoundComPlayer(ComPlayer comPlayer) {
+    private void startRoundComPlayer(ComPlayer comPlayer) {
         cardInPlay = comPlayer.PlayCard(comPlayer, comPlayer.getRandCard(comPlayer));
         categoryNumber = comPlayer.getCategoryFromComPlayer();
     }
 
     //Gets the user to choose to play a card or pass turn
-    public void playTurnUserPlayer(){
+    private void playTurnUserPlayer(){
         if (!userPlayer.passedTurn) {
             userPlayer.showHand(userPlayer);
             int userMove = userPlayer.playOrPass();
@@ -184,6 +194,7 @@ class Game {
                 int valueToPlay = getValueToPlay(categoryNumber, userPlayer.Hand.get(cardToPlay-1).getCategoryInPlay(categoryNumber));
                 if (valueToPlay > valueInPlay) {
                     cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+                    checkWinCondition(userPlayer);
                 } else { passPlayerTurn(userPlayer); }
             } else {
                 passPlayerTurn(userPlayer);
@@ -192,17 +203,20 @@ class Game {
     }
 
     //ComPlayer turn; either plays a higher card or passes
-    public void playTurnComPlayer(ComPlayer comPlayer) {
+    private void playTurnComPlayer(ComPlayer comPlayer) {
         if (!comPlayer.passedTurn) {
             int comMove = comPlayer.playCardOrPass(categoryNumber, valueInPlay);
             if (comMove == 0) {
                 passPlayerTurn(comPlayer);
-            } else {cardInPlay = comPlayer.PlayCard(comPlayer, comMove);}
+            } else {
+                cardInPlay = comPlayer.PlayCard(comPlayer, comMove);
+                checkWinCondition(comPlayer);
+            }
         }
     }
 
     //Standard pass method for all players
-    public void passPlayerTurn(Player player) {
+    private void passPlayerTurn(Player player) {
         player.DrawCard(player, cardDeck);
         player.passedTurn = true;
         playersInRound = playersInRound - 1;
@@ -210,7 +224,7 @@ class Game {
     }
 
     //Return a string of category for printing
-    public String getCategoryAsString(int categoryNumber ) {
+    private String getCategoryAsString(int categoryNumber ) {
         String categoryAsString;
         loop: do {
             switch (categoryNumber) {
@@ -254,7 +268,7 @@ class Game {
     }
 
     //Return Hardness as int for comparison
-    public static int getHardnessAsInt(String hardness) {
+    private static int getHardnessAsInt(String hardness) {
         int hardnessAsInt = 0;
         switch (hardness){
             case "1" :
@@ -366,7 +380,7 @@ class Game {
     }
 
     //Return specific gravity as int for comparison
-    public static int getSpecificGravityAsInt(String specificGravity) {
+    private static int getSpecificGravityAsInt(String specificGravity) {
         int specificGravityAsInt = 0;
         switch (specificGravity) {
             case "2.2" :
@@ -517,7 +531,7 @@ class Game {
     }
 
     //Return cleavage as int for comparison
-    public static int getCleavageAsInt(String cleavage) {
+    private static int getCleavageAsInt(String cleavage) {
         int cleavageAsInt = 0;
         switch (cleavage){
             case "none":
@@ -569,7 +583,7 @@ class Game {
     }
 
     //Return crustal abundance as int for comparison
-    public static int getCrustalAbundanceAsInt(String crustalAbundance) {
+    private static int getCrustalAbundanceAsInt(String crustalAbundance) {
         int crustalAbundanceAsInt = 0;
         switch (crustalAbundance){
             case "ultratrace":
@@ -594,7 +608,7 @@ class Game {
     }
 
     //Return economic value as int for comparison
-    public static int getEconomicValueAsInt(String economicValue) {
+    private static int getEconomicValueAsInt(String economicValue) {
         int economicValueAsInt = 0;
         switch (economicValue){
             case "trivial":

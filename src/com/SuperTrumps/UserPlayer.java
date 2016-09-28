@@ -4,9 +4,7 @@ import java.util.Scanner;
 
 public class UserPlayer extends Player {
 
-
-    UserPlayer() {
-    }
+    UserPlayer() {}
 
     UserPlayer(String playerName) {
         playerID = 0;
@@ -22,13 +20,17 @@ public class UserPlayer extends Player {
 
     //Displays users hand
     public void showHand(Player player) {
-        Scanner input_showHand = new Scanner(System.in);
-        System.out.println("View hand? y/n");
-        String showHand = input_showHand.next();
-        if (showHand.charAt(0) == 'y') {
-            System.out.println("Cards in hand " + player.Hand.size());
-            for (int i = 0; i < player.Hand.size(); i++ )System.out.println("Card #" + (i+1) + ":\n" + player.Hand.get(i));
-        }
+        String showHandChoice;
+        do {
+            Scanner input_showHand = new Scanner(System.in);
+            System.out.println("View hand? y/n");
+            showHandChoice = input_showHand.next();
+            if (showHandChoice.charAt(0) == 'y') {
+                System.out.println("Cards in hand " + player.Hand.size());
+                for (int i = 0; i < player.Hand.size(); i++)
+                    System.out.println("Card #" + (i + 1) + ":\n" + player.Hand.get(i));
+            }
+        } while (showHandChoice.charAt(0) != 'y');
     }
 
     //Take input to play card from users hand
@@ -47,13 +49,13 @@ public class UserPlayer extends Player {
         return categorySelect;
     }
 
-    public Card PlayCard(Player player, int cardToPlay) {
-        System.out.println(playerName + " is playing the card: \n" + player.Hand.get(cardToPlay-1));
-        Card cardInPlay = player.Hand.get(cardToPlay - 1);
-        player.Hand.remove(player.Hand.get(cardToPlay -1));
-        System.out.println("Cards in hand " + player.Hand.size());
-        return cardInPlay;
-    }
+//    public Card PlayCard(Player player, int cardToPlay) {
+//        System.out.println(playerName + " is playing the card: \n" + player.Hand.get(cardToPlay-1));
+//        Card cardInPlay = player.Hand.get(cardToPlay - 1);
+//        player.Hand.remove(player.Hand.get(cardToPlay -1));
+//        System.out.println("Cards in hand " + player.Hand.size());
+//        return cardInPlay;
+//    }
 
     public int playOrPass() {
         int playOrPass;

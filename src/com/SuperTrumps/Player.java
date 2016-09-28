@@ -19,11 +19,22 @@ public class Player {
         }
     }
 
-    //Adds card to player hand and removes from deck
-    public void DrawCard(Player player, Deck cardDeck) {
-        System.out.println(playerName + " draws a card from the deck.\n");
-        player.Hand.add(cardDeck.deckArray.get(cardDeck.size()-1));
-        cardDeck.deckArray.remove(cardDeck.deckArray.get(cardDeck.size()-1));
+    public Card PlayCard(Player player, int cardToPlay) {
+        System.out.println(playerName + " is playing the card: \n" + player.Hand.get(cardToPlay-1));
+        Card cardInPlay = player.Hand.get(cardToPlay - 1);
+        player.Hand.remove(player.Hand.get(cardToPlay -1));
+        System.out.println("Cards in " + this.playerName + " hand " + player.Hand.size());
+        return cardInPlay;
     }
 
+    //Adds card to player hand and removes from deck
+    public void DrawCard(Player player, Deck cardDeck) {
+        if (cardDeck.size() > 0) {
+            System.out.println(playerName + " draws a card from the deck.\n");
+            player.Hand.add(cardDeck.deckArray.get(cardDeck.size() - 1));
+            cardDeck.deckArray.remove(cardDeck.deckArray.get(cardDeck.size() - 1));
+        } else {
+            System.out.println("Deck is empty.\n");
+        }
+    }
 }

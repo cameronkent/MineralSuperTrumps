@@ -7,7 +7,7 @@ public class Main {
     static boolean gameOver;
 
     public static void main(String[] args) throws Exception {
-        //boolean gameOver = false;
+        boolean playReady = false;
 
 //  Start application
         System.out.println("Welcome to Mineral SuperTrumps!");
@@ -35,13 +35,14 @@ public class Main {
         gameST.setComPlayers();
         gameST.showPlayers();
 
-        //input check before starting rounds
-        boolean playReady = false;
+//input check before starting rounds
         do {
             System.out.println("\nAre you ready to play? y/n");
             Scanner input_playReady = new Scanner(System.in);
             if (input_playReady.next().charAt(0) == 'y') {
-                System.out.println("\nGAME STARTING\n");
+                System.out.println("\n**************************************************\n" +
+                                   "                  GAME STARTING" +
+                                   "\n**************************************************\n");
                 playReady = true; }
         } while (!playReady);
 
@@ -52,10 +53,19 @@ public class Main {
         gameST.dealPlayerHands();
 
         do {
+            System.out.println("\n**************************************************\n" +
+                               "                ROUND (" + (gameST.roundCount +1) +") STARTING" +
+                               "\n**************************************************\n");
+            System.out.println(gameST.cardDeck.size() + " cards remain in deck");
             gameST.resetPassedPlayers();
             gameST.playGameRound();
-            System.out.println("ROUND COMPLETE");
+            System.out.println("\n**************************************************\n" +
+                               "                ROUND (" + gameST.roundCount +") COMPLETE" +
+                               "\n**************************************************\n");
         } while (!gameOver);
+
+        System.out.println(gameST.gameWinner.playerName.toUpperCase() + " WINS THE GAME!");
+        System.out.println("Thank you for playing!");
 
 //  If player plays 'Trump' card round is over
 

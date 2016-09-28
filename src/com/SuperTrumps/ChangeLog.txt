@@ -133,3 +133,7 @@ Assessment Project: 'Mineral Supertrumps'
     * Implemented loop of game rounds to boolean gameOver
     * Fixed playTurnUserPlayer
     PUSHED
+    * Removed Redundant Round class
+    * Altered encapsulation of methods and variables
+    * todo fix exception in run
+    PUSHED
