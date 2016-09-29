@@ -8,7 +8,15 @@ import com.dd.plist.NSString;
 //                    card_type
 public class Card {
 
-    String title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
+    String title;
+    String chemistry;
+    String classification;
+    String crystalSystem;
+    String hardness;
+    String specificGravity;
+    String cleavage;
+    String crustalAbundance;
+    String economicValue;
     NSArray occurrence;
     public boolean isTrump;
 
@@ -67,5 +75,30 @@ public class Card {
                 categoryInPlay = this.economicValue;
                 return categoryInPlay;
         } return categoryInPlay;
+    }
+
+    public static String getCategoryAsString(int categorySelect) {
+        String categoryInPlay = "";
+        switch (categorySelect) {
+            case 1:
+                categoryInPlay = "Hardness";
+                return categoryInPlay;
+            case 2:
+                categoryInPlay = "Specific gravity";
+                return categoryInPlay;
+            case 3:
+                categoryInPlay = "Cleavage";
+                return categoryInPlay;
+            case 4:
+                categoryInPlay = "Crustal abundance";
+                return categoryInPlay;
+            case 5:
+                categoryInPlay = "Economic value";
+                return categoryInPlay;
+        } return categoryInPlay;
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 }

@@ -13,14 +13,14 @@ class Game {
     private int categoryNumber = 0;
     private int valueInPlay;
     private String categoryAsString;
-    private String categoryValueAsString;
+    private String valueInPlayAsString;
     Deck cardDeck;
     private Card cardInPlay = null;
     private Player[] players;
     private UserPlayer userPlayer;
     private ComPlayer[] comPlayer;
     Player gameWinner;
-    private boolean trumpPlayed;
+    private boolean trumpPlayed = false;
 
 
     Game(int numPlayers) {
@@ -58,11 +58,16 @@ class Game {
 
     void randomiseDealer() {
         Random random = new Random();
-        dealer = random.nextInt(numPlayers) + 1;
-        if (dealer == 1) {
-            System.out.println(userPlayer.playerName + " is dealing this round\n");
-        }else {
-            System.out.println(comPlayer[dealer - 1].playerName + " is dealing this round\n");
+        try {
+            dealer = random.nextInt(numPlayers) + 1;
+            if (dealer == 1) {
+                System.out.println(userPlayer.playerName + " is dealing this round\n");
+            }else {
+                System.out.println(comPlayer[dealer - 1].playerName + " is dealing this round\n");
+            }
+        } catch (Exception exc) {
+            System.out.println("Game.java @ randomiseDealer");
+            exc.printStackTrace();
         }
     }
 
@@ -72,7 +77,7 @@ class Game {
         System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
     }
 
-    void playGameRound() {
+    void playGameRound() throws Exception{
         playersInRound = numPlayers + 1;
         roundCount = roundCount + 1;
 
@@ -80,6 +85,7 @@ class Game {
             startGameRound();
         }
 
+        dealer = 0;
         trumpPlayed = false;
 
         do {
@@ -108,37 +114,47 @@ class Game {
         }
     }
 
-    private void startGameRound() {
-        if (dealer == 1) { playerTurn = numPlayers; }
-        else {playerTurn = dealer - 1; }
-        switch (playerTurn) {
-            case 0:
-                startRoundUserPlayer();
-                playerTurn = numPlayers;
-                break;
-            case 1:
-                startRoundComPlayer(comPlayer[0]);
-                playerTurn = 0;
-                break;
-            case 2:
-                startRoundComPlayer(comPlayer[1]);
-                playerTurn = 1;
-                break;
-            case 3:
-                startRoundComPlayer(comPlayer[2]);
-                playerTurn = 2;
-                break;
-            case 4:
-                startRoundComPlayer(comPlayer[3]);
-                playerTurn = 3;
-                break;
+    private void startGameRound() throws Exception{
+        try {
+            if (roundCount == 1) {
+                if (dealer == 1) {
+                    playerTurn = numPlayers;
+                } else {
+                    playerTurn = dealer - 1;
+                }
+            }
+            switch (playerTurn) {
+                case 0:
+                    startRoundUserPlayer();
+                    playerTurn = numPlayers;
+                    break;
+                case 1:
+                    startRoundComPlayer(comPlayer[0]);
+                    playerTurn = 0;
+                    break;
+                case 2:
+                    startRoundComPlayer(comPlayer[1]);
+                    playerTurn = 1;
+                    break;
+                case 3:
+                    startRoundComPlayer(comPlayer[2]);
+                    playerTurn = 2;
+                    break;
+                case 4:
+                    startRoundComPlayer(comPlayer[3]);
+                    playerTurn = 3;
+                    break;
+            }
+            categoryAsString = getCategoryAsString(categoryNumber);
+            setCurrentValues();
+            displayCurrentValue();
+        } catch (Exception exc) {
+            System.out.println("Game.java @ startGameRound");
+            exc.printStackTrace();
         }
-        categoryAsString = getCategoryAsString(categoryNumber);
-        setCurrentValues();
-        displayCurrentValue();
     }
 
-    private void playGameRoundTurns() {
+    private void playGameRoundTurns() throws Exception{
         switch (playerTurn) {
             case 0:
                 playTurnUserPlayer();
@@ -161,21 +177,23 @@ class Game {
                 playerTurn = 3;
                 break;
         }
-        setCurrentValues();
+        if (!cardInPlay.isTrump) {
+            setCurrentValues();
+        }
         displayCurrentValue();
     }
 
     private void setCurrentValues() {
-        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+        valueInPlayAsString = cardInPlay.getCategoryInPlay(categoryNumber);
         valueInPlay = getValueToPlay(categoryNumber, cardInPlay.getCategoryInPlay(categoryNumber));
     }
 
     private void displayCurrentValue() {
         System.out.println("\nCategory for this round is: " + categoryAsString.toUpperCase());
-        System.out.println("Score to beat is: " + categoryValueAsString.toUpperCase() + "\n");
+        System.out.println("Score to beat is: " + valueInPlayAsString.toUpperCase() + "\n");
     }
 
-    private void startRoundUserPlayer() {
+    private void startRoundUserPlayer() throws Exception{
         userPlayer.showHand(userPlayer);
         int cardToPlay = userPlayer.getCardToPlay();
         cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
@@ -183,12 +201,12 @@ class Game {
         checkWinCondition(userPlayer);
     }
 
-    private void startRoundComPlayer(ComPlayer comPlayer) {
+    private void startRoundComPlayer(ComPlayer comPlayer) throws Exception {
         Card cardToPlay;
         loop: for (int i = 0; i < comPlayer.Hand.size(); i++) {
             cardToPlay = comPlayer.Hand.get(i);
             if (!cardToPlay.isTrump) {
-                cardInPlay = comPlayer.PlayCard(comPlayer, comPlayer.getRandCard(comPlayer));
+                cardInPlay = comPlayer.PlayCard(comPlayer, i + 1);
                 categoryNumber = comPlayer.getCategoryFromComPlayer();
                 checkWinCondition(comPlayer);
                 break loop;
@@ -200,30 +218,35 @@ class Game {
     }
 
     //Gets the user to choose to play a card or pass turn
-    private void playTurnUserPlayer(){
+    private void playTurnUserPlayer() throws Exception {
         if (!userPlayer.passedTurn) {
             userPlayer.showHand(userPlayer);
             int userMove = userPlayer.playOrPass();
             if (userMove == 1) {
                 int cardToPlay = userPlayer.getCardToPlay();
-                int valueToPlay = getValueToPlay(categoryNumber, userPlayer.Hand.get(cardToPlay-1).getCategoryInPlay(categoryNumber));
-                if (valueToPlay > valueInPlay) {
-                    cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+                if (userPlayer.Hand.get(cardToPlay - 1).isTrump) {
+                    activateTrumpCard(userPlayer, cardToPlay);
                     checkWinCondition(userPlayer);
-                } else { passPlayerTurn(userPlayer); }
-            } else {
-                passPlayerTurn(userPlayer);
-            }
+                } else {
+                    int valueToPlay = getValueToPlay(categoryNumber, userPlayer.Hand.get(cardToPlay - 1).getCategoryInPlay(categoryNumber));
+                    if (valueToPlay > valueInPlay) {
+                        cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+                        checkWinCondition(userPlayer);
+                    } else {
+                        passPlayerTurn(userPlayer);
+                    }
+                }
+            } else { passPlayerTurn(userPlayer); }
         }
     }
 
     //ComPlayer turn; either plays a higher card or passes
-    private void playTurnComPlayer(ComPlayer comPlayer) {
+    private void playTurnComPlayer(ComPlayer comPlayer) throws Exception{
         if (!comPlayer.passedTurn) {
             int comMove = comPlayer.playCardOrPass(categoryNumber, valueInPlay);
             if (comMove == 0) {
                 passPlayerTurn(comPlayer);
-            } else if (comPlayer.Hand.get(comMove).isTrump){
+            } else if (comPlayer.Hand.get(comMove - 1).isTrump){
                 activateTrumpCard(comPlayer, comMove);
             }
             else {
@@ -233,45 +256,58 @@ class Game {
         }
     }
 
-    private void activateTrumpCard(Player player, int trump) {
+    private void activateTrumpCard(Player player, int trump) throws Exception {
         cardInPlay = player.PlayTrump(player, trump);
-        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+        valueInPlayAsString = "";
         valueInPlay = 0;
         playersInRound = 0;
         trumpPlayed = true;
+        String trumpName = cardInPlay.getTitle();
 
-        switch (cardInPlay.title) {
+        switch (trumpName) {
             case "The Geologist":
                 if (player == userPlayer) {
                     categoryNumber = userPlayer.getCategoryToPlay();
+
                 }else {
                     categoryNumber = ComPlayer.getCategoryFromComPlayer();
                 }
+                categoryAsString = Card.getCategoryAsString(categoryNumber);
                 break;
             case "The Gemmologist":
                 categoryNumber = 1;
+                categoryAsString = "Hardness";
                 break;
             case "The Mineralogist":
                 categoryNumber = 3;
+                categoryAsString = "Cleavage";
                 break;
             case "The Miner":
                 categoryNumber = 5;
+                categoryAsString = "Economic value";
                 break;
             case "The Petrologist":
                 categoryNumber = 4;
+                categoryAsString = "Crustal abundance";
                 break;
             case "The Geophysicist":
                 categoryNumber = 2;//todo: or throw magnetite
+                categoryAsString = "Specific gravity";
                 break;
         }
     }
 
     //Standard pass method for all players
-    private void passPlayerTurn(Player player) {
-        player.DrawCard(player, cardDeck);
-        player.passedTurn = true;
-        playersInRound = playersInRound - 1;
-        System.out.println(playersInRound + " players left in round.");
+    private void passPlayerTurn(Player player) throws Exception {
+        try {
+            player.DrawCard(player, cardDeck);
+            player.passedTurn = true;
+            playersInRound = playersInRound - 1;
+            System.out.println(playersInRound + " players left in round.");
+        } catch (Exception exc) {
+            System.out.println("Game.java @ passPlayerTurn");
+            exc.printStackTrace();
+        }
     }
 
     //Return a string of category for printing

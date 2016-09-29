@@ -1,36 +1,25 @@
 package com.SuperTrumps.Testing;
 
-import com.SuperTrumps.Deck;
-import com.SuperTrumps.Card;
-
-import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TestThree {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
 
-//        Deck testDeck = new Deck();
-//        Collections.shuffle(testDeck.deckArray);
-//
-//        for (int i = 0; i < testDeck.size(); i ++) {
-//            Card testCard = testDeck.deckArray.get(i);
-//            if ( testCard.isTrump == true) {
-//                System.out.println(testCard);
-//            }
-//        }
-        Random randCategory = new Random();
+        System.out.println("numPlayers:");
+        Scanner input_numPlayers = new Scanner(System.in);
+        int numPlayers = input_numPlayers.nextInt();
+
         for (int i = 0; i < 10; i++) {
-            System.out.println(randCategory.nextInt(5) + 1);
+            Random random = new Random();
+            int dealer = random.nextInt(numPlayers + 1) + 1;
+            System.out.println(dealer);
         }
-
-//        for (int i = 0; i < 10; i++) {
-//            Random random = new Random();
-//            Scanner input_numPlayers = new Scanner(System.in);
-//            int numPlayers = input_numPlayers.nextInt();
-//            int dealer = random.nextInt(numPlayers) + 1;
-//            System.out.println(dealer);
-//        }
+        System.out.println("second");
+        for (int i = 0; i < 10; i++) {
+            Random random = new Random();
+            int dealer = random.nextInt(numPlayers + 1) + 1;
+            System.out.println(dealer);
+        }
     }
-
 }

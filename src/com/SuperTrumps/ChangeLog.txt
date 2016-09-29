@@ -142,3 +142,9 @@ Assessment Project: 'Mineral Supertrumps'
     * Applied win condition to after cards are played
     * Implemented trump check before com starts a round
     PUSHED
+
+29/9/16
+    * Implemented try catch around methods with '-1' to find outOfBoundsException
+    * Debugged exceptions occurring from trump cards
+    * ACHIEVED A WIN CONDITION IN PLAY THROUGH
+    PUSHED
