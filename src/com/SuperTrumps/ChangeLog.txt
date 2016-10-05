@@ -153,7 +153,8 @@ Assessment Project: 'Mineral Supertrumps'
 5/10/16
     * Created branch to start GUI
     PUSHED
-
+    * Created welcome form with new game and view rules button
+    * Created setupGame form to set user entered variables
 
 
 
