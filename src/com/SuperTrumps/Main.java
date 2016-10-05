@@ -18,7 +18,6 @@ public class Main {
         String playerName = input_playerName.next();
         System.out.println("Welcome " + playerName + "\n");
 
-
 //  Choose number of players
         int numPlayers;
         do {Scanner input_numPlayers = new Scanner(System.in);
@@ -66,17 +65,6 @@ public class Main {
 
         System.out.println(gameST.gameWinner.playerName.toUpperCase() + " WINS THE GAME!");
         System.out.println("Thank you for playing!");
-
-//  If player plays 'Trump' card round is over
-
-//  New round category is the 'Trump' category
-
-//  Player who played 'Trump' begins next round
-
-//  Rounds continue
-
-//  First player with empty hand wins game
-
 
     }
 }

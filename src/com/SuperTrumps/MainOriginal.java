@@ -62,9 +62,9 @@ public class MainOriginal {
 //Turn structure with user playing first card
 //        cardInPlay = userPlayer.getCardToPlay(userPlayer);
         categoryNumber = userPlayer.getCategoryToPlay();
-        //categoryAsString = newGame.getCategoryAsString(categoryNumber);
+        //categoryAsString = newGame.getCategoryNameAsString(categoryNumber);
 
-//        categoryValueAsString = cardInPlay.getCategoryInPlay(categoryNumber);
+//        categoryValueAsString = cardInPlay.getCategoryValueInPlay(categoryNumber);
 
 //        valueInPlay = Game.getValueToPlay(categoryNumber, categoryValueAsString);
         //System.out.println("Category for this round is: " + categoryAsString.toUpperCase());

@@ -8,15 +8,7 @@ import com.dd.plist.NSString;
 //                    card_type
 public class Card {
 
-    String title;
-    String chemistry;
-    String classification;
-    String crystalSystem;
-    String hardness;
-    String specificGravity;
-    String cleavage;
-    String crustalAbundance;
-    String economicValue;
+    String title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
     NSArray occurrence;
     public boolean isTrump;
 
@@ -56,9 +48,9 @@ public class Card {
                 "\n--------------------------------------------------\n");
     }
 
-    public String getCategoryInPlay(int categorySelect) {
+    public String getCategoryValueInPlay(int categoryNumber) {
         String categoryInPlay = "";
-        switch (categorySelect) {
+        switch (categoryNumber) {
             case 1:
                 categoryInPlay = this.hardness;
                 return categoryInPlay;
@@ -77,9 +69,9 @@ public class Card {
         } return categoryInPlay;
     }
 
-    public static String getCategoryAsString(int categorySelect) {
+    public static String getCategoryNameAsString(int categoryNumber) {
         String categoryInPlay = "";
-        switch (categorySelect) {
+        switch (categoryNumber) {
             case 1:
                 categoryInPlay = "Hardness";
                 return categoryInPlay;

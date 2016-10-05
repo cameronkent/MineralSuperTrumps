@@ -37,7 +37,6 @@ public class Deck {
 
             } while (minerals < 54);
 
-// TODO: 27/09/16  Reactive trumps when logic is implemented
             do {
                 NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
 

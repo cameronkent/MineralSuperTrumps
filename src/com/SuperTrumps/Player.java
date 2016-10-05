@@ -37,9 +37,9 @@ public class Player {
     public Card PlayTrump(Player player, int trumpToPlay) throws Exception{
         Card cardInPlay = null;
         try {
-            System.out.println(playerName + " is playing the TRUMP: \n" + player.Hand.get(trumpToPlay - 1));// removed -1
-            cardInPlay = player.Hand.get(trumpToPlay - 1);// removed -1
-            player.Hand.remove(player.Hand.get(trumpToPlay - 1));// removed -1
+            System.out.println(playerName + " is playing the TRUMP: \n" + player.Hand.get(trumpToPlay - 1));
+            cardInPlay = player.Hand.get(trumpToPlay - 1);
+            player.Hand.remove(player.Hand.get(trumpToPlay - 1));
             System.out.println("Cards in " + this.playerName + " hand " + player.Hand.size());
         } catch (Exception exc) {
             System.out.println("Player.java @ PlayTrump");

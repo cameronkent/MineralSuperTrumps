@@ -106,7 +106,7 @@ Assessment Project: 'Mineral Supertrumps'
     PUSHED
     * Created Testing package to separate test files
     * Worked on Round class methods
-    * Incomplete methods in Round class. need to solve todo
+    * Incomplete methods in Round class. need to solve DONE
     PUSHED
 
 27/9/16
@@ -123,19 +123,19 @@ Assessment Project: 'Mineral Supertrumps'
     PUSHED
     * Refactored turn switches to refer to methods
     * Refactored player classes to fix game flow
-    * toDo fix on playTurnUserPlayer FIXED
+    * fix on playTurnUserPlayer FIXED
 
 28/9/16
     * Refactored starting new round to method calls
     * fixed userDealer turn start error
-    * todo implement trump functionality
+    * implement trump functionality done
     PUSHED
     * Implemented loop of game rounds to boolean gameOver
     * Fixed playTurnUserPlayer
     PUSHED
     * Removed Redundant Round class
     * Altered encapsulation of methods and variables
-    * todo fix exception in run
+    * fix exception in run
     PUSHED
     * Introduce isTrump Boolean to cards to allow for if checks
     * Implemented Trump execution switch for regular turns
@@ -148,3 +148,14 @@ Assessment Project: 'Mineral Supertrumps'
     * Debugged exceptions occurring from trump cards
     * ACHIEVED A WIN CONDITION IN PLAY THROUGH
     PUSHED
+    * refactor where possible and add code comments where necessary.
+
+5/10/16
+    * Created branch to start GUI
+    PUSHED
+
+
+
+
+
+

@@ -45,8 +45,8 @@ public class TestTwo {
 //        System.out.println("Choose category to play:" + "\n1 Hardness" + "\n2 Specific gravity" + "\n3 Cleavage" + "\n4 Crustal abundance" + "\n5 Economic value");
 //        Scanner inputCategory = new Scanner(System.in);
 //        categorySelect = inputCategory.nextInt();
-//        categoryAsString = gameOne.getCategoryAsString(categorySelect);
-//        categoryValueAsString = cardInPlay.getCategoryInPlay(categorySelect);
+//        categoryAsString = gameOne.getCategoryNameAsString(categorySelect);
+//        categoryValueAsString = cardInPlay.getCategoryValueInPlay(categorySelect);
 //        System.out.println("Category for this round is " + categoryAsString);
 //        System.out.println("Score to beat is: " + categoryValueAsString);
 
