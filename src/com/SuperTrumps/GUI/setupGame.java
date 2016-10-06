@@ -15,7 +15,7 @@ public class setupGame {
     private JTextField text_getUserName;
     private JLabel label_userName;
     private JLabel label_numPlayers;
-    private JComboBox combo_numPlayers;
+    private JComboBox combo_getNumPlayers;
 
     public setupGame() {
         button_backToMain.addActionListener(new ActionListener() {
@@ -23,6 +23,13 @@ public class setupGame {
             public void actionPerformed(ActionEvent e) {
                 panel_setupGame.setVisible(false);
                 GUI.setFrameHome();
+            }
+        });
+        button_startGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel_setupGame.setVisible(false);
+                GUI.setFrameGameTable();
             }
         });
     }

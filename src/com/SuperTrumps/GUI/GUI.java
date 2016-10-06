@@ -28,6 +28,11 @@ public class GUI {
     }
 
     public static void setFrameHome() {
+
         gameGUI.setContentPane(new welcomeGUI().panel_welcome);
+    }
+
+    public static void setFrameGameTable() {
+        gameGUI.setContentPane(new gameTable().panel_gameTable);
     }
 }

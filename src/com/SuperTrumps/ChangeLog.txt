@@ -155,8 +155,11 @@ Assessment Project: 'Mineral Supertrumps'
     PUSHED
     * Created welcome form with new game and view rules button
     * Created setupGame form to set user entered variables
+    PUSHED
 
-
+6/10.16
+    * Continued work on GUI forms
+    PUSHED
 
 
 
