@@ -4,9 +4,10 @@ import com.dd.plist.NSString;
 
 public class TrumpCard extends Card {
 
-    String title, subtitle;
+    String fileName, title, subtitle;
 
-    public TrumpCard(NSString title, NSString subtitle) {
+    public TrumpCard(NSString fileName, NSString title, NSString subtitle) {
+        this.fileName = fileName.toString();
         this.title = title.toString();
         this.subtitle = subtitle.toString();
         this.isTrump = true;

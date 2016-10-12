@@ -21,6 +21,7 @@ public class Deck {
             do {
                 NSDictionary mineralCard = (NSDictionary) cardsArray.objectAtIndex(minerals);
 
+                NSString imageName = (NSString) mineralCard.objectForKey("fileName");
                 NSString title = (NSString) mineralCard.objectForKey("title");
                 NSString chemistry = (NSString) mineralCard.objectForKey("chemistry");
                 NSString classification = (NSString) mineralCard.objectForKey("classification");
@@ -32,7 +33,7 @@ public class Deck {
                 NSString crustalAbundance = (NSString) mineralCard.objectForKey("crustal_abundance");
                 NSString economicValue = (NSString) mineralCard.objectForKey("economic_value");
 
-                deckArray.add(new Card(title, chemistry, classification, crystalSystem, occurrence, hardness, specificGravity, cleavage, crustalAbundance, economicValue));
+                deckArray.add(new Card(imageName, title, chemistry, classification, crystalSystem, occurrence, hardness, specificGravity, cleavage, crustalAbundance, economicValue));
                 minerals = minerals + 1;
 
             } while (minerals < 54);
@@ -40,10 +41,11 @@ public class Deck {
             do {
                 NSDictionary trumpCard = (NSDictionary) cardsArray.objectAtIndex(trumps);
 
+                NSString fileName = (NSString) trumpCard.objectForKey("fileName");
                 NSString title = (NSString) trumpCard.objectForKey("title");
                 NSString subtitle = (NSString) trumpCard.objectForKey("subtitle");
 
-                deckArray.add(new TrumpCard(title, subtitle));
+                deckArray.add(new TrumpCard(fileName, title, subtitle));
                 trumps = trumps + 1;
             } while (trumps < 60);
 

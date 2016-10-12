@@ -157,9 +157,12 @@ Assessment Project: 'Mineral Supertrumps'
     * Created setupGame form to set user entered variables
     PUSHED
 
-6/10.16
+6/10/16
     * Continued work on GUI forms
     PUSHED
 
-
-
+12/10/16
+    * Removed GUI forms began work with code building
+    * Added file import for card images to card and deck classes
+    * Worked on layouts for ui panels
+    PUSHED

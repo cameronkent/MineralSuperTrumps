@@ -4,11 +4,11 @@ import com.dd.plist.NSArray;
 import com.dd.plist.NSString;
 
 //                    fileName
-//                    imageName
+//                    fileName
 //                    card_type
 public class Card {
 
-    String title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
+    String fileName, title, chemistry, classification, crystalSystem, hardness, specificGravity, cleavage, crustalAbundance, economicValue;
     NSArray occurrence;
     public boolean isTrump;
 
@@ -16,7 +16,8 @@ public class Card {
     public Card() {}
 
     //Construct card
-    public Card(NSString title, NSString chemistry, NSString classification, NSString crystalSystem, NSArray occurrence, NSString hardness, NSString specificGravity, NSString cleavage, NSString crustalAbundance, NSString economicValue) {
+    public Card(NSString imageName, NSString title, NSString chemistry, NSString classification, NSString crystalSystem, NSArray occurrence, NSString hardness, NSString specificGravity, NSString cleavage, NSString crustalAbundance, NSString economicValue) {
+        this.fileName = imageName.toString();
         this.title = title.toString();
         this.chemistry = chemistry.toString();
         this.classification = classification.toString();
