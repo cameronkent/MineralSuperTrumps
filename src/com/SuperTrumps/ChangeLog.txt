@@ -172,3 +172,7 @@ Assessment Project: 'Mineral Supertrumps'
     * Introduced static variables to adjust within game panels
     * Began implementing logic to game creation with user entered values
     PUSHED
+    * Successfully create labels for num of comPlayers
+    * Implement game logic to create players deck and deal
+    * Implemented draw of card images and sized relative to frame
+    PUSHED

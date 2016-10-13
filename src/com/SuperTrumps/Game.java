@@ -6,14 +6,15 @@ import java.util.Random;
 public class Game {
 
     int roundCount;
-    private int numPlayers, dealer, playerTurn, playersInRound, categoryNumber = 0, valueInPlay;
-    private String categoryAsString, valueInPlayAsString;
+    public int numPlayers, dealer, playerTurn, playersInRound, categoryNumber = 0, valueInPlay;
+    public String categoryAsString, valueInPlayAsString;
     public Deck cardDeck;
-    private Card cardInPlay = null;
-    private UserPlayer userPlayer;
+    public Card cardInPlay = null;
+    public UserPlayer userPlayer;
     public ComPlayer[] comPlayer;
     Player gameWinner;
     private boolean trumpPlayed = false;
+    public String dealerName;
 
     public Game(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -39,20 +40,20 @@ public class Game {
         }
     }
 
-    void buildCardDeck() throws Exception {
+    public void buildCardDeck() throws Exception {
         cardDeck = new Deck();
         Collections.shuffle(cardDeck.deckArray);
-        System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.\n");
+//        System.out.println("The deck has been shuffled. \nThere are " + cardDeck.size() + " Mineral and SuperTrump cards.\n");
     }
 
-    void randomiseDealer() {
+    public void randomiseDealer() {
         Random random = new Random();
         try {
             dealer = random.nextInt(numPlayers) + 1;
             if (dealer == 1) {
-                System.out.println(userPlayer.playerName + " is dealing this round\n");
+                dealerName = userPlayer.playerName;
             }else {
-                System.out.println(comPlayer[dealer - 1].playerName + " is dealing this round\n");
+                dealerName = comPlayer[dealer - 1].playerName;
             }
         } catch (Exception exc) {
             System.out.println("Game.java @ randomiseDealer");
@@ -60,10 +61,10 @@ public class Game {
         }
     }
 
-    void dealPlayerHands() {
+    public void dealPlayerHands() {
         userPlayer.DealHand(userPlayer, cardDeck);
         for (int i = 0; i < comPlayer.length; i++) { comPlayer[i].DealHand(comPlayer[i], cardDeck); }
-        System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
+//        System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
     }
 
     void playGameRound() throws Exception{
