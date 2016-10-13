@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Player {
 
     private static final int STARTING_HAND = 8;
-    String playerName;
+    public String playerName;
     int playerID;
 
     public boolean passedTurn;

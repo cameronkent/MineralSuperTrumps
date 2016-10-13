@@ -1,7 +1,5 @@
 package com.SuperTrumps.GUI;
 
-import javafx.scene.control.Tab;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +68,8 @@ public class GUI {
         JPanel namePanel = new JPanel();
             JLabel nameLabel = new JLabel("Enter your Name");
             JTextField nameInput = new JTextField(12);
-            namePanel.add(nameLabel);
+        //todo if (!nameInput.getText().trim().isEmpty()) {startGameButton.setEnabled(true);}
+        namePanel.add(nameLabel);
             namePanel.add(nameInput);
             configPanel.add(namePanel);
 
@@ -84,6 +83,9 @@ public class GUI {
 
         JPanel buttonPanel = new JPanel();
             JButton startGameButton = new JButton("Start Game");
+            startGameButton.setEnabled(false);
+            if (!nameInput.getText().equals("")) {startGameButton.setEnabled(true);}
+
             startGameButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -198,7 +200,9 @@ public class GUI {
                 JPanel rightButtonPanel = new JPanel();
                     rightButtonPanel.setLayout(new GridLayout(2,1));
                     JButton playCardButton = new JButton("Play Card");
+                    playCardButton.setEnabled(false);
                     JButton passTurnButton = new JButton("Pass Turn");
+                    passTurnButton.setEnabled(false);
                     rightButtonPanel.add(playCardButton);
                     rightButtonPanel.add(passTurnButton);
                     playerTablePanel.add(rightButtonPanel);

@@ -3,35 +3,35 @@ package com.SuperTrumps;
 import java.util.Collections;
 import java.util.Random;
 
-class Game {
+public class Game {
 
     int roundCount;
     private int numPlayers, dealer, playerTurn, playersInRound, categoryNumber = 0, valueInPlay;
     private String categoryAsString, valueInPlayAsString;
-    Deck cardDeck;
+    public Deck cardDeck;
     private Card cardInPlay = null;
     private UserPlayer userPlayer;
-    private ComPlayer[] comPlayer;
+    public ComPlayer[] comPlayer;
     Player gameWinner;
     private boolean trumpPlayed = false;
 
-    Game(int numPlayers) {
+    public Game(int numPlayers) {
         this.numPlayers = numPlayers;
         comPlayer = new ComPlayer[numPlayers];
     }
 
-    void setUserPlayer(String playerName) {
+    public void setUserPlayer(String playerName) {
         userPlayer = new UserPlayer(playerName);
     }
 
-    void setComPlayers() {
+    public void setComPlayers() {
         for (int i = 0; i < numPlayers; i++) {
             comPlayer[i] = new ComPlayer(i + 1);
             comPlayer[i].playerName = "Computer " + (Integer.toString(i + 1));
         }
     }
 
-    void showPlayers() {
+    public void showPlayers() {
         System.out.println("This games players are:");
         System.out.println(userPlayer.playerName);
         for (int i = 0; i < comPlayer.length; i++) {

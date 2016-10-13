@@ -1,4 +1,4 @@
-package com.SuperTrumps.Testing;
+package com.SuperTrumps.GUI;
 
 import com.SuperTrumps.Game;
 
@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class TestThree {
+public class MainUI {
 
     static public boolean gameOver;
     static public JFrame gameFrame;
@@ -33,9 +33,9 @@ public class TestThree {
 
         setWelcomeContent();
 
-//        gameST = new Game(numPlayers);
-//        gameST.setUserPlayer(playerName);
-//        gameST.setComPlayers();
+        gameST = new Game(numPlayers);
+        gameST.setUserPlayer(playerName);
+        gameST.setComPlayers();
 
     }
 
@@ -115,14 +115,6 @@ public class TestThree {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                numPlayers = (int) numPlayersInput.getSelectedItem();
-                playerName = nameInput.getText();
-                gameMessage = ("There are " + ((numPlayers)  + 1) + " players in this game.");
-
-                gameST = new Game(numPlayers);
-                gameST.setUserPlayer(playerName);
-                gameST.setComPlayers();
-
                 setGameTableContent();
             }
         });
@@ -139,9 +131,9 @@ public class TestThree {
         configPanel.add(buttonPanel);
 
 
-//        numPlayers = (int) numPlayersInput.getSelectedItem();
-//        playerName = nameInput.getText();
-//        gameMessage = ("There are " + ((numPlayers)  + 1) + " players in this game.");
+        numPlayers = (int) numPlayersInput.getSelectedItem();
+        playerName = nameInput.getText();
+        gameMessage = ("There are " + ((numPlayers)  + 1) + " players in this game.");
 
         gameFrame.setContentPane(configPanel);
         gameFrame.pack();
@@ -165,35 +157,55 @@ public class TestThree {
 
 
 
-        JPanel comPlayerPanel = new JPanel();
-        comPlayerPanel.setLayout(new GridLayout(1,numPlayers));
+        JPanel topTablePanel = new JPanel();
+        topTablePanel.setLayout(new GridLayout(2,3));
 
-        JLabel comInfo[] = new JLabel[numPlayers];
-        for (int i = 0; i < numPlayers; i++) {
-            //todo // FIXME: 13/10/2016
-            comInfo[i].setText(gameST.comPlayer[i].playerName + "\n" + gameST.comPlayer[i].Hand.size());
-            comPlayerPanel.add(comInfo[i]);
-        }
-        gameTablePanel.add(comPlayerPanel);
+        GUI.FaceDownCardPanel comPlayerOne = new GUI.FaceDownCardPanel();
+        comPlayerOne.setPreferredSize(new Dimension(100, 200));
+        JLabel comPlayerOneNameLabel = new JLabel("Computer One");
 
-        JPanel cardDeckPanel = new JPanel();
-
-
-        TestThree.FaceDownCardPanel gameDeck = new TestThree.FaceDownCardPanel();
+        GUI.FaceDownCardPanel gameDeck = new GUI.FaceDownCardPanel();
         gameDeck.setPreferredSize(new Dimension(100, 200));
         JLabel gameDeckLabel = new JLabel("SuperTrump Deck: " + gameST.cardDeck.size());
 
-        TestThree.FaceDownCardPanel cardInPlay = new TestThree.FaceDownCardPanel();
+        GUI.FaceDownCardPanel comPlayerTwo = new GUI.FaceDownCardPanel();
+        comPlayerTwo.setPreferredSize(new Dimension(100, 200));
+        JLabel comPlayerTwoNameLabel = new JLabel("Computer Two");
+
+
+        topTablePanel.add(comPlayerOne);
+        topTablePanel.add(gameDeck);
+        topTablePanel.add(comPlayerTwo);
+
+        topTablePanel.add(comPlayerOneNameLabel);
+        topTablePanel.add(gameDeckLabel);
+        topTablePanel.add(comPlayerTwoNameLabel);
+
+        gameTablePanel.add(topTablePanel);
+
+        JPanel bottomTablePanel = new JPanel();
+        bottomTablePanel.setLayout(new GridLayout(2,3));
+
+        GUI.FaceDownCardPanel comPlayerThree = new GUI.FaceDownCardPanel();
+        comPlayerThree.setPreferredSize(new Dimension(100, 200));
+        JLabel comPlayerThreeNameLabel = new JLabel("Computer Three");
+
+        GUI.FaceDownCardPanel cardInPlay = new GUI.FaceDownCardPanel();
         cardInPlay.setPreferredSize(new Dimension(100, 200));
         JLabel cardInPlayLabel = new JLabel("Card in play");
 
+        GUI.FaceDownCardPanel comPlayerFour = new GUI.FaceDownCardPanel();
+        comPlayerFour.setPreferredSize(new Dimension(100, 200));
+        JLabel comPlayerFourNameLabel = new JLabel("Computer Four");
 
-        cardDeckPanel.add(gameDeckLabel);
-        cardDeckPanel.add(gameDeck);
-        cardDeckPanel.add(cardInPlay);
-        cardDeckPanel.add(cardInPlayLabel);
+        if (numPlayers >= 3) {bottomTablePanel.add(comPlayerThree);}
+        bottomTablePanel.add(cardInPlay);
+        if (numPlayers >= 4) bottomTablePanel.add(comPlayerFour);
+        if (numPlayers >= 3) bottomTablePanel.add(comPlayerThreeNameLabel);
+        bottomTablePanel.add(cardInPlayLabel);
+        if (numPlayers >= 4) bottomTablePanel.add(comPlayerFourNameLabel);
 
-        gameTablePanel.add(cardDeckPanel);
+        gameTablePanel.add(bottomTablePanel);
 
 
         JPanel playerTablePanel = new JPanel();
@@ -212,7 +224,7 @@ public class TestThree {
         playerTablePanel.add(leftButtonPanel);
         JPanel playerHandPanel = new JPanel();
         for (int i = 0; i < 8; i++) { // TODO: 12/10/2016 Hand.Size()
-            TestThree.FaceUpCardPanel faceUpCard = new TestThree.FaceUpCardPanel();
+            GUI.FaceUpCardPanel faceUpCard = new GUI.FaceUpCardPanel();
             faceUpCard.setPreferredSize(new Dimension(100,200));
             playerHandPanel.add(faceUpCard);
         }

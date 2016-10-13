@@ -166,3 +166,9 @@ Assessment Project: 'Mineral Supertrumps'
     * Added file import for card images to card and deck classes
     * Worked on layouts for ui panels
     PUSHED
+
+13/10/16
+    * Implemented disabled start game button unless player name is entered
+    * Introduced static variables to adjust within game panels
+    * Began implementing logic to game creation with user entered values
+    PUSHED
