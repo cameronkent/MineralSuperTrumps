@@ -25,4 +25,10 @@ public class TrumpCard extends Card {
     public String getTitle() {
         return this.title;
     }
+
+    @Override
+    public String getFileName() {
+        return this.fileName;
+    }
+
 }

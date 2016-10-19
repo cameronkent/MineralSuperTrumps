@@ -18,13 +18,13 @@ public class MainUI {
     static public boolean gameOver;
     static public JFrame gameFrame;
     static public BufferedImage backOfCard;
-    static public int numPlayers;
-    static public String playerName;
+//    static public int numPlayers;
+//    static public String playerName;
 
     static public String gameMessage;
     static public Game gameST;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         gameFrame = new JFrame("Mineral SuperTrumps");
         gameFrame.setVisible(true);
@@ -32,10 +32,6 @@ public class MainUI {
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setWelcomeContent();
-
-        gameST = new Game(numPlayers);
-        gameST.setUserPlayer(playerName);
-        gameST.setComPlayers();
 
     }
 
@@ -115,6 +111,18 @@ public class MainUI {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                gameST = new Game((int) numPlayersInput.getSelectedItem());
+                gameST.setUserPlayer(nameInput.getText());
+                gameST.setComPlayers();
+                try {gameST.buildCardDeck();
+                } catch (Exception e1) {
+                    e1.printStackTrace();}
+                gameST.randomiseDealer();
+                gameST.dealPlayerHands();
+                gameMessage = ("There are " + ((gameST.numPlayers)  + 1) + " players in this game.\n" +
+                        gameST.dealerName + " is dealing this round");
+
                 setGameTableContent();
             }
         });
@@ -126,14 +134,10 @@ public class MainUI {
                 setWelcomeContent();
             }
         });
+
         buttonPanel.add(startGameButton);
         buttonPanel.add(menuButton);
         configPanel.add(buttonPanel);
-
-
-        numPlayers = (int) numPlayersInput.getSelectedItem();
-        playerName = nameInput.getText();
-        gameMessage = ("There are " + ((numPlayers)  + 1) + " players in this game.");
 
         gameFrame.setContentPane(configPanel);
         gameFrame.pack();
@@ -155,58 +159,32 @@ public class MainUI {
         JPanel gameTablePanel = new JPanel();
         gameTablePanel.setLayout(new GridLayout(3, 1));
 
+        JPanel comPlayerPanel = new JPanel();
+        comPlayerPanel.setLayout(new GridLayout(1,gameST.numPlayers));
 
+        JLabel comInfo[] = new JLabel[gameST.numPlayers];
+        for (int i = 0; i < gameST.numPlayers; i++) {
+            comInfo[i] = new JLabel(gameST.comPlayer[i].playerName + "\n" + "Cards " + gameST.comPlayer[i].Hand.size(), SwingConstants.CENTER);
+            comPlayerPanel.add(comInfo[i]);
+        }
+        gameTablePanel.add(comPlayerPanel);
 
-        JPanel topTablePanel = new JPanel();
-        topTablePanel.setLayout(new GridLayout(2,3));
+        JPanel cardDeckPanel = new JPanel();
 
-        GUI.FaceDownCardPanel comPlayerOne = new GUI.FaceDownCardPanel();
-        comPlayerOne.setPreferredSize(new Dimension(100, 200));
-        JLabel comPlayerOneNameLabel = new JLabel("Computer One");
+        FaceDownCardPanel gameDeck = new FaceDownCardPanel();
+        gameDeck.setPreferredSize(new Dimension(200, 300));
+        JLabel gameDeckLabel = new JLabel("SuperTrump Deck: " + gameST.cardDeck.size(), SwingConstants.CENTER);
 
-        GUI.FaceDownCardPanel gameDeck = new GUI.FaceDownCardPanel();
-        gameDeck.setPreferredSize(new Dimension(100, 200));
-        JLabel gameDeckLabel = new JLabel("SuperTrump Deck: " + gameST.cardDeck.size());
+        FaceDownCardPanel cardInPlay = new FaceDownCardPanel();
+        cardInPlay.setPreferredSize(new Dimension(200, 300));
+        JLabel cardInPlayLabel = new JLabel("Card in play", SwingConstants.CENTER);
 
-        GUI.FaceDownCardPanel comPlayerTwo = new GUI.FaceDownCardPanel();
-        comPlayerTwo.setPreferredSize(new Dimension(100, 200));
-        JLabel comPlayerTwoNameLabel = new JLabel("Computer Two");
+        cardDeckPanel.add(gameDeckLabel);
+        cardDeckPanel.add(gameDeck);
+        cardDeckPanel.add(cardInPlay);
+        cardDeckPanel.add(cardInPlayLabel);
 
-
-        topTablePanel.add(comPlayerOne);
-        topTablePanel.add(gameDeck);
-        topTablePanel.add(comPlayerTwo);
-
-        topTablePanel.add(comPlayerOneNameLabel);
-        topTablePanel.add(gameDeckLabel);
-        topTablePanel.add(comPlayerTwoNameLabel);
-
-        gameTablePanel.add(topTablePanel);
-
-        JPanel bottomTablePanel = new JPanel();
-        bottomTablePanel.setLayout(new GridLayout(2,3));
-
-        GUI.FaceDownCardPanel comPlayerThree = new GUI.FaceDownCardPanel();
-        comPlayerThree.setPreferredSize(new Dimension(100, 200));
-        JLabel comPlayerThreeNameLabel = new JLabel("Computer Three");
-
-        GUI.FaceDownCardPanel cardInPlay = new GUI.FaceDownCardPanel();
-        cardInPlay.setPreferredSize(new Dimension(100, 200));
-        JLabel cardInPlayLabel = new JLabel("Card in play");
-
-        GUI.FaceDownCardPanel comPlayerFour = new GUI.FaceDownCardPanel();
-        comPlayerFour.setPreferredSize(new Dimension(100, 200));
-        JLabel comPlayerFourNameLabel = new JLabel("Computer Four");
-
-        if (numPlayers >= 3) {bottomTablePanel.add(comPlayerThree);}
-        bottomTablePanel.add(cardInPlay);
-        if (numPlayers >= 4) bottomTablePanel.add(comPlayerFour);
-        if (numPlayers >= 3) bottomTablePanel.add(comPlayerThreeNameLabel);
-        bottomTablePanel.add(cardInPlayLabel);
-        if (numPlayers >= 4) bottomTablePanel.add(comPlayerFourNameLabel);
-
-        gameTablePanel.add(bottomTablePanel);
-
+        gameTablePanel.add(cardDeckPanel);
 
         JPanel playerTablePanel = new JPanel();
         JPanel leftButtonPanel = new JPanel();
@@ -223,18 +201,33 @@ public class MainUI {
         leftButtonPanel.add(quitGameButton);
         playerTablePanel.add(leftButtonPanel);
         JPanel playerHandPanel = new JPanel();
-        for (int i = 0; i < 8; i++) { // TODO: 12/10/2016 Hand.Size()
-            GUI.FaceUpCardPanel faceUpCard = new GUI.FaceUpCardPanel();
-            faceUpCard.setPreferredSize(new Dimension(100,200));
-            playerHandPanel.add(faceUpCard);
+//        Player Hand as JPanels
+//        for (int i = 0; i < gameST.userPlayer.Hand.size(); i++) {
+//            MainUI.FaceUpCardPanel faceUpCard = new MainUI.FaceUpCardPanel(gameST.userPlayer.Hand.get(i).getFileName());
+//            faceUpCard.setPreferredSize(new Dimension(200,300));
+//            playerHandPanel.add(faceUpCard);
+//        }
+//        Player Hand as Buttons
+        JButton cards[] = new JButton[gameST.userPlayer.Hand.size()];
+        for (int i = 0; i < gameST.userPlayer.Hand.size(); i++) {
+            ImageIcon cardImage = new ImageIcon("images/" + gameST.userPlayer.Hand.get(i).getFileName());
+            Image img = cardImage.getImage() ;
+            Image newImg = img.getScaledInstance( 200, 300,  java.awt.Image.SCALE_SMOOTH ) ;
+            cardImage = new ImageIcon( newImg );
+
+            cards[i] = new JButton(cardImage);
+            cards[i].setPreferredSize(new Dimension(200,300));
+            playerHandPanel.add(cards[i]);
         }
         playerTablePanel.add(playerHandPanel);
+
         JPanel rightButtonPanel = new JPanel();
         rightButtonPanel.setLayout(new GridLayout(2,1));
         JButton playCardButton = new JButton("Play Card");
         playCardButton.setEnabled(false);
         JButton passTurnButton = new JButton("Pass Turn");
         passTurnButton.setEnabled(false);
+
         rightButtonPanel.add(playCardButton);
         rightButtonPanel.add(passTurnButton);
         playerTablePanel.add(rightButtonPanel);
@@ -258,18 +251,16 @@ public class MainUI {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(backOfCard, 0, 0, null); // see javadoc for more info on the parameters
-            backOfCard.getScaledInstance(100, 200, Image.SCALE_DEFAULT); // TODO: 12/10/2016 where to put this?
+            g.drawImage(backOfCard, 0, 0, 200, 300, null);
         }
     }
 
     public static class FaceUpCardPanel extends JPanel {
+        BufferedImage cardFace;
 
-        public FaceUpCardPanel () {}
-
-        public FaceUpCardPanel(String cardImageName) {
+        public FaceUpCardPanel(String imageFileName) {
             try {
-                backOfCard = ImageIO.read(new File("images/" + cardImageName));
+                cardFace = ImageIO.read(new File("images/" + imageFileName));
             } catch (IOException exc) {
                 exc.printStackTrace();
             }
@@ -278,6 +269,7 @@ public class MainUI {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(backOfCard, 0, 0, null); // see javadoc for more info on the parameters
+            g.drawImage(cardFace, 0, 0, 200, 300, null);
         }
-    }}
+    }
+}

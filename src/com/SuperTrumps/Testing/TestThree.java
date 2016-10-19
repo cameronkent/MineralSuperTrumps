@@ -1,28 +1,20 @@
 package com.SuperTrumps.Testing;
 
+import com.SuperTrumps.Deck;
 import com.SuperTrumps.Game;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class TestThree {
 
-    static public boolean gameOver;
     static public JFrame gameFrame;
     static public BufferedImage backOfCard;
-//    static public int numPlayers;
-//    static public String playerName;
-
-    static public String gameMessage;
-    static public Game gameST;
+//    static public ImageIcon image;
+    static public Deck cardDeck;
 
     public static void main(String[] args) throws Exception {
 
@@ -31,209 +23,49 @@ public class TestThree {
         gameFrame.setLocationRelativeTo(null);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setWelcomeContent();
-
-//        gameST = new Game(numPlayers);
-//        gameST.setUserPlayer(playerName);
-//        gameST.setComPlayers();
-
-    }
-
-    public static void setWelcomeContent() {
-        JPanel welcomePanel = new JPanel();
-        welcomePanel.setLayout(new GridLayout(2,1));
-
-        JPanel messagePanel = new JPanel();
-        JLabel welcomeLabel = new JLabel("Welcome to the Mineral SuperTrumps game");
-        messagePanel.add(welcomeLabel);
-        welcomePanel.add(messagePanel);
-
-        JPanel buttonPanel = new JPanel();
-        JButton newGameButton = new JButton("New Game");
-        newGameButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                newGameButtonPressed(); }
-
-            private void newGameButtonPressed() {
-                welcomePanel.setVisible(false);
-                setConfigContent();
-            }
-        } );
-        JButton viewRulesButton = new JButton("View Rules");
-        buttonPanel.add(newGameButton);
-        buttonPanel.add(viewRulesButton);
-        welcomePanel.add(buttonPanel);
-
-        gameFrame.setContentPane(welcomePanel);
-        gameFrame.pack();
-
-    }
-
-    public static void setConfigContent() {
-        JPanel configPanel = new JPanel();
-        configPanel.setLayout(new GridLayout(4, 1));
-
-        JPanel messagePanel = new JPanel();
-        JLabel messageLabel = new JLabel("Choose your game settings");
-        messagePanel.add(messageLabel);
-        configPanel.add(messagePanel);
-
-        JPanel namePanel = new JPanel();
-        JLabel nameLabel = new JLabel("Enter your Name");
-        JTextField nameInput = new JTextField(12);
-        namePanel.add(nameLabel);
-        namePanel.add(nameInput);
-        configPanel.add(namePanel);
-
-        JPanel numPlayersPanel = new JPanel();
-        JLabel numPlayersLabel = new JLabel("Number of opponents");
-        Integer[] num = {2,3,4};
-        JComboBox numPlayersInput = new JComboBox(num);
-        numPlayersPanel.add(numPlayersLabel);
-        numPlayersPanel.add(numPlayersInput);
-        configPanel.add(numPlayersPanel);
-
-        JPanel buttonPanel = new JPanel();
-        JButton startGameButton = new JButton("Start Game");
-        startGameButton.setEnabled(false);
-        nameInput.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {nameEntered();}
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {nameEntered();}
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {nameEntered();}
-
-            private void nameEntered() {
-                if (nameInput.getText().equals("")) {startGameButton.setEnabled(false);}
-                else {startGameButton.setEnabled(true);}
-            }
-        });
-
-        startGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                gameST = new Game((int) numPlayersInput.getSelectedItem());
-                gameST.setUserPlayer(nameInput.getText());
-                gameST.setComPlayers();
-                try {gameST.buildCardDeck();
-                } catch (Exception e1) {
-                    e1.printStackTrace();}
-                gameST.randomiseDealer();
-                gameST.dealPlayerHands();
-                gameMessage = ("There are " + ((gameST.numPlayers)  + 1) + " players in this game.\n" +
-                        gameST.dealerName + " is dealing this round");
-
-                setGameTableContent();
-            }
-        });
-
-        JButton menuButton = new JButton("Main Menu");
-        menuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setWelcomeContent();
-            }
-        });
-
-        buttonPanel.add(startGameButton);
-        buttonPanel.add(menuButton);
-        configPanel.add(buttonPanel);
-
-        gameFrame.setContentPane(configPanel);
-        gameFrame.pack();
-
-    }
-
-    public static void setGameTableContent() {
+        cardDeck = new Deck();
 
         JPanel TablePanel = new JPanel();
-        TablePanel.setLayout(new BorderLayout());
-        JPanel messagePanel = new JPanel();
 
-        messagePanel.setPreferredSize(new Dimension(800, 50));
-        JLabel messageLabel = new JLabel(gameMessage);
-        messageLabel.setFont(new Font("Arial", Font.PLAIN, 26));
-        messagePanel.add(messageLabel);
-        TablePanel.add(messagePanel, BorderLayout.NORTH);
+        JButton cards[] = new JButton[cardDeck.size()];
 
-        JPanel gameTablePanel = new JPanel();
-        gameTablePanel.setLayout(new GridLayout(3, 1));
+        for (int i = 0; i < cardDeck.size(); i++) {
 
-        JPanel comPlayerPanel = new JPanel();
-        comPlayerPanel.setLayout(new GridLayout(1,gameST.numPlayers));
+            ImageIcon cardImage = new ImageIcon("images/" + cardDeck.deckArray.get(i).getFileName());
+            Image img = cardImage.getImage() ;
+            Image newImg = img.getScaledInstance( 100, 150,  java.awt.Image.SCALE_SMOOTH ) ;
+            cardImage = new ImageIcon( newImg );
 
-        JLabel comInfo[] = new JLabel[gameST.numPlayers];
-        for (int i = 0; i < gameST.numPlayers; i++) {
-            comInfo[i] = new JLabel(gameST.comPlayer[i].playerName + "\n" + "Cards " + gameST.comPlayer[i].Hand.size(), SwingConstants.CENTER);
-            comPlayerPanel.add(comInfo[i]);
+            cards[i] = new JButton(cardImage);
+            cards[i].setPreferredSize(new Dimension(100,150));
+            TablePanel.add(cards[i]);
         }
-        gameTablePanel.add(comPlayerPanel);
 
-        JPanel cardDeckPanel = new JPanel();
+        gameFrame.add(TablePanel);
+        gameFrame.pack();
 
-        TestThree.FaceDownCardPanel gameDeck = new TestThree.FaceDownCardPanel();
-        gameDeck.setPreferredSize(new Dimension(200, 300));
-        JLabel gameDeckLabel = new JLabel("SuperTrump Deck: " + gameST.cardDeck.size(), SwingConstants.CENTER);
+    }
 
-        TestThree.FaceDownCardPanel cardInPlay = new TestThree.FaceDownCardPanel();
-        cardInPlay.setPreferredSize(new Dimension(200, 300));
-        JLabel cardInPlayLabel = new JLabel("Card in play", SwingConstants.CENTER);
+    public static void setContent() {
 
-        cardDeckPanel.add(gameDeckLabel);
-        cardDeckPanel.add(gameDeck);
-        cardDeckPanel.add(cardInPlay);
-        cardDeckPanel.add(cardInPlayLabel);
+        JPanel TablePanel = new JPanel();
 
-        gameTablePanel.add(cardDeckPanel);
-
-        JPanel playerTablePanel = new JPanel();
-        JPanel leftButtonPanel = new JPanel();
-        leftButtonPanel.setLayout(new GridLayout(2,1));
-        JButton viewRulesButton = new JButton("View Rules");
-        JButton quitGameButton = new JButton("Quit Game");
-        quitGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setWelcomeContent();
-            }
-        });
-        leftButtonPanel.add(viewRulesButton);
-        leftButtonPanel.add(quitGameButton);
-        playerTablePanel.add(leftButtonPanel);
-        JPanel playerHandPanel = new JPanel();
-        for (int i = 0; i < gameST.userPlayer.Hand.size(); i++) {
-            TestThree.FaceUpCardPanel faceUpCard = new TestThree.FaceUpCardPanel(gameST.userPlayer.Hand.get(i).getFileName());
-            faceUpCard.setPreferredSize(new Dimension(200,300));
-            playerHandPanel.add(faceUpCard);
+        FaceUpCardPanel cards[] = new FaceUpCardPanel[cardDeck.size()];
+        for (int i = 0; i < cardDeck.size(); i++) {
+            cards[i] = new FaceUpCardPanel(cardDeck.deckArray.get(i).getFileName());
+            cards[i].setPreferredSize(new Dimension(200,300));
+            TablePanel.add(cards[i]);
         }
-        playerTablePanel.add(playerHandPanel);
-
-        JPanel rightButtonPanel = new JPanel();
-        rightButtonPanel.setLayout(new GridLayout(2,1));
-        JButton playCardButton = new JButton("Play Card");
-        playCardButton.setEnabled(false);
-        JButton passTurnButton = new JButton("Pass Turn");
-        passTurnButton.setEnabled(false);
-
-        rightButtonPanel.add(playCardButton);
-        rightButtonPanel.add(passTurnButton);
-        playerTablePanel.add(rightButtonPanel);
-        gameTablePanel.add(playerTablePanel);
-        TablePanel.add(gameTablePanel);
 
         gameFrame.setContentPane(TablePanel);
         gameFrame.pack();
     }
 
-    public static class FaceDownCardPanel extends JPanel {
+    public static class createImageIcon extends JPanel{
 
-        public FaceDownCardPanel() {
+        public createImageIcon(String path) {
             try {
-                backOfCard = ImageIO.read(new File("images/Slide65.jpg"));
+                backOfCard = ImageIO.read(new File("images/" + path));
             } catch (IOException exc) {
                 exc.printStackTrace();
             }
@@ -242,7 +74,7 @@ public class TestThree {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(backOfCard, 0, 0, 200, 300, null);
+            g.drawImage(backOfCard, 0, 0, 100, 150, null);
         }
     }
 

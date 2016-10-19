@@ -21,7 +21,7 @@ public class Deck {
             do {
                 NSDictionary mineralCard = (NSDictionary) cardsArray.objectAtIndex(minerals);
 
-                NSString imageName = (NSString) mineralCard.objectForKey("fileName");
+                NSString fileName = (NSString) mineralCard.objectForKey("fileName");
                 NSString title = (NSString) mineralCard.objectForKey("title");
                 NSString chemistry = (NSString) mineralCard.objectForKey("chemistry");
                 NSString classification = (NSString) mineralCard.objectForKey("classification");
@@ -33,7 +33,7 @@ public class Deck {
                 NSString crustalAbundance = (NSString) mineralCard.objectForKey("crustal_abundance");
                 NSString economicValue = (NSString) mineralCard.objectForKey("economic_value");
 
-                deckArray.add(new Card(imageName, title, chemistry, classification, crystalSystem, occurrence, hardness, specificGravity, cleavage, crustalAbundance, economicValue));
+                deckArray.add(new Card(fileName, title, chemistry, classification, crystalSystem, occurrence, hardness, specificGravity, cleavage, crustalAbundance, economicValue));
                 minerals = minerals + 1;
 
             } while (minerals < 54);

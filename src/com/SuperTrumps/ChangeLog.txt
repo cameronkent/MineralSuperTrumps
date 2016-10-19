@@ -176,3 +176,8 @@ Assessment Project: 'Mineral Supertrumps'
     * Implement game logic to create players deck and deal
     * Implemented draw of card images and sized relative to frame
     PUSHED
+
+19/10/16
+    * Fixed error with Trump card image importing
+    * Tested importing card images as labels and buttons
+    PUSHED
