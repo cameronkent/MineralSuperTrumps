@@ -181,3 +181,6 @@ Assessment Project: 'Mineral Supertrumps'
     * Fixed error with Trump card image importing
     * Tested importing card images as labels and buttons
     PUSHED
+    * Changed styling of font on labels and buttons
+    * Inserted TODOs in location to action
+    PUSHED
