@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class UserPlayer extends Player {
 
+    static public int cardNumber;
+    private int category;
+
     UserPlayer() {}
 
     UserPlayer(String playerName) {
@@ -35,20 +38,18 @@ public class UserPlayer extends Player {
 //        } while (showHandChoice.charAt(0) != 'y');
 //    }
 
-    //Take input to play card from users hand
+    public void setCardToPlay(int i) {
+        cardNumber = i+1;
+    }
+
     public int getCardToPlay() { // TODO: 21/10/2016 alter for UI input
-        Scanner inputCardToPlay = new Scanner(System.in);
-        MainUI.addMessageLabel("Choose card to play");
-        int cardToPlay =  inputCardToPlay.nextInt();
-        return cardToPlay;
+        return cardNumber;
     }
 
     public int getCategoryToPlay() { // TODO: 21/10/2016 alter for UI input
-        int categorySelect;
-        MainUI.addMessageLabel("Choose category to play:" + "\n1 Hardness" + "\n2 Specific gravity" + "\n3 Cleavage" + "\n4 Crustal abundance" + "\n5 Economic value");
-        Scanner inputCategory = new Scanner(System.in);
-        categorySelect = inputCategory.nextInt();
-        return categorySelect;
+//        MainUI.addMessageLabel("Choose category to play");
+//        MainUI.categoryPanel.setVisible(true);
+        return category;
     }
 
     public int playOrPass() { // TODO: 21/10/2016 work UI around this method
@@ -59,5 +60,9 @@ public class UserPlayer extends Player {
             playOrPass = input_playOrPass.nextInt();
         } while (playOrPass != 1 && playOrPass != 2);
         return playOrPass;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
     }
 }

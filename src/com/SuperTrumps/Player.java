@@ -24,29 +24,23 @@ public class Player {
     public Card PlayCard(Player player, int cardToPlay) throws Exception{
         Card cardInPlay = null;
         try {
-            MainUI.addMessageLabel(playerName + " is playing the card: \n" + player.Hand.get(cardToPlay - 1));
-            cardInPlay = player.Hand.get(cardToPlay - 1);
-            player.Hand.remove(player.Hand.get(cardToPlay - 1));
-            MainUI.addMessageLabel("Cards in " + this.playerName + " hand " + player.Hand.size());
+            MainUI.addMessageLabel(playerName + " is playing the card: \n" + player.Hand.get(cardToPlay -1).getTitle());
+            cardInPlay = player.Hand.get(cardToPlay -1);
+            player.Hand.remove(player.Hand.get(cardToPlay -1));
             return cardInPlay;
-        } catch (Exception exc){
-            System.out.println("Player.java @ PlayCard");
-            exc.printStackTrace();
-        } return cardInPlay;
+        } catch (Exception exc){System.out.println("Player.java @ PlayCard");exc.printStackTrace();}
+        return cardInPlay;
     }
 
     //Play trump card from Hand
     public Card PlayTrump(Player player, int trumpToPlay) throws Exception{
         Card cardInPlay = null;
         try {
-            MainUI.addMessageLabel(playerName + " is playing the TRUMP: \n" + player.Hand.get(trumpToPlay - 1));
-            cardInPlay = player.Hand.get(trumpToPlay - 1);
-            player.Hand.remove(player.Hand.get(trumpToPlay - 1));
+            MainUI.addMessageLabel(playerName + " is playing the TRUMP: " + player.Hand.get(trumpToPlay));
+            cardInPlay = player.Hand.get(trumpToPlay -1);
+            player.Hand.remove(player.Hand.get(trumpToPlay -1));
             MainUI.addMessageLabel("Cards in " + this.playerName + " hand " + player.Hand.size());
-        } catch (Exception exc) {
-            System.out.println("Player.java @ PlayTrump");
-            exc.printStackTrace();
-        }
+        } catch (Exception exc) {System.out.println("Player.java @ PlayTrump");exc.printStackTrace();}
         return cardInPlay;
     }
 
@@ -58,11 +52,9 @@ public class Player {
                 player.Hand.add(cardDeck.deckArray.get(cardDeck.size() - 1));
                 cardDeck.deckArray.remove(cardDeck.deckArray.get(cardDeck.size() - 1));
             } else {
-                MainUI.addMessageLabel("Deck is empty.\n");
+                MainUI.addMessageLabel("Deck is empty.");
             }
-        } catch (Exception exc) {
-            System.out.println("Player.java @ DrawCard");
-            exc.printStackTrace();
+        } catch (Exception exc) {System.out.println("Player.java @ DrawCard");exc.printStackTrace();
         }
     }
 }

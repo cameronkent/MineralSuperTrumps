@@ -194,3 +194,6 @@ Assessment Project: 'Mineral Supertrumps'
     * Implemented scroll panel for game messages
     * Removed Do While loops to allow program flow
     PUSHED
+    * Tried implementing different work arounds for loop
+    * todo fix this thing :(
+    PUSHED

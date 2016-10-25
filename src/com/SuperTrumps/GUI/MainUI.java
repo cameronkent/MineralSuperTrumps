@@ -1,5 +1,6 @@
 package com.SuperTrumps.GUI;
 
+import com.SuperTrumps.Card;
 import com.SuperTrumps.Game;
 
 import javax.imageio.ImageIO;
@@ -18,14 +19,14 @@ public class MainUI {
     static public boolean gameOver;
     static public JFrame gameFrame;
     static public BufferedImage backOfCard;
-    static public FaceUpCardPanel cardInPlayImage;
-    static public JLabel gameMessageLabel;
+    static public ImageIcon cardInPlayImage;
+    static public JButton startRoundButton;
     static public JPanel scrollPanel;
     static public JScrollPane messageScrollPane;
     static public JButton playCardButton;
     static public JButton passTurnButton;
-//    static public JLabel gameMessageLabel = new JLabel();
-
+    static public JLabel cardInPlay;
+    static public JPanel categoryPanel;
     static public String gameMessage;
     static public Game gameST;
 
@@ -135,9 +136,6 @@ public class MainUI {
                     e1.printStackTrace();}
                 gameST.randomiseDealer();
                 gameST.dealPlayerHands();
-//                gameMessage = ("There are " + ((gameST.numPlayers)  + 1) + " players in this game.\n" +
-//                        gameST.dealerName + " is dealing this round");
-                //messageScrollPane.add(new JLabel("There are " + ((gameST.numPlayers)  + 1) + " players in this game."));
                 gameMessage = (gameST.dealerName + " is dealing this round");
                     buildGameTable();
             }
@@ -175,7 +173,7 @@ public class MainUI {
 
         messageScrollPane = new JScrollPane(scrollPanel);
         messageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        messageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        messageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPanel.add(new JLabel(gameMessage, SwingConstants.CENTER));
 
         JPanel messagePanel = new JPanel();
@@ -185,7 +183,58 @@ public class MainUI {
         TablePanel.add(messagePanel, BorderLayout.NORTH);
 
         JPanel gameTablePanel = new JPanel();
-        gameTablePanel.setLayout(new GridLayout(3, 1));
+        gameTablePanel.setLayout(new GridLayout(4, 1));
+
+        categoryPanel = new JPanel();
+        JButton hardnessButton = new JButton("Hardness");
+        hardnessButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameST.userPlayer.setCategory(1);
+            }
+        });
+        hardnessButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 20));
+        categoryPanel.add(hardnessButton);
+        JButton specGravButton = new JButton("Specific Gravity");
+        specGravButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameST.userPlayer.setCategory(2);
+            }
+        });
+        specGravButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 20));
+        categoryPanel.add(specGravButton);
+        JButton cleavageButton = new JButton("Cleavage");
+        cleavageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameST.userPlayer.setCategory(3);
+            }
+        });
+        cleavageButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 20));
+        categoryPanel.add(cleavageButton);
+        JButton crustButton = new JButton("Crustal Abundance");
+        crustButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameST.userPlayer.setCategory(4);
+            }
+        });
+        crustButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 20));
+        categoryPanel.add(crustButton);
+        JButton ecoValueButton = new JButton("Economic Value");
+        ecoValueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameST.userPlayer.setCategory(5);
+            }
+        });
+        ecoValueButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 20));
+        categoryPanel.add(ecoValueButton);
+        categoryPanel.setVisible(false);
+
+
+        gameTablePanel.add(categoryPanel);
 
         JPanel comPlayerPanel = new JPanel();
         comPlayerPanel.setLayout(new GridLayout(1,gameST.numPlayers));
@@ -201,17 +250,22 @@ public class MainUI {
         JPanel cardDeckPanel = new JPanel();
 
         FaceDownCardPanel gameDeck = new FaceDownCardPanel();
-        gameDeck.setPreferredSize(new Dimension(200, 300));
+        gameDeck.setPreferredSize(new Dimension(180, 250));
         JLabel gameDeckLabel = new JLabel("SuperTrump Deck: " + gameST.cardDeck.size(), SwingConstants.CENTER);
         gameDeckLabel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
-        cardInPlayImage = new FaceUpCardPanel();
-        cardInPlayImage.setPreferredSize(new Dimension(200, 300));
         JLabel cardInPlayLabel = new JLabel("Card in play", SwingConstants.CENTER);
+
+        ImageIcon cipIcon = new ImageIcon("images/Slide65.jpg");
+        Image cipImg = cipIcon.getImage() ;
+        Image newCipImg = cipImg.getScaledInstance( 180, 250,  Image.SCALE_SMOOTH ) ;
+        cardInPlayImage = new ImageIcon( newCipImg );
+        cardInPlay = new JLabel(cardInPlayImage);
+
         cardInPlayLabel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
 
         cardDeckPanel.add(gameDeckLabel);
         cardDeckPanel.add(gameDeck);
-        cardDeckPanel.add(cardInPlayImage);
+        cardDeckPanel.add(cardInPlay);
         cardDeckPanel.add(cardInPlayLabel);
 
         gameTablePanel.add(cardDeckPanel);
@@ -219,9 +273,20 @@ public class MainUI {
         JPanel playerTablePanel = new JPanel();
         JPanel leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new GridLayout(2,1));
-        JButton viewRulesButton = new JButton("View Rules");
-        viewRulesButton.setEnabled(false);
-        viewRulesButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+
+        startRoundButton = new JButton("Start Round");
+        //startRoundButton.setEnabled(false);
+        startRoundButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+        startRoundButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    startGame();
+                } catch (Exception e1) {e1.printStackTrace();}
+            }
+        });
+
+
         JButton quitGameButton = new JButton("Quit Game");
         quitGameButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         quitGameButton.addActionListener(new ActionListener() {
@@ -230,7 +295,7 @@ public class MainUI {
                 setWelcomeContent();
             }
         });
-        leftButtonPanel.add(viewRulesButton);
+        leftButtonPanel.add(startRoundButton);
         leftButtonPanel.add(quitGameButton);
         playerTablePanel.add(leftButtonPanel);
         JPanel playerHandPanel = new JPanel();
@@ -243,16 +308,21 @@ public class MainUI {
 //        Player Hand as Buttons
         JButton cards[] = new JButton[gameST.userPlayer.Hand.size()];
         for (int i = 0; i < gameST.userPlayer.Hand.size(); i++) {
+
             ImageIcon cardImage = new ImageIcon("images/" + gameST.userPlayer.Hand.get(i).getFileName());
             Image img = cardImage.getImage() ;
             Image newImg = img.getScaledInstance( 200, 300,  Image.SCALE_SMOOTH ) ;
             cardImage = new ImageIcon( newImg );
 
             cards[i] = new JButton(cardImage);
+
+            int finalI = i;
             cards[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // TODO: 19/10/2016 implement click to select card to play
+                    gameST.userPlayer.setCardToPlay(finalI);
+                    playCardButton.setEnabled(true);
                 }
             });
             cards[i].setPreferredSize(new Dimension(200,300));
@@ -269,6 +339,14 @@ public class MainUI {
         passTurnButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         passTurnButton.setEnabled(false);
 
+        passTurnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    gameST.passPlayerTurn(gameST.userPlayer);
+                } catch (Exception e1) {e1.printStackTrace();}
+            }
+        });
         rightButtonPanel.add(playCardButton);
         rightButtonPanel.add(passTurnButton);
         playerTablePanel.add(rightButtonPanel);
@@ -279,25 +357,42 @@ public class MainUI {
         gameFrame.setContentPane(TablePanel);
         gameFrame.pack();
 
-        try {
-            startGameContent();
-        } catch (Exception e) { e.printStackTrace(); }
-
+//        try {
+//            startGame();
+//        } catch (Exception e) { e.printStackTrace(); }
+//
     }
 
-    public static void startGameContent() throws Exception {
-
-        if (!gameOver) {
-            addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
+    public static void startGame() throws Exception {
+        new Thread(new Runnable() {
+            public void run() {
+                while (!gameOver) {
+                    addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
+                    gameST.resetPassedPlayers();
+                    try {gameST.playGameRound();} catch (Exception e) {e.printStackTrace();}
+                    addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
+                }
+            }
+        }).start();
+//        if (!gameOver) {
+//            addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
 //            gameST.resetPassedPlayers();
 //            gameST.playGameRound();
-            addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
-        }
+//            addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
+//        }
 
     }
 
     public static void addMessageLabel(String message) {
         scrollPanel.add(new JLabel(message, SwingConstants.CENTER));
+    }
+
+    public static void showCardInPlay(Card cardInPlay) {
+
+        ImageIcon cardImage = new ImageIcon("images/" + cardInPlay.getFileName());
+        Image img = cardImage.getImage() ;
+        Image newImg = img.getScaledInstance( 180, 250,  Image.SCALE_SMOOTH ) ;
+        cardInPlayImage.setImage(newImg);
     }
 
     public static class FaceDownCardPanel extends JPanel {
@@ -339,3 +434,21 @@ public class MainUI {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

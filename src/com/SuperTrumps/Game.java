@@ -70,6 +70,9 @@ public class Game {
     }
 
     public void playGameRound() throws Exception{
+
+        MainUI.startRoundButton.setEnabled(false);
+
         playersInRound = numPlayers + 1;
         roundCount = roundCount + 1;
 
@@ -78,7 +81,12 @@ public class Game {
         dealer = 0;
         trumpPlayed = false;
 
-        if (playersInRound > 1)  {playGameTurns(); }
+        //if (playersInRound > 1)  { playGameTurns(); }
+
+        do { playGameTurns(); }while (playersInRound >1);
+
+        MainUI.startRoundButton.setEnabled(true);
+
     }
 
     private void checkWinCondition(Player player) {
@@ -166,20 +174,20 @@ public class Game {
 
     private void setCurrentValues() {
         valueInPlayAsString = cardInPlay.getCategoryValueInPlay(categoryNumber);
-        valueInPlay = getValueToPlay(categoryNumber, categoryAsString);
+        valueInPlay = getValueToPlay(categoryNumber, cardInPlay.getCategoryValueInPlay(categoryNumber));
     }
 
     private void displayCurrentValue() {
         MainUI.addMessageLabel("Category for this round is: " + categoryAsString.toUpperCase());
-//        System.out.println("Score to beat is: " + valueInPlayAsString.toUpperCase() + "\n");
     }
 
     private void startRoundUserPlayer() throws Exception{
-//        userPlayer.showHand(userPlayer);
         int cardToPlay = userPlayer.getCardToPlay();
         cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+        MainUI.addMessageLabel("Choose category to play");
+        MainUI.categoryPanel.setVisible(true);
         categoryNumber = userPlayer.getCategoryToPlay();
-        MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName()); // TODO: 21/10/2016 should populate card in play image
+        MainUI.categoryPanel.setVisible(false);
         checkWinCondition(userPlayer);
     }
 
@@ -188,8 +196,8 @@ public class Game {
         for (int i = 0; i < comPlayer.Hand.size(); i++) {
             cardToPlay = comPlayer.Hand.get(i);
             if (!cardToPlay.isTrump) {
-                cardInPlay = comPlayer.PlayCard(comPlayer, i + 1);
-                MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
+                cardInPlay = comPlayer.PlayCard(comPlayer, i +1);
+                MainUI.showCardInPlay(cardInPlay);
                 categoryNumber = ComPlayer.getCategoryFromComPlayer();
                 checkWinCondition(comPlayer);
                 break;
@@ -197,26 +205,19 @@ public class Game {
         }
     }
 
-    //Gets the user to choose to play a card or pass turn
     private void playTurnUserPlayer() throws Exception {
-        if (!userPlayer.passedTurn) {
-            MainUI.passTurnButton.setEnabled(true);
-            int userMove = userPlayer.playOrPass();
-            if (userMove == 1) {
                 int cardToPlay = userPlayer.getCardToPlay();
-                if (userPlayer.Hand.get(cardToPlay - 1).isTrump) {
+                if (userPlayer.Hand.get(cardToPlay).isTrump) {
                     activateTrumpCard(userPlayer, cardToPlay);
                     checkWinCondition(userPlayer);
                 } else {
                     int valueToPlay = getValueToPlay(categoryNumber, categoryAsString);
                     if (valueToPlay > valueInPlay) {
                         cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
-                        MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
+                        MainUI.showCardInPlay(cardInPlay);
                         checkWinCondition(userPlayer);
                     } else { passPlayerTurn(userPlayer); }
                 }
-            } else { passPlayerTurn(userPlayer); }
-        }
     }
 
     //ComPlayer turn; either plays a higher card or passes
@@ -229,7 +230,7 @@ public class Game {
                 activateTrumpCard(comPlayer, comMove); }
             else {
                 cardInPlay = comPlayer.PlayCard(comPlayer, comMove);
-                MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
+                MainUI.showCardInPlay(cardInPlay);
                 checkWinCondition(comPlayer);
             }
         }
@@ -237,7 +238,7 @@ public class Game {
 
     private void activateTrumpCard(Player player, int trump) throws Exception {
         cardInPlay = player.PlayTrump(player, trump);
-        MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
+        MainUI.showCardInPlay(cardInPlay);
         valueInPlayAsString = "";
         valueInPlay = 0;
         playersInRound = 0;
@@ -275,11 +276,12 @@ public class Game {
     }
 
     //Standard pass method for all players
-    private void passPlayerTurn(Player player) throws Exception {
+    public void passPlayerTurn(Player player) throws Exception {
         try {
             player.DrawCard(player, cardDeck);
             player.passedTurn = true;
             playersInRound = playersInRound - 1;
+            MainUI.addMessageLabel(player.playerName + " left this round.");
             MainUI.addMessageLabel(playersInRound + " players left in round.");
         } catch (Exception exc) {
             System.out.println("Game.java @ passPlayerTurn");
