@@ -1,7 +1,6 @@
 package com.SuperTrumps.GUI;
 
 import com.SuperTrumps.Game;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,8 +18,13 @@ public class MainUI {
     static public boolean gameOver;
     static public JFrame gameFrame;
     static public BufferedImage backOfCard;
-//    static public int numPlayers;
-//    static public String playerName;
+    static public FaceUpCardPanel cardInPlayImage;
+    static public JLabel gameMessageLabel;
+    static public JPanel scrollPanel;
+    static public JScrollPane messageScrollPane;
+    static public JButton playCardButton;
+    static public JButton passTurnButton;
+//    static public JLabel gameMessageLabel = new JLabel();
 
     static public String gameMessage;
     static public Game gameST;
@@ -121,6 +125,7 @@ public class MainUI {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                configPanel.setVisible(false);
 
                 gameST = new Game((int) numPlayersInput.getSelectedItem());
                 gameST.setUserPlayer(nameInput.getText());
@@ -130,10 +135,11 @@ public class MainUI {
                     e1.printStackTrace();}
                 gameST.randomiseDealer();
                 gameST.dealPlayerHands();
-                gameMessage = ("There are " + ((gameST.numPlayers)  + 1) + " players in this game.\n" +
-                        gameST.dealerName + " is dealing this round");
-
-                setGameTableContent();
+//                gameMessage = ("There are " + ((gameST.numPlayers)  + 1) + " players in this game.\n" +
+//                        gameST.dealerName + " is dealing this round");
+                //messageScrollPane.add(new JLabel("There are " + ((gameST.numPlayers)  + 1) + " players in this game."));
+                gameMessage = (gameST.dealerName + " is dealing this round");
+                    buildGameTable();
             }
         });
 
@@ -155,16 +161,27 @@ public class MainUI {
 
     }
 
-    public static void setGameTableContent() {
+    private static void buildGameTable() {
 
         JPanel TablePanel = new JPanel();
         TablePanel.setLayout(new BorderLayout());
-        JPanel messagePanel = new JPanel();
 
-        messagePanel.setPreferredSize(new Dimension(800, 50));
-        JLabel messageLabel = new JLabel(gameMessage);
-        messageLabel.setFont(new Font("Lantinghei SC", Font.PLAIN, 26));
-        messagePanel.add(messageLabel);
+        scrollPanel = new JPanel();
+        scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
+
+        scrollPanel.setAlignmentY(SwingConstants.CENTER);
+        scrollPanel.setPreferredSize(new Dimension(800, 50));
+        scrollPanel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+
+        messageScrollPane = new JScrollPane(scrollPanel);
+        messageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        messageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPanel.add(new JLabel(gameMessage, SwingConstants.CENTER));
+
+        JPanel messagePanel = new JPanel();
+        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+        messagePanel.add(new JLabel("Game status", SwingConstants.CENTER)).setFont(new Font("Lantinghei SC", Font.PLAIN, 24));
+        messagePanel.add(messageScrollPane);
         TablePanel.add(messagePanel, BorderLayout.NORTH);
 
         JPanel gameTablePanel = new JPanel();
@@ -175,7 +192,7 @@ public class MainUI {
 
         JLabel comInfo[] = new JLabel[gameST.numPlayers];
         for (int i = 0; i < gameST.numPlayers; i++) {
-            comInfo[i] = new JLabel(gameST.comPlayer[i].playerName + "\n" + "Cards " + gameST.comPlayer[i].Hand.size(), SwingConstants.CENTER);
+            comInfo[i] = new JLabel(gameST.comPlayer[i].playerName + "\n" + " Cards " + gameST.comPlayer[i].Hand.size(), SwingConstants.CENTER);
             comInfo[i].setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
             comPlayerPanel.add(comInfo[i]);
         }
@@ -187,14 +204,14 @@ public class MainUI {
         gameDeck.setPreferredSize(new Dimension(200, 300));
         JLabel gameDeckLabel = new JLabel("SuperTrump Deck: " + gameST.cardDeck.size(), SwingConstants.CENTER);
         gameDeckLabel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
-        FaceDownCardPanel cardInPlay = new FaceDownCardPanel();
-        cardInPlay.setPreferredSize(new Dimension(200, 300));
+        cardInPlayImage = new FaceUpCardPanel();
+        cardInPlayImage.setPreferredSize(new Dimension(200, 300));
         JLabel cardInPlayLabel = new JLabel("Card in play", SwingConstants.CENTER);
         cardInPlayLabel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
 
         cardDeckPanel.add(gameDeckLabel);
         cardDeckPanel.add(gameDeck);
-        cardDeckPanel.add(cardInPlay);
+        cardDeckPanel.add(cardInPlayImage);
         cardDeckPanel.add(cardInPlayLabel);
 
         gameTablePanel.add(cardDeckPanel);
@@ -203,6 +220,7 @@ public class MainUI {
         JPanel leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new GridLayout(2,1));
         JButton viewRulesButton = new JButton("View Rules");
+        viewRulesButton.setEnabled(false);
         viewRulesButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         JButton quitGameButton = new JButton("Quit Game");
         quitGameButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
@@ -227,7 +245,7 @@ public class MainUI {
         for (int i = 0; i < gameST.userPlayer.Hand.size(); i++) {
             ImageIcon cardImage = new ImageIcon("images/" + gameST.userPlayer.Hand.get(i).getFileName());
             Image img = cardImage.getImage() ;
-            Image newImg = img.getScaledInstance( 200, 300,  java.awt.Image.SCALE_SMOOTH ) ;
+            Image newImg = img.getScaledInstance( 200, 300,  Image.SCALE_SMOOTH ) ;
             cardImage = new ImageIcon( newImg );
 
             cards[i] = new JButton(cardImage);
@@ -244,10 +262,10 @@ public class MainUI {
 
         JPanel rightButtonPanel = new JPanel();
         rightButtonPanel.setLayout(new GridLayout(2,1));
-        JButton playCardButton = new JButton("Play Card");
+        playCardButton = new JButton("Play Card");
         playCardButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         playCardButton.setEnabled(false);
-        JButton passTurnButton = new JButton("Pass Turn");
+        passTurnButton = new JButton("Pass Turn");
         passTurnButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         passTurnButton.setEnabled(false);
 
@@ -257,21 +275,29 @@ public class MainUI {
         gameTablePanel.add(playerTablePanel);
         TablePanel.add(gameTablePanel);
 
-        // TODO: 19/10/2016 Consult jason where to implement >
-//        do {
-//            System.out.println("\n**************************************************\n" +
-//                    "                ROUND (" + (gameST.roundCount +1) +") STARTING" +
-//                    "\n**************************************************\n");
-//            System.out.println(gameST.cardDeck.size() + " cards remain in deck");
-//            gameST.resetPassedPlayers();
-//            gameST.playGameRound();
-//            System.out.println("\n**************************************************\n" +
-//                    "                ROUND (" + gameST.roundCount +") COMPLETE" +
-//                    "\n**************************************************\n");
-//        } while (!gameOver);
 
         gameFrame.setContentPane(TablePanel);
         gameFrame.pack();
+
+        try {
+            startGameContent();
+        } catch (Exception e) { e.printStackTrace(); }
+
+    }
+
+    public static void startGameContent() throws Exception {
+
+        if (!gameOver) {
+            addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
+//            gameST.resetPassedPlayers();
+//            gameST.playGameRound();
+            addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
+        }
+
+    }
+
+    public static void addMessageLabel(String message) {
+        scrollPanel.add(new JLabel(message, SwingConstants.CENTER));
     }
 
     public static class FaceDownCardPanel extends JPanel {
@@ -300,6 +326,10 @@ public class MainUI {
             } catch (IOException exc) {
                 exc.printStackTrace();
             }
+        }
+
+        public FaceUpCardPanel() {
+
         }
 
         @Override

@@ -184,3 +184,13 @@ Assessment Project: 'Mineral Supertrumps'
     * Changed styling of font on labels and buttons
     * Inserted TODOs in location to action
     PUSHED
+
+21/10/16
+    * Changed print lines to alter message in UI
+    * Refactored the game Method to build panel in another method call
+    PUSHED
+
+25/10/16
+    * Implemented scroll panel for game messages
+    * Removed Do While loops to allow program flow
+    PUSHED

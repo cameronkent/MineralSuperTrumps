@@ -1,11 +1,13 @@
 package com.SuperTrumps;
 
+import com.SuperTrumps.GUI.MainUI;
+
 import java.util.Collections;
 import java.util.Random;
 
 public class Game {
 
-    int roundCount;
+    public int roundCount;
     public int numPlayers, dealer, playerTurn, playersInRound, categoryNumber = 0, valueInPlay;
     public String categoryAsString, valueInPlayAsString;
     public Deck cardDeck;
@@ -33,7 +35,7 @@ public class Game {
     }
 
     public void showPlayers() {
-        System.out.println("This games players are:");
+        MainUI.addMessageLabel("This games players are:");
         System.out.println(userPlayer.playerName);
         for (int i = 0; i < comPlayer.length; i++) {
             System.out.println(comPlayer[i].playerName);
@@ -64,10 +66,10 @@ public class Game {
     public void dealPlayerHands() {
         userPlayer.DealHand(userPlayer, cardDeck);
         for (int i = 0; i < comPlayer.length; i++) { comPlayer[i].DealHand(comPlayer[i], cardDeck); }
-//        System.out.println("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
+        //MainUI.gameMessageLabel.setText("The hands have been dealt. \nThere are " + cardDeck.size() + " cards remaining.\n");
     }
 
-    void playGameRound() throws Exception{
+    public void playGameRound() throws Exception{
         playersInRound = numPlayers + 1;
         roundCount = roundCount + 1;
 
@@ -76,8 +78,7 @@ public class Game {
         dealer = 0;
         trumpPlayed = false;
 
-        do { playGameRoundTurns();
-        } while (playersInRound > 1);
+        if (playersInRound > 1)  {playGameTurns(); }
     }
 
     private void checkWinCondition(Player player) {
@@ -88,7 +89,7 @@ public class Game {
         } else { Main.gameOver = false; }
     }
 
-    void resetPassedPlayers(){
+    public void resetPassedPlayers(){
         this.userPlayer.passedTurn = false;
         for (int i = 0; i < numPlayers; i++) {
             this.comPlayer[i].passedTurn =false;
@@ -132,7 +133,7 @@ public class Game {
         }
     }
 
-    private void playGameRoundTurns() throws Exception{
+    private void playGameTurns() throws Exception{
         switch (playerTurn) {
             case 0:
                 playTurnUserPlayer();
@@ -158,7 +159,7 @@ public class Game {
         if (!cardInPlay.isTrump) {
             setCurrentValues();
         }
-        if (!Main.gameOver) {
+        if (!MainUI.gameOver) {
             displayCurrentValue();
         }
     }
@@ -169,15 +170,16 @@ public class Game {
     }
 
     private void displayCurrentValue() {
-        System.out.println("\nCategory for this round is: " + categoryAsString.toUpperCase());
-        System.out.println("Score to beat is: " + valueInPlayAsString.toUpperCase() + "\n");
+        MainUI.addMessageLabel("Category for this round is: " + categoryAsString.toUpperCase());
+//        System.out.println("Score to beat is: " + valueInPlayAsString.toUpperCase() + "\n");
     }
 
     private void startRoundUserPlayer() throws Exception{
-        userPlayer.showHand(userPlayer);
+//        userPlayer.showHand(userPlayer);
         int cardToPlay = userPlayer.getCardToPlay();
         cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
         categoryNumber = userPlayer.getCategoryToPlay();
+        MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName()); // TODO: 21/10/2016 should populate card in play image
         checkWinCondition(userPlayer);
     }
 
@@ -187,6 +189,7 @@ public class Game {
             cardToPlay = comPlayer.Hand.get(i);
             if (!cardToPlay.isTrump) {
                 cardInPlay = comPlayer.PlayCard(comPlayer, i + 1);
+                MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
                 categoryNumber = ComPlayer.getCategoryFromComPlayer();
                 checkWinCondition(comPlayer);
                 break;
@@ -197,7 +200,7 @@ public class Game {
     //Gets the user to choose to play a card or pass turn
     private void playTurnUserPlayer() throws Exception {
         if (!userPlayer.passedTurn) {
-            userPlayer.showHand(userPlayer);
+            MainUI.passTurnButton.setEnabled(true);
             int userMove = userPlayer.playOrPass();
             if (userMove == 1) {
                 int cardToPlay = userPlayer.getCardToPlay();
@@ -208,6 +211,7 @@ public class Game {
                     int valueToPlay = getValueToPlay(categoryNumber, categoryAsString);
                     if (valueToPlay > valueInPlay) {
                         cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+                        MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
                         checkWinCondition(userPlayer);
                     } else { passPlayerTurn(userPlayer); }
                 }
@@ -225,6 +229,7 @@ public class Game {
                 activateTrumpCard(comPlayer, comMove); }
             else {
                 cardInPlay = comPlayer.PlayCard(comPlayer, comMove);
+                MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
                 checkWinCondition(comPlayer);
             }
         }
@@ -232,6 +237,7 @@ public class Game {
 
     private void activateTrumpCard(Player player, int trump) throws Exception {
         cardInPlay = player.PlayTrump(player, trump);
+        MainUI.cardInPlayImage = new MainUI.FaceUpCardPanel(cardInPlay.getFileName());
         valueInPlayAsString = "";
         valueInPlay = 0;
         playersInRound = 0;
@@ -274,7 +280,7 @@ public class Game {
             player.DrawCard(player, cardDeck);
             player.passedTurn = true;
             playersInRound = playersInRound - 1;
-            System.out.println(playersInRound + " players left in round.");
+            MainUI.addMessageLabel(playersInRound + " players left in round.");
         } catch (Exception exc) {
             System.out.println("Game.java @ passPlayerTurn");
             exc.printStackTrace();
@@ -284,22 +290,20 @@ public class Game {
     //Return a string of category for printing
     private String getCategoryAsString(int categoryNumber ) {
         String categoryAsString;
-        loop: do {
             switch (categoryNumber) {
                 case 1: categoryAsString = "Hardness";
-                    break loop;
+                    break;
                 case 2: categoryAsString = "Specific gravity";
-                    break loop;
+                    break;
                 case 3: categoryAsString = "Cleavage";
-                    break loop;
+                    break;
                 case 4: categoryAsString = "Crustal abundance";
-                    break loop;
+                    break;
                 case 5: categoryAsString = "Economic value";
-                    break loop;
+                    break;
                 default: categoryAsString = "";
                     break;
             }
-        } while (categoryAsString.equals(""));
         return categoryAsString;
     }
 
