@@ -202,3 +202,5 @@ Assessment Project: 'Mineral Supertrumps'
     * Began attempting to rebuild a new GUI class in conjunction with a run class to handle flow
     * Structured GUI class with Build methods for all JPanels
     PUSHED
+    * Began working with gameStates and altering function locality
+    PUSHED

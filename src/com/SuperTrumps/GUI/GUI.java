@@ -158,7 +158,8 @@ public class GUI {
         buildGameMessagePanel();
 
         gameArea_panel.add(playArea_panel);
-        gameArea_panel.add(gameMessage_panel);
+        //gameArea_panel.add(gameMessage_panel);
+        gameArea_panel.add(gameMessage_scrollPane);
     }
 
     private void buildPlayAreaPanel() {
@@ -184,7 +185,7 @@ public class GUI {
         gameMessage_scrollPane.add(new JLabel("Game status", SwingConstants.CENTER)).setFont(new Font("Lantinghei SC", Font.PLAIN, 24));
 
         //gameMessage_panel.setLayout(new BoxLayout(gameMessage_scrollPane, BoxLayout.Y_AXIS));
-        gameMessage_panel.add(gameMessage_scrollPane);
+        //gameMessage_panel.add(gameMessage_scrollPane);
 
     }
 
@@ -209,7 +210,7 @@ public class GUI {
         }
     }
 
-    private void buildPlayerButtonsPanel() {
+    private void buildPlayerButtonsPanel() { //todo: ActionListeners
         playerButtons_panel = new JPanel();
         playerButtons_panel.setLayout(new GridLayout(3,1));
         playerButtons_panel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));

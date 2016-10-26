@@ -1,5 +1,6 @@
 package com.SuperTrumps;
 
+import com.SuperTrumps.GUI.GameState;
 import com.SuperTrumps.GUI.MainUI;
 
 import java.util.Collections;
@@ -81,15 +82,14 @@ public class Game {
         dealer = 0;
         trumpPlayed = false;
 
-        //if (playersInRound > 1)  { playGameTurns(); }
+        if (playersInRound > 1)  { playGameTurns(); }
 
-        do { playGameTurns(); }while (playersInRound >1);
 
         MainUI.startRoundButton.setEnabled(true);
 
     }
 
-    private void checkWinCondition(Player player) {
+    public void checkWinCondition(Player player) {
         if (player.Hand.size() == 0) {
             gameWinner = player;
             playersInRound = 1;
@@ -182,16 +182,22 @@ public class Game {
     }
 
     private void startRoundUserPlayer() throws Exception{
+        MainUI.addMessageLabel("Choose a card to play");
+
+        MainUI.state = GameState.USER_START_ROUND;
+
         int cardToPlay = userPlayer.getCardToPlay();
-        cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
-        MainUI.addMessageLabel("Choose category to play");
-        MainUI.categoryPanel.setVisible(true);
-        categoryNumber = userPlayer.getCategoryToPlay();
-        MainUI.categoryPanel.setVisible(false);
-        checkWinCondition(userPlayer);
+
+//        cardInPlay = userPlayer.PlayCard(userPlayer, cardToPlay);
+//        MainUI.addMessageLabel("Choose category to play");
+//        MainUI.categoryPanel.setVisible(true);
+//        categoryNumber = userPlayer.getCategoryToPlay();
+//        MainUI.categoryPanel.setVisible(false);
+//        checkWinCondition(userPlayer);
     }
 
     private void startRoundComPlayer(ComPlayer comPlayer) throws Exception {
+        MainUI.state = GameState.COM_START_ROUND;
         Card cardToPlay;
         for (int i = 0; i < comPlayer.Hand.size(); i++) {
             cardToPlay = comPlayer.Hand.get(i);
@@ -206,6 +212,8 @@ public class Game {
     }
 
     private void playTurnUserPlayer() throws Exception {
+
+
                 int cardToPlay = userPlayer.getCardToPlay();
                 if (userPlayer.Hand.get(cardToPlay).isTrump) {
                     activateTrumpCard(userPlayer, cardToPlay);

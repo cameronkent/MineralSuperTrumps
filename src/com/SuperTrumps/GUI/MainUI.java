@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class MainUI {
 
+    static public GameState state;
     static public boolean gameOver;
     static public JFrame gameFrame;
     static public BufferedImage backOfCard;
@@ -30,18 +31,9 @@ public class MainUI {
     static public String gameMessage;
     static public Game gameST;
 
-//    public static void main(String[] args) throws Exception {
-//
-//        gameFrame = new JFrame("Mineral SuperTrumps");
-//        gameFrame.setVisible(true);
-//        gameFrame.setLocationRelativeTo(null);
-//        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        setWelcomeContent();
-//
-//    }
+    public static void main(String[] args) throws Exception {
 
-    public static void buildApp(){
+        state = GameState.IDLE;
 
         gameFrame = new JFrame("Mineral SuperTrumps");
         gameFrame.setVisible(true);
@@ -52,9 +44,11 @@ public class MainUI {
 
     }
 
+
     public static void setWelcomeContent() {
+
         JPanel welcomePanel = new JPanel();
-        welcomePanel.setLayout(new GridLayout(2,1));
+        welcomePanel.setLayout(new GridLayout(2, 1));
 
         JPanel messagePanel = new JPanel();
         JLabel welcomeLabel = new JLabel("Welcome to the Mineral SuperTrumps game");
@@ -65,15 +59,11 @@ public class MainUI {
         JPanel buttonPanel = new JPanel();
         JButton newGameButton = new JButton("New Game");
         newGameButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
-        newGameButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                newGameButtonPressed(); }
-
-            private void newGameButtonPressed() {
-                welcomePanel.setVisible(false);
-                setConfigContent();
-            }
-        } );
+        newGameButton.addActionListener(e -> {
+            state = GameState.START;
+            welcomePanel.setVisible(false);
+            setConfigContent();
+        });
         JButton viewRulesButton = new JButton("View Rules");
         viewRulesButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         buttonPanel.add(newGameButton);
@@ -107,7 +97,7 @@ public class MainUI {
         JPanel numPlayersPanel = new JPanel();
         JLabel numPlayersLabel = new JLabel("Number of opponents");
         numPlayersLabel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
-        Integer[] num = {2,3,4};
+        Integer[] num = {2, 3, 4};
         JComboBox numPlayersInput = new JComboBox(num);
         nameInput.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         numPlayersPanel.add(numPlayersLabel);
@@ -120,35 +110,46 @@ public class MainUI {
         startGameButton.setEnabled(false);
         nameInput.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {nameEntered();}
+            public void insertUpdate(DocumentEvent e) {
+                nameEntered();
+            }
 
             @Override
-            public void removeUpdate(DocumentEvent e) {nameEntered();}
+            public void removeUpdate(DocumentEvent e) {
+                nameEntered();
+            }
 
             @Override
-            public void changedUpdate(DocumentEvent e) {nameEntered();}
+            public void changedUpdate(DocumentEvent e) {
+                nameEntered();
+            }
 
             private void nameEntered() {
-                if (nameInput.getText().equals("")) {startGameButton.setEnabled(false);}
-                else {startGameButton.setEnabled(true);}
+                if (!nameInput.getText().equals("")) {
+                    state = GameState.GET_NAME;
+                    startGameButton.setEnabled(true);
+                }
             }
         });
 
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                state = GameState.START_ROUND;
                 configPanel.setVisible(false);
 
                 gameST = new Game((int) numPlayersInput.getSelectedItem());
                 gameST.setUserPlayer(nameInput.getText());
                 gameST.setComPlayers();
-                try {gameST.buildCardDeck();
+                try {
+                    gameST.buildCardDeck();
                 } catch (Exception e1) {
-                    e1.printStackTrace();}
+                    e1.printStackTrace();
+                }
                 gameST.randomiseDealer();
                 gameST.dealPlayerHands();
                 gameMessage = (gameST.dealerName + " is dealing this round");
-                    buildGameTable();
+                buildGameTable();
             }
         });
 
@@ -248,7 +249,7 @@ public class MainUI {
         gameTablePanel.add(categoryPanel);
 
         JPanel comPlayerPanel = new JPanel();
-        comPlayerPanel.setLayout(new GridLayout(1,gameST.numPlayers));
+        comPlayerPanel.setLayout(new GridLayout(1, gameST.numPlayers));
 
         JLabel comInfo[] = new JLabel[gameST.numPlayers];
         for (int i = 0; i < gameST.numPlayers; i++) {
@@ -267,9 +268,9 @@ public class MainUI {
         JLabel cardInPlayLabel = new JLabel("Card in play", SwingConstants.CENTER);
 
         ImageIcon cipIcon = new ImageIcon("images/Slide65.jpg");
-        Image cipImg = cipIcon.getImage() ;
-        Image newCipImg = cipImg.getScaledInstance( 180, 250,  Image.SCALE_SMOOTH ) ;
-        cardInPlayImage = new ImageIcon( newCipImg );
+        Image cipImg = cipIcon.getImage();
+        Image newCipImg = cipImg.getScaledInstance(180, 250, Image.SCALE_SMOOTH);
+        cardInPlayImage = new ImageIcon(newCipImg);
         cardInPlay = new JLabel(cardInPlayImage);
 
         cardInPlayLabel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
@@ -283,7 +284,7 @@ public class MainUI {
 
         JPanel playerTablePanel = new JPanel();
         JPanel leftButtonPanel = new JPanel();
-        leftButtonPanel.setLayout(new GridLayout(2,1));
+        leftButtonPanel.setLayout(new GridLayout(2, 1));
 
         startRoundButton = new JButton("Start Round");
         //startRoundButton.setEnabled(false);
@@ -292,8 +293,10 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //startGame();
-                } catch (Exception e1) {e1.printStackTrace();}
+                    startGame();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -321,9 +324,9 @@ public class MainUI {
         for (int i = 0; i < gameST.userPlayer.Hand.size(); i++) {
 
             ImageIcon cardImage = new ImageIcon("images/" + gameST.userPlayer.Hand.get(i).getFileName());
-            Image img = cardImage.getImage() ;
-            Image newImg = img.getScaledInstance( 200, 300,  Image.SCALE_SMOOTH ) ;
-            cardImage = new ImageIcon( newImg );
+            Image img = cardImage.getImage();
+            Image newImg = img.getScaledInstance(200, 300, Image.SCALE_SMOOTH);
+            cardImage = new ImageIcon(newImg);
 
             cards[i] = new JButton(cardImage);
 
@@ -333,16 +336,27 @@ public class MainUI {
                 public void actionPerformed(ActionEvent e) {
                     // TODO: 19/10/2016 implement click to select card to play
                     gameST.userPlayer.setCardToPlay(finalI);
+                    System.out.println(finalI);
+                    try {
+                        gameST.cardInPlay = gameST.userPlayer.PlayCard(gameST.userPlayer, finalI);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+//                    //MainUI.addMessageLabel("Choose category to play");
+//                    MainUI.categoryPanel.setVisible(true);
+//                    gameST.categoryNumber = gameST.userPlayer.getCategoryToPlay();
+//                    MainUI.categoryPanel.setVisible(false);
+//                    gameST.checkWinCondition(gameST.userPlayer);
                     playCardButton.setEnabled(true);
                 }
             });
-            cards[i].setPreferredSize(new Dimension(200,300));
+            cards[i].setPreferredSize(new Dimension(200, 300));
             playerHandPanel.add(cards[i]);
         }
         playerTablePanel.add(playerHandPanel);
 
         JPanel rightButtonPanel = new JPanel();
-        rightButtonPanel.setLayout(new GridLayout(2,1));
+        rightButtonPanel.setLayout(new GridLayout(2, 1));
         playCardButton = new JButton("Play Card");
         playCardButton.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
         playCardButton.setEnabled(false);
@@ -355,7 +369,9 @@ public class MainUI {
             public void actionPerformed(ActionEvent e) {
                 try {
                     gameST.passPlayerTurn(gameST.userPlayer);
-                } catch (Exception e1) {e1.printStackTrace();}
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         rightButtonPanel.add(playCardButton);
@@ -374,25 +390,15 @@ public class MainUI {
 //
     }
 
-//    public static void startGame() throws Exception {
-//        new Thread(new Runnable() {
-//            public void run() {
-//                while (!gameOver) {
-//                    addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
-//                    gameST.resetPassedPlayers();
-//                    try {gameST.playGameRound();} catch (Exception e) {e.printStackTrace();}
-//                    addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
-//                }
-//            }
-//        }).start();
-//        if (!gameOver) {
-//            addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
-//            gameST.resetPassedPlayers();
-//            gameST.playGameRound();
-//            addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
-//        }
+    public static void startGame() throws Exception {
+        if (!gameOver) {
+            addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
+            gameST.resetPassedPlayers();
+            gameST.playGameRound();
+            addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
+        }
 
-//    }
+    }
 
     public static void addMessageLabel(String message) {
         scrollPanel.add(new JLabel(message, SwingConstants.CENTER));
@@ -401,8 +407,8 @@ public class MainUI {
     public static void showCardInPlay(Card cardInPlay) {
 
         ImageIcon cardImage = new ImageIcon("images/" + cardInPlay.getFileName());
-        Image img = cardImage.getImage() ;
-        Image newImg = img.getScaledInstance( 180, 250,  Image.SCALE_SMOOTH ) ;
+        Image img = cardImage.getImage();
+        Image newImg = img.getScaledInstance(180, 250, Image.SCALE_SMOOTH);
         cardInPlayImage.setImage(newImg);
     }
 
