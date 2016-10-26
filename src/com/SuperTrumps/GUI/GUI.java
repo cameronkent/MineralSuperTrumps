@@ -1,256 +1,252 @@
-//package com.SuperTrumps.GUI;
-//
-//import javax.imageio.ImageIO;
-//import javax.swing.*;
-//import java.awt.*;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
-//import java.io.IOException;
-//
-//public class GUI {
-//
-//    static public boolean gameOver;
-//    static public JFrame gameFrame;
-//    static public BufferedImage backOfCard;
-//
-//    public static void main(String[] args) {
-//
-//        gameFrame = new JFrame("Mineral SuperTrumps");
-//        gameFrame.setVisible(true);
-//        gameFrame.setLocationRelativeTo(null);
-//        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        setWelcomeContent();
-//
-//    }
-//
-//    private static void setWelcomeContent() {
-//        JPanel welcomePanel = new JPanel();
-//        welcomePanel.setLayout(new GridLayout(2,1));
-//
-//        JPanel messagePanel = new JPanel();
-//            JLabel welcomeLabel = new JLabel("Welcome to the Mineral SuperTrumps game");
-//            messagePanel.add(welcomeLabel);
-//            welcomePanel.add(messagePanel);
-//
-//        JPanel buttonPanel = new JPanel();
-//            JButton newGameButton = new JButton("New Game");
-//            newGameButton.addActionListener(new ActionListener() {
-//                public void actionPerformed(ActionEvent e) {
-//                    newGameButtonPressed(); }
-//
-//                private void newGameButtonPressed() {
-//                    welcomePanel.setVisible(false);
-//                    setConfigContent();
-//                }
-//            } );
-//            JButton viewRulesButton = new JButton("View Rules");
-//            buttonPanel.add(newGameButton);
-//            buttonPanel.add(viewRulesButton);
-//            welcomePanel.add(buttonPanel);
-//
-//        gameFrame.setContentPane(welcomePanel);
-//        gameFrame.pack();
-//
-//    }
-//
-//    private static void setConfigContent() {
-//        JPanel configPanel = new JPanel();
-//        configPanel.setLayout(new GridLayout(4, 1));
-//
-//        JPanel messagePanel = new JPanel();
-//            JLabel messageLabel = new JLabel("Choose your game settings");
-//            messagePanel.add(messageLabel);
-//            configPanel.add(messagePanel);
-//
-//        JPanel namePanel = new JPanel();
-//            JLabel nameLabel = new JLabel("Enter your Name");
-//            JTextField nameInput = new JTextField(12);
-//        //todo if (!nameInput.getText().trim().isEmpty()) {startGameButton.setEnabled(true);}
-//        namePanel.add(nameLabel);
-//            namePanel.add(nameInput);
-//            configPanel.add(namePanel);
-//
-//        JPanel numPlayersPanel = new JPanel();
-//            JLabel numPlayersLabel = new JLabel("Number of opponents");
-//            Integer[] num = {2,3,4};
-//            JComboBox numPlayersInput = new JComboBox(num);
-//            numPlayersPanel.add(numPlayersLabel);
-//            numPlayersPanel.add(numPlayersInput);
-//            configPanel.add(numPlayersPanel);
-//
-//        JPanel buttonPanel = new JPanel();
-//            JButton startGameButton = new JButton("Start Game");
-//            startGameButton.setEnabled(false);
-//            if (!nameInput.getText().equals("")) {startGameButton.setEnabled(true);}
-//
-//            startGameButton.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    setGameTableContent();
-//                }
-//            });
-//            JButton menuButton = new JButton("Main Menu");
-//            menuButton.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    setWelcomeContent();
-//                }
-//            });
-//            buttonPanel.add(startGameButton);
-//            buttonPanel.add(menuButton);
-//            configPanel.add(buttonPanel);
-//
-//        gameFrame.setContentPane(configPanel);
-//        gameFrame.pack();
-//
-//    }
-//
-//    private static void setGameTableContent() {
-//
-//        JPanel TablePanel = new JPanel();
-//        TablePanel.setLayout(new BorderLayout());
-//        JPanel messagePanel = new JPanel();
-//
-//            messagePanel.setPreferredSize(new Dimension(800, 50));
-//            JLabel messageLabel = new JLabel("'souts' to go here"); // TODO: 12/10/2016 place souts here
-//            messageLabel.setFont(new Font("Arial", Font.PLAIN, 26));
-//            messagePanel.add(messageLabel);
-//        TablePanel.add(messagePanel, BorderLayout.NORTH);
-//
-//        JPanel gameTablePanel = new JPanel();
-//        gameTablePanel.setLayout(new GridLayout(3, 1));
-//
-//
-//
-//        JPanel topTablePanel = new JPanel();
-//            topTablePanel.setLayout(new GridLayout(2,3));
-//
-//            FaceDownCardPanel comPlayerOne = new FaceDownCardPanel();
-//            comPlayerOne.setPreferredSize(new Dimension(100, 200));
-//            JLabel comPlayerOneNameLabel = new JLabel("Computer One");
-//
-//            FaceDownCardPanel gameDeck = new FaceDownCardPanel();
-//            gameDeck.setPreferredSize(new Dimension(100, 200));
-//            JLabel gameDeckLabel = new JLabel("SuperTrump Deck: "); // TODO: 12/10/2016 add Deck.Size()
-//
-//            FaceDownCardPanel comPlayerTwo = new FaceDownCardPanel();
-//            comPlayerTwo.setPreferredSize(new Dimension(100, 200));
-//            JLabel comPlayerTwoNameLabel = new JLabel("Computer Two");
-//
-//
-//            topTablePanel.add(comPlayerOne);
-//            topTablePanel.add(gameDeck);
-//            topTablePanel.add(comPlayerTwo);
-//
-//            topTablePanel.add(comPlayerOneNameLabel);
-//            topTablePanel.add(gameDeckLabel);
-//            topTablePanel.add(comPlayerTwoNameLabel);
-//
-//        gameTablePanel.add(topTablePanel);
-//
-//        JPanel bottomTablePanel = new JPanel();
-//            bottomTablePanel.setLayout(new GridLayout(2,3));
-//
-//            FaceDownCardPanel comPlayerThree = new FaceDownCardPanel();
-//            comPlayerThree.setPreferredSize(new Dimension(100, 200));
-//            JLabel comPlayerThreeNameLabel = new JLabel("Computer Three");
-//
-//            FaceDownCardPanel cardInPlay = new FaceDownCardPanel();
-//            cardInPlay.setPreferredSize(new Dimension(100, 200));
-//            JLabel cardInPlayLabel = new JLabel("Card in play");
-//
-//            FaceDownCardPanel comPlayerFour = new FaceDownCardPanel();
-//            comPlayerFour.setPreferredSize(new Dimension(100, 200));
-//            JLabel comPlayerFourNameLabel = new JLabel("Computer Four");
-//
-//            bottomTablePanel.add(comPlayerThree);
-//            bottomTablePanel.add(cardInPlay);
-//            bottomTablePanel.add(comPlayerFour);
-//            bottomTablePanel.add(comPlayerThreeNameLabel);
-//            bottomTablePanel.add(cardInPlayLabel);
-//            bottomTablePanel.add(comPlayerFourNameLabel);
-//
-//        gameTablePanel.add(bottomTablePanel);
-//
-//
-//        JPanel playerTablePanel = new JPanel();
-//            JPanel leftButtonPanel = new JPanel();
-//                leftButtonPanel.setLayout(new GridLayout(2,1));
-//                JButton viewRulesButton = new JButton("View Rules");
-//                JButton quitGameButton = new JButton("Quit Game");
-//                quitGameButton.addActionListener(new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        setWelcomeContent();
-//                    }
-//                });
-//            leftButtonPanel.add(viewRulesButton);
-//                    leftButtonPanel.add(quitGameButton);
-//                    playerTablePanel.add(leftButtonPanel);
-//                JPanel playerHandPanel = new JPanel();
-//                    for (int i = 0; i < 8; i++) { // TODO: 12/10/2016 Hand.Size()
-//                        FaceUpCardPanel faceUpCard = new FaceUpCardPanel();
-//                        faceUpCard.setPreferredSize(new Dimension(100,200));
-//                        playerHandPanel.add(faceUpCard);
-//                    }
-//                    playerTablePanel.add(playerHandPanel);
-//                JPanel rightButtonPanel = new JPanel();
-//                    rightButtonPanel.setLayout(new GridLayout(2,1));
-//                    JButton playCardButton = new JButton("Play Card");
-//                    playCardButton.setEnabled(false);
-//                    JButton passTurnButton = new JButton("Pass Turn");
-//                    passTurnButton.setEnabled(false);
-//                    rightButtonPanel.add(playCardButton);
-//                    rightButtonPanel.add(passTurnButton);
-//                    playerTablePanel.add(rightButtonPanel);
-//        gameTablePanel.add(playerTablePanel);
-//        TablePanel.add(gameTablePanel);
-//
-//        gameFrame.setContentPane(TablePanel);
-//        gameFrame.pack();
-//    }
-//
-//    public static class FaceDownCardPanel extends JPanel {
-//
-//        public FaceDownCardPanel() {
-//            try {
-//                backOfCard = ImageIO.read(new File("images/Slide65.jpg"));
-//            } catch (IOException exc) {
-//                exc.printStackTrace();
-//            }
-//        }
-//
-//        @Override
-//        protected void paintComponent(Graphics g) {
-//            super.paintComponent(g);
-//            g.drawImage(backOfCard, 0, 0, null); // see javadoc for more info on the parameters
-//            backOfCard.getScaledInstance(100, 200, Image.SCALE_DEFAULT); // TODO: 12/10/2016 where to put this?
-//        }
-//    }
-//
-//    public static class FaceUpCardPanel extends JPanel {
-//
-//        public FaceUpCardPanel () {}
-//
-//        public FaceUpCardPanel(String cardImageName) {
-//            try {
-//                backOfCard = ImageIO.read(new File("images/" + cardImageName));
-//            } catch (IOException exc) {
-//                exc.printStackTrace();
-//            }
-//        }
-//
-//        @Override
-//        protected void paintComponent(Graphics g) {
-//            super.paintComponent(g);
-//            g.drawImage(backOfCard, 0, 0, null); // see javadoc for more info on the parameters
-//        }
-//    }
-//}
-//
-//
-//
-//
+package com.SuperTrumps.GUI;
+
+import com.SuperTrumps.Card;
+
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GUI {
+
+    public static JFrame game_Frame;
+    public static JPanel welcome_panel;
+    private static JPanel setup_panel;
+    private static JPanel setupName_panel;
+    private static JPanel setupPlayers_panel;
+    public static JPanel gameTable_panel;
+    private static JPanel comPlayer_panel;
+    public static JTextField name_textField;
+    public static JButton startGame_button;
+    public static JComboBox numPlayers_comboBox;
+    private static JPanel gameArea_panel;
+    private static JPanel playArea_panel;
+    private static JPanel gameMessage_panel;
+    private static JScrollPane gameMessage_scrollPane;
+    private static JPanel player_panel;
+    private static JPanel playerHand_panel;
+    private static JPanel playerButtons_panel;
+
+
+    public void buildFrame() {
+        game_Frame = new JFrame("Mineral SuperTrumps");
+        game_Frame.setVisible(true);
+        game_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game_Frame.pack();
+    }
+
+    public void buildWelcomePanel() {
+        welcome_panel = new JPanel();
+        welcome_panel.setLayout(new GridLayout(2,1));
+
+        JLabel welcome_label = new JLabel("Welcome to the Mineral SuperTrumps game");
+        welcome_label.setFont(new Font("Lantinghei SC", Font.PLAIN, 26));
+
+        JButton newGame_button = new JButton("NEW GAME");
+        newGame_button.setFont(new Font("Lantinghei SC", Font.PLAIN, 20));
+
+        newGame_button.addActionListener(e -> {
+            welcome_panel.setVisible(false);
+            game_Frame.setContentPane(setup_panel);
+        });
+
+        welcome_panel.add(welcome_label);
+        welcome_panel.add(newGame_button);
+    }
+
+    public void buildSetupPanel() {
+        setup_panel = new JPanel();
+        setup_panel.setLayout(new GridLayout(4, 1));
+
+        JLabel setup_label = new JLabel("Choose game settings");
+        setup_label.setFont(new Font("Lantinghei SC", Font.PLAIN, 26));
+
+        buildSetupNamePanel();
+
+        buildSetupPlayersPanel();
+
+        startGame_button = new JButton("START GAME"); //todo: Add Listener
+        startGame_button.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+        startGame_button.setEnabled(false);
+
+        startGame_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setup_panel.setVisible(false);
+                run.runGame();
+            }
+        });
+
+        setup_panel.add(setup_label);
+        setup_panel.add(setupName_panel);
+        setup_panel.add(setupPlayers_panel);
+        setup_panel.add(startGame_button);
+    }
+
+    private void buildSetupNamePanel() {
+        setupName_panel = new JPanel();
+
+        JLabel name_label = new JLabel("Enter your name");
+        name_label.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+        name_textField = new JTextField(10);
+        name_textField.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+
+        name_textField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if (!name_textField.getText().equals("")) {startGame_button.setEnabled(true);}
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (!name_textField.getText().equals("")) {startGame_button.setEnabled(true);}
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if (!name_textField.getText().equals("")) {startGame_button.setEnabled(true);}
+            }
+        });
+
+        setupName_panel.add(name_label);
+        setupName_panel.add(name_textField);
+    }
+
+    private void buildSetupPlayersPanel() {
+        setupPlayers_panel = new JPanel();
+
+        JLabel numPlayers_label = new JLabel("Number of opponents");
+        numPlayers_label.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+        Integer[] nums = {2,3,4};
+        numPlayers_comboBox = new JComboBox(nums); //todo: Add listener?
+        numPlayers_comboBox.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+
+        setupPlayers_panel.add(numPlayers_label);
+        setupPlayers_panel.add(numPlayers_comboBox);
+    }
+
+    public void buildGameTablePanel() {
+        gameTable_panel = new JPanel();
+        gameTable_panel.setLayout(new GridLayout(3,1));
+
+        buildComPlayerPanel();
+        buildGameAreaPanel();
+        buildPlayerPanel();
+
+        gameTable_panel.add(comPlayer_panel);
+        gameTable_panel.add(gameArea_panel);
+        gameTable_panel.add(player_panel);
+    }
+
+    private void buildComPlayerPanel() {
+        comPlayer_panel = new JPanel();
+
+        JLabel comPlayer_labels[] =new JLabel[run.gameST.numPlayers];
+        for (int i = 0; i < run.gameST.numPlayers; i++) {
+            comPlayer_labels[i] = new JLabel(run.gameST.comPlayer[i].playerName + "\n" + " Cards " + run.gameST.comPlayer[i].Hand.size(), SwingConstants.CENTER);
+            comPlayer_labels[i].setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+            comPlayer_panel.add(comPlayer_labels[i]);
+        }
+    }
+
+    private void buildGameAreaPanel() {
+        gameArea_panel = new JPanel();
+
+        buildPlayAreaPanel();
+        buildGameMessagePanel();
+
+        gameArea_panel.add(playArea_panel);
+        gameArea_panel.add(gameMessage_panel);
+    }
+
+    private void buildPlayAreaPanel() {
+        playArea_panel = new JPanel();
+
+        JLabel gameDeck_label = new JLabel("SuperTrump Deck: " + run.gameST.cardDeck.size(), SwingConstants.CENTER);
+        gameDeck_label.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+
+        ImageIcon faceDownCard = new ImageIcon(new ImageIcon("images/Slide65.jpg").getImage().getScaledInstance(180, 250, Image.SCALE_SMOOTH));
+        JLabel deckImage_label = new JLabel(faceDownCard);
+
+        playArea_panel.add(gameDeck_label);
+        playArea_panel.add(deckImage_label);
+
+    }
+
+    private void buildGameMessagePanel() {
+
+        gameMessage_scrollPane = new JScrollPane(new JPanel());
+        gameMessage_scrollPane.setLayout(new ScrollPaneLayout());
+        gameMessage_scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        gameMessage_scrollPane.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+        gameMessage_scrollPane.add(new JLabel("Game status", SwingConstants.CENTER)).setFont(new Font("Lantinghei SC", Font.PLAIN, 24));
+
+        //gameMessage_panel.setLayout(new BoxLayout(gameMessage_scrollPane, BoxLayout.Y_AXIS));
+        gameMessage_panel.add(gameMessage_scrollPane);
+
+    }
+
+    private void buildPlayerPanel() {
+        player_panel = new JPanel();
+
+        buildPlayerHandPanel();
+        buildPlayerButtonsPanel();
+
+        player_panel.add(playerHand_panel);
+        player_panel.add(playerButtons_panel);
+    }
+
+    private void buildPlayerHandPanel() {
+        playerHand_panel = new JPanel();
+        JButton cards[] = new JButton[run.gameST.userPlayer.Hand.size()];
+        for (int i = 0; i < run.gameST.userPlayer.Hand.size(); i++) {
+
+            cards[i] = new JButton((Action) displayCard(run.gameST.userPlayer.Hand.get(i)));
+            playerHand_panel.add(cards[i]);
+
+        }
+    }
+
+    private void buildPlayerButtonsPanel() {
+        playerButtons_panel = new JPanel();
+        playerButtons_panel.setLayout(new GridLayout(3,1));
+        playerButtons_panel.setFont(new Font("Lantinghei SC", Font.PLAIN, 18));
+
+        JButton playCard_button = new JButton("PLAY CARD");
+        JButton passTurn_button = new JButton("PASS TURN");
+        JButton quitGame_button = new JButton("QUIT GAME");
+
+        playerButtons_panel.add(playCard_button);
+        playerButtons_panel.add(passTurn_button);
+        playerButtons_panel.add(quitGame_button);
+    }
+
+    private Image displayCard(Card card) {
+        ImageIcon cardImage = new ImageIcon("images/" + card.getFileName());
+        Image img = cardImage.getImage() ;
+        Image newImg = img.getScaledInstance( 180, 250,  Image.SCALE_SMOOTH ) ;
+        return newImg;
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

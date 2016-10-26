@@ -197,3 +197,8 @@ Assessment Project: 'Mineral Supertrumps'
     * Tried implementing different work arounds for loop
     * todo fix this thing :(
     PUSHED
+
+26/10/16
+    * Began attempting to rebuild a new GUI class in conjunction with a run class to handle flow
+    * Structured GUI class with Build methods for all JPanels
+    PUSHED

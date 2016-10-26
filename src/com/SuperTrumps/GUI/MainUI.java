@@ -30,7 +30,18 @@ public class MainUI {
     static public String gameMessage;
     static public Game gameST;
 
-    public static void main(String[] args) throws Exception {
+//    public static void main(String[] args) throws Exception {
+//
+//        gameFrame = new JFrame("Mineral SuperTrumps");
+//        gameFrame.setVisible(true);
+//        gameFrame.setLocationRelativeTo(null);
+//        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//        setWelcomeContent();
+//
+//    }
+
+    public static void buildApp(){
 
         gameFrame = new JFrame("Mineral SuperTrumps");
         gameFrame.setVisible(true);
@@ -281,7 +292,7 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    startGame();
+                    //startGame();
                 } catch (Exception e1) {e1.printStackTrace();}
             }
         });
@@ -363,17 +374,17 @@ public class MainUI {
 //
     }
 
-    public static void startGame() throws Exception {
-        new Thread(new Runnable() {
-            public void run() {
-                while (!gameOver) {
-                    addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
-                    gameST.resetPassedPlayers();
-                    try {gameST.playGameRound();} catch (Exception e) {e.printStackTrace();}
-                    addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
-                }
-            }
-        }).start();
+//    public static void startGame() throws Exception {
+//        new Thread(new Runnable() {
+//            public void run() {
+//                while (!gameOver) {
+//                    addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
+//                    gameST.resetPassedPlayers();
+//                    try {gameST.playGameRound();} catch (Exception e) {e.printStackTrace();}
+//                    addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
+//                }
+//            }
+//        }).start();
 //        if (!gameOver) {
 //            addMessageLabel("ROUND (" + (gameST.roundCount + 1) + ") STARTING");
 //            gameST.resetPassedPlayers();
@@ -381,7 +392,7 @@ public class MainUI {
 //            addMessageLabel("ROUND (" + gameST.roundCount + ") COMPLETE");
 //        }
 
-    }
+//    }
 
     public static void addMessageLabel(String message) {
         scrollPanel.add(new JLabel(message, SwingConstants.CENTER));
